@@ -1,13 +1,12 @@
 import React, { Component } from 'react';
 import './App.css'
-import { Grid } from 'react-bootstrap'
+//import { Grid } from 'react-bootstrap'
+import { NavBar } from './Nav.jsx'
 
 class App extends Component {
     render() {
         return (
-            <Grid> 
-                <h1>Free Tilt</h1>
-            </Grid >
+            <NavBar />
         );
     }
 }
