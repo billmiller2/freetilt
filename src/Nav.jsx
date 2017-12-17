@@ -1,6 +1,6 @@
 import * as React from 'react'
 import { Navbar, Nav, NavItem } from 'react-bootstrap'
-//import { EquityCalculator } from './equitycalculator'
+import { Link } from 'react-router-dom'
 
 export class NavBar extends React.Component {
     render() {
@@ -12,7 +12,12 @@ export class NavBar extends React.Component {
                     </Navbar.Brand>
                 </Navbar.Header>
                 <Nav>
-                    <NavItem>Equity Calculator</NavItem>
+                    <NavItem
+                        componentClass={Link}
+                        href='/equitycalculator'
+                        to='/equitycalculator'>
+                        Equity Calculator
+                    </NavItem>
                 </Nav>
             </Navbar>
         )
