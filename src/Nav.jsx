@@ -8,7 +8,7 @@ export class NavBar extends React.Component {
             <Navbar>
                 <Navbar.Header>
                     <Navbar.Brand>
-                        Free Tilt
+                        <Link to='/'>Free Tilt</Link>
                     </Navbar.Brand>
                 </Navbar.Header>
                 <Nav>
