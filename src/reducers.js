@@ -1,12 +1,6 @@
 import { combineReducers } from 'redux'
-
-function index(state = {}, action) {
-    switch (action.type) {
-        default:
-            return state
-    }
-}
+import { equityReducer } from './equitycalculator'
 
 export const tiltApp = combineReducers({
-    index
+    equityReducer
 })
