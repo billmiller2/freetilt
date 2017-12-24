@@ -1,18 +1,18 @@
 import * as React from 'react'
 import { Col } from 'react-bootstrap'
-import { suits } from '../'
+import { suits, ranks } from '../'
 
 export class Cards extends React.Component {
     render() {
-        let cols = []
-
-        for (let i = 0; i < suits.length; i++) {
-            cols.push(<Col key={i} xs={3}>{suits[i]}</Col>)
-        }
-
         return (
             <div>
-                {cols}
+            {suits.map((suit, i) => 
+                <Col key={i} xs={3}>
+                    {ranks.map((rank, i) => {
+                        return [(rank + suit), <br key={i} />]
+                    })}
+                </Col>
+            )}                
             </div>
         )
     }
