@@ -1,3 +1,19 @@
 body {
     color: #456ba8;
 }
+
+.spades {
+    color: #000000;
+}
+
+.hearts {
+    color: #ff0000;
+}
+
+.diamonds{
+    color: #0b1bef;
+}
+
+.clubs {
+    color: #228417;
+}
