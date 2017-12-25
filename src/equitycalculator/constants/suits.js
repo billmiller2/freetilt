@@ -1,7 +1,12 @@
+export const SPADES = '\u2660'
+export const HEARTS = '\u2665'
+export const DIAMONDS = '\u2666'
+export const CLUBS = '\u2663'
+
 export const suits = [
-    '\u2660', // spades
-    '\u2665', // hearts
-    '\u2666', // diamonds
-    '\u2663'  // clubs
+    SPADES,
+    HEARTS,
+    DIAMONDS,
+    CLUBS
 ]
 

@@ -7,10 +7,10 @@ export class EquityCalculator extends React.Component {
         return (
             <Grid>
                 <h3>Equity Calculator</h3>
-                <Col xs={4}>
+                <Col xs={3} md={2}>
                     <Cards />
                 </Col>
-                <Col xs={8}>
+                <Col xs={9} md={10}>
                 </Col>
             </Grid>
         )
