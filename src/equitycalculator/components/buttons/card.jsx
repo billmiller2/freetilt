@@ -8,7 +8,9 @@ export class Card extends React.Component {
         let suitClass = suit ? getSuitFromHTML(suit.charCodeAt()) : ''
 
         return (
-            <Button className={"cardButton " + suitClass}>
+            <Button
+                className={"cardButton " + suitClass}
+                onClick={() => this.props.onSelect(rank, suit)}>
                 {rank + suit}
             </Button>
         )

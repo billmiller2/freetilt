@@ -13,6 +13,7 @@ export class Cards extends React.Component {
                         return [
                             <Card 
                                 key={rank+suit}
+                                onSelect={this.props.onSelect}
                                 rank={rank} 
                                 suit={suit} />,
                             <br key={suit+rank} />
