@@ -4,11 +4,12 @@ import { getSuitFromHTML } from '../../'
 
 export class Card extends React.Component {
     render() {
-        let suit = getSuitFromHTML(this.props.suit.charCodeAt())
+        const { rank, suit } = this.props
+        let suitClass = suit ? getSuitFromHTML(suit.charCodeAt()) : ''
 
         return (
-            <Button className={"cardButton " + suit}>
-                {this.props.rank + this.props.suit}
+            <Button className={"cardButton " + suitClass}>
+                {rank + suit}
             </Button>
         )
     }

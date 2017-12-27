@@ -2,6 +2,11 @@ body {
     color: #456ba8;
 }
 
+.cardButton {
+    min-width: 42px;
+    min-height: 34px;
+}
+
 .spades {
     color: #000000;
 }
