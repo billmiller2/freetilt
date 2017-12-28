@@ -22,6 +22,13 @@ const initialState = {
 export function equityReducer(state = initialState, action) {
     switch (action.type) {
         case SELECT_CARD:
+            let selectedCard = state.selectedCard === 1 ? 2 : 1
+            let selectedHand = state.selectedHand
+
+            if (selectedCard === 1) {
+                selectedHand = state.selectedHand === 1 ? 2 : 1
+            }
+
             return {
                 ...state,
                 hands: {
@@ -33,7 +40,9 @@ export function equityReducer(state = initialState, action) {
                             suit: action.suit
                         }
                     }
-                }
+                },
+                selectedHand: selectedHand,
+                selectedCard: selectedCard
             }
         default:
             return state
