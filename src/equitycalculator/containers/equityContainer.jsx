@@ -1,8 +1,10 @@
 import { connect } from 'react-redux'
-import { EquityCalculator } from '../'
+import { Equity } from '../'
 
-const mapStateToProps = (state, ownProps) => {
+const mapStateToProps = (state) => {
     return {}
 }
 
-export const EquityContainer = connect(mapStateToProps)(EquityCalculator)
+export const EquityContainer = connect(
+    mapStateToProps
+)(Equity)

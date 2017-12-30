@@ -1,4 +1,4 @@
-import { SELECT_CARD } from '../'
+import { SELECT_CARD, SELECT_POSITION } from '../'
 
 const card = {
     rank: '',
@@ -43,6 +43,12 @@ export function equityReducer(state = initialState, action) {
                 },
                 selectedHand: selectedHand,
                 selectedCard: selectedCard
+            }
+        case SELECT_POSITION:
+            return {
+                ...state,
+                selectedHand: action.hand,
+                selectedCard: action.card
             }
         default:
             return state

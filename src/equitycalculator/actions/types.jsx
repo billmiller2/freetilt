@@ -1,1 +1,2 @@
 export const SELECT_CARD = 'SELECT_CARD'
+export const SELECT_POSITION = 'SELECT_POSITION'

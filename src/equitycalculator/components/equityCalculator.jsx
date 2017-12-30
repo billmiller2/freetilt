@@ -1,6 +1,10 @@
 import * as React from 'react'
 import { Grid, Col } from 'react-bootstrap'
-import { CardsContainer, HandContainer } from '../'
+import {
+    CardsContainer,
+    EquityContainer,
+    HandContainer
+} from '../'
 
 export class EquityCalculator extends React.Component {
     render() {
@@ -17,6 +21,7 @@ export class EquityCalculator extends React.Component {
                     <HandContainer number={2} />
                 </Col>
                 <Col xs={5} md={7}>
+                    <EquityContainer />
                 </Col>
             </Grid>
         )
