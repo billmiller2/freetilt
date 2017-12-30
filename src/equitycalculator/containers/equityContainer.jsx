@@ -2,7 +2,11 @@ import { connect } from 'react-redux'
 import { Equity } from '../'
 
 const mapStateToProps = (state) => {
-    return {}
+    const { hands } = state.equityReducer
+
+    return {
+        hands: hands
+    }
 }
 
 export const EquityContainer = connect(
