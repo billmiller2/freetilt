@@ -1,7 +1,7 @@
 import * as React from 'react'
 import { Col } from 'react-bootstrap'
 import { suits, ranks } from '../'
-import { Card } from './'
+import { BoardCard } from './'
 
 export class Cards extends React.Component {
     render() {
@@ -11,7 +11,7 @@ export class Cards extends React.Component {
                 <Col key={i} xs={3}>
                     {ranks.map((rank, j) => {
                         return [
-                            <Card 
+                            <BoardCard 
                                 key={rank+suit}
                                 onSelect={this.props.onSelect}
                                 rank={rank} 
@@ -25,4 +25,3 @@ export class Cards extends React.Component {
         )
     }
 }
-

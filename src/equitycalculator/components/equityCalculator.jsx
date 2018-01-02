@@ -20,8 +20,10 @@ export class EquityCalculator extends React.Component {
                     <HandContainer number={1} />
                     <HandContainer number={2} />
                 </Col>
-                <Col xs={5} md={7}>
+                <Col xs={3} md={2}>
                     <EquityContainer />
+                </Col>
+                <Col xs={2} md={5}>
                 </Col>
             </Grid>
         )

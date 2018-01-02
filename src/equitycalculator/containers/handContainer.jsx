@@ -1,5 +1,6 @@
 import { connect } from 'react-redux'
 import { Hand } from '../'
+import { selectPosition } from '../'
 
 const mapStateToProps = (state, ownProps) => {
     const { number } = ownProps
@@ -10,6 +11,15 @@ const mapStateToProps = (state, ownProps) => {
     }
 }
 
+const mapDispatchToProps = (dispatch) => {
+    return {
+        onSelect: (hand, card) => {
+            dispatch(selectPosition(hand, card))
+        }
+    }
+}
+
 export const HandContainer = connect(
-    mapStateToProps
+    mapStateToProps,
+    mapDispatchToProps
 )(Hand)

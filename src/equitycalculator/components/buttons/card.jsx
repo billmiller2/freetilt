@@ -10,7 +10,7 @@ export class Card extends React.Component {
         return (
             <Button
                 className={"cardButton " + suitClass}
-                onClick={() => this.props.onSelect(rank, suit)}>
+                onClick={this.props.onSelect}>
                 {rank + suit}
             </Button>
         )

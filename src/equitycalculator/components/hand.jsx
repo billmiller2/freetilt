@@ -1,10 +1,21 @@
 import * as React from 'react'
-import { Card } from './'
+import { HandCard } from './'
 
-export const Hand = (props) => (
-    <div>
-        <h4>Hand {props.number}</h4>
-        <Card rank={props.hand[1].rank} suit={props.hand[1].suit} />
-        <Card rank={props.hand[2].rank} suit={props.hand[2].suit} />
-    </div>
-)
+export class Hand extends React.Component {
+    render() {
+        const { hand, onSelect, number } = this.props
+        return (
+            <div>
+                <h4>Hand {number}</h4>
+                <HandCard
+                    rank={hand[1].rank}
+                    suit={hand[1].suit}
+                    onSelect={() => onSelect(number, 1)} />
+                <HandCard
+                    rank={hand[2].rank}
+                    suit={hand[2].suit}
+                    onSelect={() => onSelect(number, 2)} />
+            </div>
+        )
+    }
+}
