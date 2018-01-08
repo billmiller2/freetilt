@@ -1,13 +1,13 @@
 import * as React from 'react'
 import { Col } from 'react-bootstrap'
-import { suits, ranks } from '../'
+import { unicodeSuits, ranks } from '../'
 import { BoardCard } from './'
 
 export class Cards extends React.Component {
     render() {
         return (
             <div>
-            {suits.map((suit, i) => 
+            {unicodeSuits.map((suit, i) => 
                 <Col key={i} xs={3}>
                     {ranks.map((rank, j) => {
                         return [

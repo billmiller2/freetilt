@@ -13,4 +13,3 @@ export const ranks = [
     '3',
     '2'
 ]
-

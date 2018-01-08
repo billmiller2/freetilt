@@ -1,14 +1,27 @@
-// unicode suits
-export const SPADES = '\u2660'
-export const HEARTS = '\u2665'
-export const DIAMONDS = '\u2666'
-export const CLUBS = '\u2663'
+// suit shorthand constants for eq calculation
+export const SPADES = 'S'
+export const HEARTS = 'H'
+export const DIAMONDS = 'D'
+export const CLUBS = 'C'
 
 export const suits = [
     SPADES,
     HEARTS,
     DIAMONDS,
     CLUBS
+]
+
+// unicode suits
+export const UNICODE_SPADES = '\u2660'
+export const UNICODE_HEARTS = '\u2665'
+export const UNICODE_DIAMONDS = '\u2666'
+export const UNICODE_CLUBS = '\u2663'
+
+export const unicodeSuits = [
+    UNICODE_SPADES,
+    UNICODE_HEARTS,
+    UNICODE_DIAMONDS,
+    UNICODE_CLUBS
 ]
 
 // HTML entities
