@@ -24,6 +24,21 @@ export const unicodeSuits = [
     UNICODE_CLUBS
 ]
 
+export const getSuitFromUnicode = (unicodeString) => {
+    switch (unicodeString) {
+        case UNICODE_SPADES:
+            return SPADES
+        case UNICODE_HEARTS:
+            return HEARTS
+        case UNICODE_DIAMONDS:
+            return DIAMONDS
+        case UNICODE_CLUBS:
+            return CLUBS
+        default:
+            return ''
+    }
+}
+
 // HTML entities
 const HTML_SPADES = 9824
 const HTML_HEARTS = 9829
