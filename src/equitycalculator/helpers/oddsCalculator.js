@@ -29,7 +29,7 @@ export const getHandRank = (handObj, board = generateBoard()) => {
     //let cards = board.concat(hand)
 
     //return evaluateHandStrength(cards) // future use, for now use board
-    board = ['KH', 'QH', 'TD', 'JD', '7D', '5S', '2D']
+    board = ['QH', 'KS', '7D', '7S', '5C', '2S', '2D']
     return evaluateHandStrength(board)
 }
 
@@ -53,6 +53,10 @@ const evaluateHandStrength = (cards) => {
 
     if (isQuads(cardRanks)) {
         return handRanks.QUADS
+    }
+
+    if (isBoat(cardRanks)) {
+        return handRanks.BOAT
     }
 
     if (isFlush(cardSuits)) {
@@ -98,6 +102,26 @@ const isQuads = (ranks) => {
             && ranks.indexOf(ranks[i], i + 2) > 0
             && ranks.indexOf(ranks[i], i + 3) > 0
         ) {
+            return true
+        }
+    }
+    return false
+}
+
+const isBoat = (cardRanks) => {
+    let setIdx = -1
+    for (let i = 0; i < cardRanks.length - 2; i++) {
+        if (cardRanks.indexOf(cardRanks[i], i + 1) > 0 && cardRanks.indexOf(cardRanks[i], i + 2) > 0) {
+            setIdx = i
+        }
+    }
+
+    if (setIdx > -1) {
+        cardRanks.splice(setIdx, 3)
+
+        let pairs = checkPairs(cardRanks)
+
+        if (pairs > 0) {
             return true
         }
     }
