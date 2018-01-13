@@ -29,7 +29,7 @@ export const getHandRank = (handObj, board = generateBoard()) => {
     //let cards = board.concat(hand)
 
     //return evaluateHandStrength(cards) // future use, for now use board
-    board = ['QH', 'KS', '7D', '7S', '5C', '2S', '2D']
+    board = ['AH', '2H', '3H', '4H', '5H', '9H', '2D']
     return evaluateHandStrength(board)
 }
 
@@ -47,8 +47,7 @@ const evaluateHandStrength = (cards) => {
     let cardSuits = getSuits(cards)
 
     if (isStraightFlush(cards)) {
-        //todo
-        //return handRanks.STRAIGHT_FLUSH
+        return handRanks.STRAIGHT_FLUSH
     }
 
     if (isQuads(cardRanks)) {
@@ -85,9 +84,25 @@ const evaluateHandStrength = (cards) => {
     }
 }
 
+/**
+ * Check for straight flush
+ *
+ * @param {array} cards ['AH', 'KS', '2D', ...]
+ * @return {bool}
+ */
 const isStraightFlush = (cards) => {
-    //console.log(cards)
+    const cardSuits = getSuits(cards)
+    const flush = isFlush(cardSuits, true)
 
+    if (flush) {
+        const flushCards = cards.filter((card) => card[1] === flush)
+        const flushRanks = getRanks(flushCards)
+
+        if (isStraight(flushRanks)) {
+            return true
+        }
+    }
+    return false
 }
 
 /**
@@ -108,6 +123,12 @@ const isQuads = (ranks) => {
     return false
 }
 
+/**
+ * Check for full house
+ *
+ * @param {array} ranks ['T', '7', '2', ...]
+ * @return {bool}
+ */
 const isBoat = (cardRanks) => {
     let setIdx = -1
     for (let i = 0; i < cardRanks.length - 2; i++) {
@@ -134,7 +155,7 @@ const isBoat = (cardRanks) => {
  * @param {array} cardSuits ['H', 'D', 'C', ...]
  * @return {bool}
  */
-const isFlush = (cardSuits) => {
+const isFlush = (cardSuits, getSuit = false) => {
     let checkedSuits = []
 
     for (let i = 0; i < cardSuits.length - 4; i++) {
@@ -146,7 +167,7 @@ const isFlush = (cardSuits) => {
                     count++
 
                     if (count === 5) {
-                        return true
+                        return getSuit ? cardSuits[i] : true
                     }
                 }
                 checkedSuits.push(cardSuits[i])
