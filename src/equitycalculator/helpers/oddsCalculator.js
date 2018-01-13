@@ -29,7 +29,7 @@ export const getHandRank = (handObj, board = generateBoard()) => {
     //let cards = board.concat(hand)
 
     //return evaluateHandStrength(cards) // future use, for now use board
-    board = ['7H', 'AH', 'AS', '5S', 'AH', '5H', '2D']
+    board = ['KH', 'QH', 'TS', 'JS', '7H', '5H', '2D']
     return evaluateHandStrength(board)
 }
 
@@ -52,6 +52,10 @@ const evaluateHandStrength = (cards) => {
 
     if (isQuads(cardRanks)) {
         return handRanks.QUADS
+    }
+
+    if (isStraight(cardRanks)) {
+        return handRanks.STRAIGHT
     }
 
     if (isSet(cardRanks)) {
@@ -92,6 +96,38 @@ const isQuads = (ranks) => {
             return true
         }
     }
+    return false
+}
+
+/**
+ * Check for straight
+ *
+ * @param {array} ranks ['T', '7', '2', ...]
+ * @return {bool}
+ */
+const isStraight = (cardRanks) => {
+    const uniqueRanks = cardRanks.filter((rank, idx, array) => array.indexOf(rank) === idx)
+
+    if (uniqueRanks.length > 4) {
+        for (let i = 0; i < uniqueRanks.length - 4; i++) {
+            // check for wheel straight
+            if (uniqueRanks[i] === 'A'
+                && uniqueRanks.indexOf('5') > 0
+                && uniqueRanks.indexOf('4') > 0
+                && uniqueRanks.indexOf('3') > 0
+                && uniqueRanks.indexOf('2') > 0
+            ) {
+                return true
+            }
+
+            const idx = ranks.indexOf(uniqueRanks[i])
+
+            if (ranks.slice(idx, idx + 5).toString() === uniqueRanks.slice(i, i + 5).toString()) {
+                return true
+            }
+        }
+    }
+
     return false
 }
 
