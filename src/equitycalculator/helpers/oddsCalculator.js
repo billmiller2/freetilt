@@ -29,7 +29,7 @@ export const getHandRank = (handObj, board = generateBoard()) => {
     //let cards = board.concat(hand)
 
     //return evaluateHandStrength(cards) // future use, for now use board
-    board = ['KH', 'QH', 'TS', 'JS', '7H', '5H', '2D']
+    board = ['KH', 'QH', 'TD', 'JD', '7D', '5S', '2D']
     return evaluateHandStrength(board)
 }
 
@@ -44,6 +44,7 @@ const evaluateHandStrength = (cards) => {
     })
 
     let cardRanks = getRanks(cards)
+    let cardSuits = getSuits(cards)
 
     if (isStraightFlush(cards)) {
         //todo
@@ -52,6 +53,10 @@ const evaluateHandStrength = (cards) => {
 
     if (isQuads(cardRanks)) {
         return handRanks.QUADS
+    }
+
+    if (isFlush(cardSuits)) {
+        return handRanks.FLUSH
     }
 
     if (isStraight(cardRanks)) {
@@ -94,6 +99,34 @@ const isQuads = (ranks) => {
             && ranks.indexOf(ranks[i], i + 3) > 0
         ) {
             return true
+        }
+    }
+    return false
+}
+
+/**
+ * Check for flush
+ *
+ * @param {array} cardSuits ['H', 'D', 'C', ...]
+ * @return {bool}
+ */
+const isFlush = (cardSuits) => {
+    let checkedSuits = []
+
+    for (let i = 0; i < cardSuits.length - 4; i++) {
+        let count = 1
+
+        if (checkedSuits.indexOf(cardSuits[i]) === -1) {
+            for (let j = i + 1; j < cardSuits.length; j++) {
+                if (cardSuits[j] === cardSuits[i]) {
+                    count++
+
+                    if (count === 5) {
+                        return true
+                    }
+                }
+                checkedSuits.push(cardSuits[i])
+            }
         }
     }
     return false
@@ -200,4 +233,19 @@ const getRanks = (cards) => {
         ranks.push(cards[i][0])
     }
     return ranks
+}
+
+/**
+ * Get array of suits from array of cards
+ * Useful for calculating rank ignorant hands
+ *
+ * @param {array} cards ['AH', 'KS', '2D', ...]
+ * @return {array} ranks ['H', 'S', 'D', ...]
+ */
+const getSuits = (cards) => {
+    let suits = []
+    for (let i = 0; i < cards.length; i++) {
+        suits.push(cards[i][1])
+    }
+    return suits
 }
