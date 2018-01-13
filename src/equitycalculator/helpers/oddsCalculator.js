@@ -29,7 +29,7 @@ export const getHandRank = (handObj, board = generateBoard()) => {
     //let cards = board.concat(hand)
 
     //return evaluateHandStrength(cards) // future use, for now use board
-    board = ['AH', '5H', '6S', 'AS', '2H', 'AH', '2D']
+    board = ['7H', 'AH', 'AS', '5S', 'AH', '5H', '2D']
     return evaluateHandStrength(board)
 }
 
@@ -50,8 +50,8 @@ const evaluateHandStrength = (cards) => {
         //return handRanks.STRAIGHT_FLUSH
     }
 
-    if (isQuads(cards)) {
-        //todo
+    if (isQuads(cardRanks)) {
+        return handRanks.QUADS
     }
 
     if (isSet(cardRanks)) {
@@ -77,8 +77,22 @@ const isStraightFlush = (cards) => {
 
 }
 
-const isQuads = (cards) => {
-    //console.log(cards)
+/**
+ * Check if a hand has four of a kind
+ *
+ * @param {array} ranks ['T', '7', '2', ...]
+ * @return {bool}
+ */
+const isQuads = (ranks) => {
+    for (let i = 0; i < ranks.length - 2; i++) {
+        if (ranks.indexOf(ranks[i], i + 1) > 0
+            && ranks.indexOf(ranks[i], i + 2) > 0
+            && ranks.indexOf(ranks[i], i + 3) > 0
+        ) {
+            return true
+        }
+    }
+    return false
 }
 
 /**
