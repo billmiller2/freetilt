@@ -1,34 +1,15 @@
 import * as handRanks from '../constants/handRanks'
 import { ranks } from '../'
-import { generateBoard, getCardStringFromObj } from './'
+import { getCardStringFromObj } from './'
 
-/**
- * Get hand rank
- *
- * Takes a hand and combines it with a board to determine best
- * possible hand
- *
- * @param {object} handObj
- * The hand object as it appears in the redux store
- * Keep in mind that the suit strings are unicode strings
- * Structure {
- *     1: { rank: 'T', suit: 'S' } // card 1
- *     2: { rank: '2', suit: 'H' } // card 2
- * }
- *
- * @param {array} board  array of up to five card strings
- * @return {string} hand rank
- */
-export const getHandRank = (handObj, board = generateBoard()) => {
-    let hand = []
+export const getCards = (hand, board) => {
+    let handArray = []
 
-    Object.entries(handObj).map((card) => {
-        hand.push(getCardStringFromObj(card[1]))
-    })
+    Object.entries(hand).map((card) =>
+        handArray.push(getCardStringFromObj(card[1]))
+    )
 
-    let cards = board.concat(hand)
-
-    return evaluateHandStrength(cards) // future use, for now use board
+    return board.concat(handArray)
 }
 
 /**
@@ -36,7 +17,7 @@ export const getHandRank = (handObj, board = generateBoard()) => {
  *
  * @param {array} cards ['JD', '8C', '2H', ...]
  */
-const evaluateHandStrength = (cards) => {
+export const evaluateHandStrength = (cards) => {
     cards.sort((a, b) => {
         return ranks.indexOf(a[0]) - ranks.indexOf(b[0])
     })
@@ -289,4 +270,38 @@ const getSuits = (cards) => {
         suits.push(cards[i][1])
     }
     return suits
+}
+
+const getRank = (handOneRank, handTwoRank) => {
+    if (ranks.indexOf(handOneRank) < ranks.indexOf(handTwoRank)) {
+        return 1
+    } else if (ranks.indexOf(handOneRank) > ranks.indexOf(handTwoRank)) {
+        return 2
+    }
+    return 0
+}
+
+export const breakTies = (handOne, handTwo, handRank) => {
+    const handOneRanks = getRanks(handOne)
+    const handTwoRanks = getRanks(handTwo)
+
+    switch (handRank) {
+        //case handRanks.STRAIGHT_FLUSH:
+        //case handRanks.QUADS:
+        case handRanks.PAIR:
+            const pairOneIndex = getPairIndex(handOneRanks)
+            const pairTwoIndex = getPairIndex(handTwoRanks)
+
+            return getRank(handOneRanks[pairOneIndex], handTwoRanks[pairTwoIndex])
+        case handRanks.HIGH_CARD:
+            for (let i = 0; i < handOne.length; i++) {
+                if (handOneRanks[i] === handTwoRanks[i]) {
+                    continue
+                }
+                return getRank(handOneRanks[i], handTwoRanks[i])
+            }
+            return 0
+        default:
+            return 0
+    }
 }
