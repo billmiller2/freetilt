@@ -20,17 +20,15 @@ import { generateBoard, getCardStringFromObj } from './'
  * @return {string} hand rank
  */
 export const getHandRank = (handObj, board = generateBoard()) => {
-    //let hand = []
+    let hand = []
 
-    //Object.entries(handObj).map((card) => {
-        //hand.push(getCardStringFromObj(card[1]))
-    //})
+    Object.entries(handObj).map((card) => {
+        hand.push(getCardStringFromObj(card[1]))
+    })
 
-    //let cards = board.concat(hand)
+    let cards = board.concat(hand)
 
-    //return evaluateHandStrength(cards) // future use, for now use board
-    board = ['AH', '2H', '3H', '4H', '5H', '9H', '2D']
-    return evaluateHandStrength(board)
+    return evaluateHandStrength(cards) // future use, for now use board
 }
 
 /**
@@ -72,15 +70,13 @@ const evaluateHandStrength = (cards) => {
 
     const pairCount = checkPairs(cardRanks)
 
-    if (pairCount > 0) {
-        switch (pairCount) {
-            case 2:
-                return handRanks.TWO_PAIR
-            case 1:
-                return handRanks.PAIR
-            default:
-                return ''
-        }
+    switch (pairCount) {
+        case 2:
+            return handRanks.TWO_PAIR
+        case 1:
+            return handRanks.PAIR
+        default:
+            return handRanks.HIGH_CARD
     }
 }
 
