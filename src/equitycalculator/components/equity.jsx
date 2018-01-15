@@ -22,7 +22,7 @@ export class Equity extends React.Component {
                                 )
                             })}
                             <div className="pull-right">
-                                {handEquities[i]}
+                                {handEquities[i]}%
                             </div>
                             </td>
                         </tr>
