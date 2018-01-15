@@ -1,8 +1,47 @@
 import * as handRanks from '../constants/handRanks'
-import { ranks } from '../'
+import { ranks, generateBoard, handRankings } from '../'
 import { getCardStringFromObj } from './'
 
-export const getCards = (hand, board) => {
+export const getHandEquity = (hands) => {
+    let handOneWins = 0
+    let handTwoWins = 0
+
+    for (let i = 0; i < 100; i++) {
+        const board = generateBoard()
+
+        const handOneCards = getCards(hands[1], board)
+        const handTwoCards = getCards(hands[2], board)
+
+        const handOneRank = evaluateHandStrength(handOneCards)
+        const handTwoRank = evaluateHandStrength(handTwoCards)
+
+        if (handRankings.indexOf(handOneRank) > handRankings.indexOf(handTwoRank)) {
+            handOneWins++
+        } else if (handRankings.indexOf(handOneRank) < handRankings.indexOf(handTwoRank)) {
+            handTwoWins++
+        } else {
+            const tieWinner = breakTies(handOneCards, handTwoCards, handOneRank)
+
+            if (tieWinner === 1) {
+                handOneWins++
+            }
+
+            if (tieWinner === 2) {
+                handTwoWins++
+            }
+        }
+    }
+
+    const ties = 100 - handOneWins - handTwoWins
+    const handOneEquity = getEquity(handTwoWins, ties)
+    const handTwoEquity = getEquity(handOneWins, ties)
+
+    return [handOneEquity, handTwoEquity]
+}
+
+const getEquity = (wins, ties) => (1 - (wins / 100) - (0.5 * (ties / 100))).toFixed(2)
+
+const getCards = (hand, board) => {
     let handArray = []
 
     Object.entries(hand).map((card) =>
@@ -17,7 +56,7 @@ export const getCards = (hand, board) => {
  *
  * @param {array} cards ['JD', '8C', '2H', ...]
  */
-export const evaluateHandStrength = (cards) => {
+const evaluateHandStrength = (cards) => {
     cards.sort((a, b) => {
         return ranks.indexOf(a[0]) - ranks.indexOf(b[0])
     })

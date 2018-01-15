@@ -3,7 +3,7 @@ import { getSuitFromHTML } from '../'
 
 export class Equity extends React.Component {
     render() {
-        const { hands } = this.props
+        const { hands, handEquities } = this.props
 
         return (
             <div>
@@ -21,6 +21,9 @@ export class Equity extends React.Component {
                                     </span>
                                 )
                             })}
+                            <div className="pull-right">
+                                {handEquities[i]}
+                            </div>
                             </td>
                         </tr>
                     )}

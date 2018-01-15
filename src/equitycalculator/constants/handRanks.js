@@ -8,7 +8,7 @@ export const BOAT = 'BOAT'
 export const QUADS = 'QUADS'
 export const STRAIGHT_FLUSH = 'STRAIGHT_FLUSH'
 
-export const handRanks = [
+export const handRankings = [
     HIGH_CARD,
     PAIR,
     TWO_PAIR,
