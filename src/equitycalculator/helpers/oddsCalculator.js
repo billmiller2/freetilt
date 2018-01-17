@@ -327,11 +327,35 @@ export const breakTies = (handOne, handTwo, handRank) => {
     switch (handRank) {
         //case handRanks.STRAIGHT_FLUSH:
         //case handRanks.QUADS:
-        case handRanks.PAIR:
-            const pairOneIndex = getPairIndex(handOneRanks)
-            const pairTwoIndex = getPairIndex(handTwoRanks)
+        case handRanks.TWO_PAIR:
+            const handOnePairOneIdx = getPairIndex(handOneRanks)
+            const handTwoPairOneIdx = getPairIndex(handTwoRanks)
+            const pairOneCompare = getRank(handOneRanks[handOnePairOneIdx], handTwoRanks[handTwoPairOneIdx])
 
-            return getRank(handOneRanks[pairOneIndex], handTwoRanks[pairTwoIndex])
+            if (pairOneCompare > 0) {
+                return pairOneCompare
+            }
+
+            handOneRanks.splice(handOnePairOneIdx, 2)
+            handTwoRanks.splice(handTwoPairOneIdx, 2)
+
+            const handOnePairTwoIdx = getPairIndex(handOneRanks)
+            const handTwoPairTwoIdx = getPairIndex(handTwoRanks)
+            const pairTwoCompare = getRank(handOneRanks[handOnePairOneIdx], handTwoRanks[handTwoPairOneIdx])
+
+            if (pairTwoCompare > 0) {
+                return pairTwoCompare
+            }
+
+            handOneRanks.splice(handOnePairTwoIdx, 2)
+            handTwoRanks.splice(handTwoPairTwoIdx, 2)
+
+            return getRank(handOneRanks[0], handTwoRanks[0])
+        case handRanks.PAIR:
+            const idxOne = getPairIndex(handOneRanks)
+            const idxTwo = getPairIndex(handTwoRanks)
+
+            return getRank(handOneRanks[idxOne], handTwoRanks[idxTwo])
         case handRanks.HIGH_CARD:
             for (let i = 0; i < handOne.length; i++) {
                 if (handOneRanks[i] === handTwoRanks[i]) {
