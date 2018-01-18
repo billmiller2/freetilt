@@ -332,9 +332,16 @@ export const breakTies = (handOne, handTwo, handRank) => {
             let suit = ''
 
             for (let i = 0; i < suits.length; i++) {
-                if (suits.indexOf(suits[i], i + 1) > 0 && suits.indexOf(suits[i], i + 2) > 0) {
-                    suit = suits[i]
-                    break
+                let idx = suits.indexOf(suits[i], i + 1)
+
+                if (idx > -1) {
+                    let suitsSlice = suits.slice()
+                    suitsSlice.splice(idx, 1)
+
+                    if (suitsSlice.indexOf(suits[i], i + 1)) {
+                        suit = suits[i]
+                        break
+                    }
                 }
             }
 
@@ -343,7 +350,9 @@ export const breakTies = (handOne, handTwo, handRank) => {
 
             let winner = 0
             for (let j = 0; j < 5; j++) {
-                winner = getRank(handOne[j][0], handTwo[j][0])
+                if (typeof flushOne[j] !== 'undefined' && typeof flushTwo[j] !== 'undefined') {
+                    winner = getRank(flushOne[j][0], flushTwo[j][0])
+                }
 
                 if (winner > 0) {
                     break
