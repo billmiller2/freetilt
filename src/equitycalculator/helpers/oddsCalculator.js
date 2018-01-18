@@ -6,7 +6,7 @@ export const getHandEquity = (hands) => {
     let handOneWins = 0
     let handTwoWins = 0
 
-    for (let i = 0; i < 100; i++) {
+    for (let i = 0; i < 1000; i++) {
         const board = generateBoard()
 
         const handOneCards = getCards(hands[1], board)
@@ -32,14 +32,14 @@ export const getHandEquity = (hands) => {
         }
     }
 
-    const ties = 100 - handOneWins - handTwoWins
+    const ties = 1000 - handOneWins - handTwoWins
     const handOneEquity = getEquity(handTwoWins, ties)
     const handTwoEquity = getEquity(handOneWins, ties)
 
     return [handOneEquity, handTwoEquity]
 }
 
-const getEquity = (wins, ties) => (1 - (wins / 100) - (0.5 * (ties / 100))).toFixed(2)
+const getEquity = (wins, ties) => (1 - (wins / 1000) - (0.5 * (ties / 1000))).toFixed(3)
 
 const getCards = (hand, board) => {
     let handArray = []
@@ -327,9 +327,30 @@ export const breakTies = (handOne, handTwo, handRank) => {
     const handTwoRanks = getRanks(handTwo)
 
     switch (handRank) {
-        //case handRanks.STRAIGHT_FLUSH:
-        //case handRanks.QUADS:
-            
+        case handRanks.FLUSH:
+            let suits = getSuits(handOne)
+            let suit = ''
+
+            for (let i = 0; i < suits.length; i++) {
+                if (suits.indexOf(suits[i], i + 1) > 0 && suits.indexOf(suits[i], i + 2) > 0) {
+                    suit = suits[i]
+                    break
+                }
+            }
+
+            const flushOne = handOne.filter((card) => card[1] === suit)
+            const flushTwo = handTwo.filter((card) => card[1] === suit)
+
+            let winner = 0
+            for (let j = 0; j < 5; j++) {
+                winner = getRank(handOne[j][0], handTwo[j][0])
+
+                if (winner > 0) {
+                    break
+                }
+            }
+
+            return winner
         case handRanks.TWO_PAIR:
             const handOnePairOneIdx = getPairIndex(handOneRanks)
             const handTwoPairOneIdx = getPairIndex(handTwoRanks)
@@ -354,6 +375,7 @@ export const breakTies = (handOne, handTwo, handRank) => {
             handTwoRanks.splice(handTwoPairTwoIdx, 2)
 
             return getRank(handOneRanks[0], handTwoRanks[0])
+        case handRanks.QUADS:
         case handRanks.SET:
         case handRanks.PAIR:
             const idxOne = getPairIndex(handOneRanks)
