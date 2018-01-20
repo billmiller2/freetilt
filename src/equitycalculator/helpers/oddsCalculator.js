@@ -322,6 +322,16 @@ const getRank = (handOneRank, handTwoRank) => {
     return 0
 }
 
+const checkKicker = (handOneRanks, handTwoRanks) => {
+    for (let i = 0; i < 5; i++) {
+        if (handOneRanks[i] === handTwoRanks[i]) {
+            continue
+        }
+        return getRank(handOneRanks[i], handTwoRanks[i])
+    }
+    return 0
+}
+
 export const breakTies = (handOne, handTwo, handRank) => {
     const handOneRanks = getRanks(handOne)
     const handTwoRanks = getRanks(handTwo)
@@ -394,16 +404,14 @@ export const breakTies = (handOne, handTwo, handRank) => {
         case handRanks.PAIR:
             const idxOne = getPairIndex(handOneRanks)
             const idxTwo = getPairIndex(handTwoRanks)
+            const bestPair = getRank(handOneRanks[idxOne], handTwoRanks[idxTwo])
 
-            return getRank(handOneRanks[idxOne], handTwoRanks[idxTwo])
-        case handRanks.HIGH_CARD:
-            for (let i = 0; i < handOne.length; i++) {
-                if (handOneRanks[i] === handTwoRanks[i]) {
-                    continue
-                }
-                return getRank(handOneRanks[i], handTwoRanks[i])
+            if (bestPair > 0) {
+                return bestPair
             }
-            return 0
+            return checkKicker(handOneRanks, handTwoRanks)
+        case handRanks.HIGH_CARD:
+            return checkKicker(handOneRanks, handTwoRanks)
         default:
             return 0
     }
