@@ -39,7 +39,7 @@ export const getHandEquity = (hands) => {
     return [handOneEquity, handTwoEquity]
 }
 
-const getEquity = (wins, ties) => (1 - (wins / 10000) - (0.5 * (ties / 10000))).toFixed(3)
+const getEquity = (wins, ties) => (1 - (wins / 10000) - (0.5 * (ties / 10000))).toFixed(2)
 
 const getCards = (hand, board = []) => {
     let handArray = []
