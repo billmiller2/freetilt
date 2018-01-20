@@ -6,6 +6,12 @@ export const getHandEquity = (hands) => {
     let handOneWins = 0
     let handTwoWins = 0
 
+    if (getCards(hands[1]).indexOf('') !== -1
+        || getCards(hands[2]).indexOf('') !== -1
+    ) {
+        return []
+    }
+
     for (let i = 0; i < 10000; i++) {
         const board = generateBoard(getCards(hands[1]), getCards(hands[2]))
 
