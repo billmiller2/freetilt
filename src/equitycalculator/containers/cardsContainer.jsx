@@ -2,7 +2,19 @@ import { connect } from 'react-redux'
 import { Cards, selectCard } from '../'
 
 const mapStateToProps = (state) => {
-    return {}
+    const { hands } = state.equityReducer
+    let deadCards = []
+    Object.entries(hands).map((hand) => {
+        for (let i = 1; i < 3; i++) {
+            if (hand[1][i].rank && hand[1][i].suit) {
+                deadCards.push(hand[1][i].rank + hand[1][i].suit)
+            }
+        }
+    })
+
+    return {
+        deadCards
+    }
 }
 
 const mapDispatchToProps = (dispatch) => {
