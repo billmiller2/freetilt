@@ -8,11 +8,11 @@ export class Equity extends React.Component {
         return (
             <div>
                 <h4>Equity</h4>
-                <table className="table table-striped">
+                <table className="table">
                     <tbody>
                     {Object.entries(hands).map((hand, i) =>
                         <tr key={i}>
-                            <td>
+                            <td height="37">
                             {Object.entries(hand[1]).map((card, j) => {
                                 let suit = getSuitFromHTML(card[1].suit.charCodeAt())
                                 return (

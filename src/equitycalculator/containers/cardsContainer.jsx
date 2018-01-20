@@ -10,6 +10,7 @@ const mapStateToProps = (state) => {
                 deadCards.push(hand[1][i].rank + hand[1][i].suit)
             }
         }
+        return true
     })
 
     return {

@@ -1,23 +1,17 @@
 import * as React from 'react'
-import { Navbar, Nav, NavItem } from 'react-bootstrap'
-import { Link } from 'react-router-dom'
+import { Navbar, Nav } from 'react-bootstrap'
+import freetilt from './images/freetilt.jpg'
 
 export class NavBar extends React.Component {
     render() {
         return (
-            <Navbar>
+            <Navbar componentClass="navbar-light">
                 <Navbar.Header>
                     <Navbar.Brand>
-                        <Link to='/'>Free Tilt</Link>
+                        <img src={freetilt} alt="freetilt" />
                     </Navbar.Brand>
                 </Navbar.Header>
                 <Nav>
-                    <NavItem
-                        componentClass={Link}
-                        href='/equitycalculator'
-                        to='/equitycalculator'>
-                        Equity Calculator
-                    </NavItem>
                 </Nav>
             </Navbar>
         )
