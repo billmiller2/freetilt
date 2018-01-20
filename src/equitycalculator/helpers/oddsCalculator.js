@@ -6,7 +6,7 @@ export const getHandEquity = (hands) => {
     let handOneWins = 0
     let handTwoWins = 0
 
-    for (let i = 0; i < 1000; i++) {
+    for (let i = 0; i < 10000; i++) {
         const board = generateBoard(getCards(hands[1]), getCards(hands[2]))
 
         const handOneCards = getCards(hands[1], board)
@@ -32,14 +32,14 @@ export const getHandEquity = (hands) => {
         }
     }
 
-    const ties = 1000 - handOneWins - handTwoWins
+    const ties = 10000 - handOneWins - handTwoWins
     const handOneEquity = getEquity(handTwoWins, ties)
     const handTwoEquity = getEquity(handOneWins, ties)
 
     return [handOneEquity, handTwoEquity]
 }
 
-const getEquity = (wins, ties) => (1 - (wins / 1000) - (0.5 * (ties / 1000))).toFixed(3)
+const getEquity = (wins, ties) => (1 - (wins / 10000) - (0.5 * (ties / 10000))).toFixed(3)
 
 const getCards = (hand, board = []) => {
     let handArray = []
@@ -198,13 +198,19 @@ const isFlush = (cardSuits, getSuit = false) => {
  * Check for straight
  *
  * @param {array} ranks ['T', '7', '2', ...]
- * @return {bool}
+ * @return {bool} || {int}
  */
-const isStraight = (cardRanks) => {
+const isStraight = (cardRanks, returnIdx = false) => {
     const uniqueRanks = cardRanks.filter((rank, idx, array) => array.indexOf(rank) === idx)
 
     if (uniqueRanks.length > 4) {
         for (let i = 0; i < uniqueRanks.length - 4; i++) {
+            const idx = ranks.indexOf(uniqueRanks[i])
+
+            if (ranks.slice(idx, idx + 5).toString() === uniqueRanks.slice(i, i + 5).toString()) {
+                return returnIdx ? cardRanks.indexOf(uniqueRanks[i]) : true
+            }
+
             // check for wheel straight
             if (uniqueRanks[i] === 'A'
                 && uniqueRanks.indexOf('5') > 0
@@ -212,13 +218,7 @@ const isStraight = (cardRanks) => {
                 && uniqueRanks.indexOf('3') > 0
                 && uniqueRanks.indexOf('2') > 0
             ) {
-                return true
-            }
-
-            const idx = ranks.indexOf(uniqueRanks[i])
-
-            if (ranks.slice(idx, idx + 5).toString() === uniqueRanks.slice(i, i + 5).toString()) {
-                return true
+                return returnIdx ? cardRanks.indexOf('5') : true
             }
         }
     }
@@ -360,6 +360,11 @@ export const breakTies = (handOne, handTwo, handRank) => {
             }
 
             return winner
+        case handRanks.STRAIGHT:
+            const handOneIdx = isStraight(handOneRanks, true)
+            const handTwoIdx = isStraight(handTwoRanks, true)
+
+            return getRank(handOneRanks[handOneIdx], handTwoRanks[handTwoIdx])
         case handRanks.TWO_PAIR:
             const handOnePairOneIdx = getPairIndex(handOneRanks)
             const handTwoPairOneIdx = getPairIndex(handTwoRanks)
