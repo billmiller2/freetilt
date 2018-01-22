@@ -22,3 +22,7 @@ body {
 .clubs {
     color: #228417;
 }
+
+.buffer-row {
+    margin-top: 20px;
+}

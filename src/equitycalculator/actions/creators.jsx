@@ -15,3 +15,11 @@ export function selectPosition(hand, card) {
         card: card
     }
 }
+
+export function saveEquity(hands, equities) {
+    return {
+        type: types.SAVE_EQUITY,
+        hands: hands,
+        equities: equities
+    }
+}

@@ -10,7 +10,7 @@ export class EquityCalculator extends React.Component {
     render() {
         return (
             <Grid>
-                <h3></h3>
+                <div className="buffer-row" />
                 <Col xs={3} md={2}>
                     <CardsContainer />
                 </Col>

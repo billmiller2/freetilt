@@ -1,4 +1,8 @@
-import { SELECT_CARD, SELECT_POSITION } from '../'
+import {
+    SELECT_CARD,
+    SELECT_POSITION,
+    SAVE_EQUITY
+} from '../'
 
 const card = {
     rank: '',
@@ -16,7 +20,16 @@ const initialState = {
         2: initialHand
     },
     selectedHand: 1,
-    selectedCard: 1
+    selectedCard: 1,
+    savedEquities: [
+        {
+            equities: [],
+            hands: {
+                1: initialHand,
+                2: initialHand
+            }
+        }
+    ]
 }
 
 export function equityReducer(state = initialState, action) {
@@ -49,6 +62,18 @@ export function equityReducer(state = initialState, action) {
                 ...state,
                 selectedHand: action.hand,
                 selectedCard: action.card
+            }
+        case SAVE_EQUITY:
+            const savedEquities = state.savedEquities.slice()
+            const equity = {
+                equities: action.equities,
+                hands: action.hands
+            }
+            savedEquities.push(equity)
+
+            return {
+                ...state,
+                savedEquities
             }
         default:
             return state

@@ -2,6 +2,12 @@ import * as React from 'react'
 import { getSuitFromHTML } from '../'
 
 export class Equity extends React.Component {
+    componentDidUpdate(prevProps) {
+        if (this.props.hands !== prevProps.hands && this.props.handEquities.length > 0) {
+            this.props.saveEquity(this.props.hands, this.props.handEquities)
+        }
+    }
+
     render() {
         const { hands, handEquities } = this.props
 

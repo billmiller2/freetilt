@@ -1,9 +1,17 @@
 import { connect } from 'react-redux'
-import { Equity, getHandEquity } from '../'
+import { Equity, getHandEquity, saveEquity } from '../'
 
 const mapStateToProps = (state) => {
-    const { hands } = state.equityReducer
-    const handEquities = getHandEquity(hands)
+    const { hands, savedEquities } = state.equityReducer
+    let savedEquity = []
+
+    for (let i = 0; i < savedEquities.length; i++) {
+        if (JSON.stringify(savedEquities[i].hands) === JSON.stringify(hands)) {
+            savedEquity = savedEquities[i].equities
+        }
+    }
+
+    const handEquities = savedEquity.length > 0 ? savedEquity : getHandEquity(hands)
 
     return {
         hands,
@@ -11,6 +19,15 @@ const mapStateToProps = (state) => {
     }
 }
 
+const mapDispatchToProps = (dispatch) => {
+    return {
+        saveEquity: (hands, handEquities) => {
+            dispatch(saveEquity(hands, handEquities))
+        }
+    }
+}
+
 export const EquityContainer = connect(
-    mapStateToProps
+    mapStateToProps,
+    mapDispatchToProps
 )(Equity)
