@@ -1,7 +1,8 @@
 import {
     SELECT_CARD,
     SELECT_POSITION,
-    SAVE_EQUITY
+    SAVE_EQUITY,
+    CLEAR_HANDS
 } from '../'
 
 const card = {
@@ -75,6 +76,8 @@ export function equityReducer(state = initialState, action) {
                 ...state,
                 savedEquities
             }
+        case CLEAR_HANDS:
+            return initialState
         default:
             return state
     }

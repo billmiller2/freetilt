@@ -24,5 +24,9 @@ body {
 }
 
 .buffer-row {
+    margin-bottom: 20px;
+}
+
+#clear-btn {
     margin-top: 20px;
 }
