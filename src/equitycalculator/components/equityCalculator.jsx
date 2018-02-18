@@ -3,7 +3,8 @@ import { Grid, Col, Row } from 'react-bootstrap'
 import {
     CardsContainer,
     EquityContainer,
-    HandContainer
+    HandContainer,
+    ClearContainer
 } from '../'
 
 export class EquityCalculator extends React.Component {
@@ -20,6 +21,9 @@ export class EquityCalculator extends React.Component {
                     </Col>
                     <Col xs={6} md={12}>
                         <HandContainer number={2} />
+                    </Col>
+                    <Col md={12}>
+                        <ClearContainer />
                     </Col>
                 </Col>
                 <Row className="visible-xs-block buffer-row" />
