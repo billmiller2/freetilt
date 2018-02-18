@@ -3,7 +3,8 @@ import { Grid, Col } from 'react-bootstrap'
 import {
     CardsContainer,
     EquityContainer,
-    HandContainer
+    HandContainer,
+    ClearContainer
 } from '../'
 
 export class EquityCalculator extends React.Component {
@@ -19,6 +20,7 @@ export class EquityCalculator extends React.Component {
                 <Col xs={3} md={2}>
                     <HandContainer number={1} />
                     <HandContainer number={2} />
+                    <ClearContainer />
                 </Col>
                 <Col xs={3} md={2}>
                     <EquityContainer />

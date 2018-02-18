@@ -23,3 +23,9 @@ export function saveEquity(hands, equities) {
         equities: equities
     }
 }
+
+export function clearHands() {
+    return {
+        type: types.CLEAR_HANDS
+    }
+}
