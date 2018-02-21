@@ -7,6 +7,7 @@ export class BoardCard extends React.Component {
 
         return <Card
             disabled={disabled}
+            isSelected={false}
             onSelect={() => onSelect(rank, suit)}
             rank={rank}
             suit={suit} />

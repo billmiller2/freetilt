@@ -5,9 +5,12 @@ import { selectPosition } from '../'
 const mapStateToProps = (state, ownProps) => {
     const { number } = ownProps
     const hand = state.equityReducer.hands[number]
+    const { selectedCard, selectedHand } = state.equityReducer
 
     return {
-        hand: hand
+        hand,
+        selectedCard,
+        selectedHand
     }
 }
 

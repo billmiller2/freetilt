@@ -30,3 +30,7 @@ body {
 #clear-btn {
     margin-top: 20px;
 }
+
+.selectedCard {
+    background: #f3f3f3;
+}
