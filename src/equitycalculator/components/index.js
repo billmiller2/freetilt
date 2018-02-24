@@ -1,3 +1,4 @@
+export * from './board'
 export * from './buttons'
 export * from './cards'
 export * from './equity'

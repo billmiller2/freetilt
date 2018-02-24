@@ -1,7 +1,7 @@
 import * as React from 'react'
 import { Col } from 'react-bootstrap'
 import { unicodeSuits, ranks } from '../'
-import { BoardCard } from './'
+import { BankCard } from './'
 
 export class Cards extends React.Component {
     render() {
@@ -14,7 +14,7 @@ export class Cards extends React.Component {
                         const disabled = deadCards.includes(rank + suit) ? true : false
 
                         return [
-                            <BoardCard 
+                            <BankCard 
                                 disabled={disabled}
                                 key={rank+suit}
                                 onSelect={this.props.onSelect}
