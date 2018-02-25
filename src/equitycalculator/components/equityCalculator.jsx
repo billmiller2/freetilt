@@ -4,9 +4,9 @@ import {
     CardsContainer,
     EquityContainer,
     HandContainer,
-    ClearContainer
+    ClearContainer,
+    BoardContainer
 } from '../'
-import { Board } from './'
 
 export class EquityCalculator extends React.Component {
     render() {
@@ -24,7 +24,7 @@ export class EquityCalculator extends React.Component {
                         <HandContainer number={2} />
                     </Col>
                     <Col xs={12} md={12}>
-                        <Board />
+                        <BoardContainer />
                     </Col>
                     <Col md={12}>
                         <ClearContainer />

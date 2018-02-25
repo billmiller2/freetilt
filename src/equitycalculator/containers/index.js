@@ -1,3 +1,4 @@
+export * from './boardContainer'
 export * from './calculatorContainer'
 export * from './cardsContainer'
 export * from './clearContainer'
