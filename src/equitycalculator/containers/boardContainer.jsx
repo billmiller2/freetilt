@@ -2,8 +2,7 @@ import { connect } from 'react-redux'
 import { Board } from '../'
 
 const mapStateToProps = (state, ownProps) => {
-    return {
-    }
+    return {}
 }
 
 const mapDispatchToProps = (dispatch) => {
