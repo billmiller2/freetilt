@@ -1,8 +1,9 @@
 import { connect } from 'react-redux'
-import { Cards, selectCard } from '../'
+import { Cards, selectCard, getHandsFromSlots } from '../'
 
 const mapStateToProps = (state) => {
-    const { hands } = state.equityReducer
+    const { slots } = state.equityReducer
+    const hands = getHandsFromSlots(slots)
     let deadCards = []
     Object.entries(hands).map((hand) => {
         for (let i = 1; i < 3; i++) {

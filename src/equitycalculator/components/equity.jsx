@@ -3,7 +3,9 @@ import { getSuitFromHTML } from '../'
 
 export class Equity extends React.Component {
     componentDidUpdate(prevProps) {
-        if (this.props.hands !== prevProps.hands && this.props.handEquities.length > 0) {
+        if (JSON.stringify(this.props.hands) !== JSON.stringify(prevProps.hands)
+            && this.props.handEquities.length > 0
+        ) {
             this.props.saveEquity(this.props.hands, this.props.handEquities)
         }
     }

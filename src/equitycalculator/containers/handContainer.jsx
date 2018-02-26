@@ -4,10 +4,10 @@ import { selectPosition } from '../'
 
 const mapStateToProps = (state, ownProps) => {
     const { number } = ownProps
-    const hand = state.equityReducer.hands[number]
+    const position = state.equityReducer.slots[number]
 
     return {
-        hand: hand
+        position
     }
 }
 

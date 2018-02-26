@@ -4,7 +4,8 @@ import {
     SAVE_EQUITY,
     CLEAR_HANDS,
     HAND_ONE,
-    HAND_TWO
+    HAND_TWO,
+    BOARD
 } from '../'
 
 const card = {
@@ -26,11 +27,11 @@ const initialBoard = {
 }
 
 const initialState = {
-    hands: {
-        1: initialHand,
-        2: initialHand
+    slots: {
+        [HAND_ONE]: initialHand,
+        [HAND_TWO]: initialHand,
+        [BOARD]: initialBoard
     },
-    board: initialBoard,
     selectedPosition: HAND_ONE,
     selectedCard: 1,
     savedEquities: [
@@ -56,10 +57,10 @@ export function equityReducer(state = initialState, action) {
 
             return {
                 ...state,
-                hands: {
-                    ...state.hands,
+                slots: {
+                    ...state.slots,
                     [state.selectedPosition]: {
-                        ...state.hands[state.selectedPosition],
+                        ...state.slots[state.selectedPosition],
                         [state.selectedCard]: {
                             rank: action.rank,
                             suit: action.suit
@@ -88,7 +89,12 @@ export function equityReducer(state = initialState, action) {
                 savedEquities
             }
         case CLEAR_HANDS:
-            return initialState
+            const equities = state.savedEquities
+
+            return {
+                ...initialState,
+                savedEquities: equities
+            }
         default:
             return state
     }

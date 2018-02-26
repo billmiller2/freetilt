@@ -1,8 +1,9 @@
 import { connect } from 'react-redux'
-import { Equity, getHandEquity, saveEquity } from '../'
+import { Equity, getHandEquity, saveEquity, getHandsFromSlots } from '../'
 
 const mapStateToProps = (state) => {
-    const { hands, savedEquities } = state.equityReducer
+    const { slots, savedEquities } = state.equityReducer
+    let hands = getHandsFromSlots(slots)
     let savedEquity = []
 
     for (let i = 0; i < savedEquities.length; i++) {
