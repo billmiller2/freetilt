@@ -1,5 +1,6 @@
 import { connect } from 'react-redux'
 import { Board } from '../'
+import { selectPosition } from '../'
 
 const mapStateToProps = (state, ownProps) => {
     return {}
@@ -7,7 +8,8 @@ const mapStateToProps = (state, ownProps) => {
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        onSelect: () => {
+        onSelect: (hand, card) => {
+            dispatch(selectPosition(hand, card))
         }
     }
 }

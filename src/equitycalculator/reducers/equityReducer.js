@@ -2,7 +2,9 @@ import {
     SELECT_CARD,
     SELECT_POSITION,
     SAVE_EQUITY,
-    CLEAR_HANDS
+    CLEAR_HANDS,
+    HAND_ONE,
+    HAND_TWO
 } from '../'
 
 const card = {
@@ -15,12 +17,21 @@ const initialHand = {
     2: card
 }
 
+const initialBoard = {
+    1: card,
+    2: card,
+    3: card,
+    4: card,
+    5: card
+}
+
 const initialState = {
     hands: {
         1: initialHand,
         2: initialHand
     },
-    selectedHand: 1,
+    board: initialBoard,
+    selectedPosition: HAND_ONE,
     selectedCard: 1,
     savedEquities: [
         {
@@ -37,25 +48,25 @@ export function equityReducer(state = initialState, action) {
     switch (action.type) {
         case SELECT_CARD:
             let selectedCard = state.selectedCard === 1 ? 2 : 1
-            let selectedHand = state.selectedHand
+            let selectedPosition = state.selectedPosition
 
             if (selectedCard === 1) {
-                selectedHand = state.selectedHand === 1 ? 2 : 1
+                selectedPosition = state.selectedPosition === HAND_ONE ? HAND_TWO : HAND_ONE
             }
 
             return {
                 ...state,
                 hands: {
                     ...state.hands,
-                    [state.selectedHand]: {
-                        ...state.hands[state.selectedHand],
+                    [state.selectedPosition]: {
+                        ...state.hands[state.selectedPosition],
                         [state.selectedCard]: {
                             rank: action.rank,
                             suit: action.suit
                         }
                     }
                 },
-                selectedHand: selectedHand,
+                selectedPosition: selectedPosition,
                 selectedCard: selectedCard
             }
         case SELECT_POSITION:
