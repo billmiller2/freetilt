@@ -1,9 +1,12 @@
 import { connect } from 'react-redux'
-import { Board } from '../'
-import { selectPosition } from '../'
+import { Board, BOARD, selectPosition } from '../'
 
-const mapStateToProps = (state, ownProps) => {
-    return {}
+const mapStateToProps = (state) => {
+    const board = state.equityReducer.slots[BOARD]
+
+    return {
+        board
+    }
 }
 
 const mapDispatchToProps = (dispatch) => {

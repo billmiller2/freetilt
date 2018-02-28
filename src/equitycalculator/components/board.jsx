@@ -3,7 +3,7 @@ import { BoardCard } from './buttons'
 import { BOARD } from '../'
 
 export const Board = (props) => {
-    const { onSelect } = props
+    const { onSelect, board } = props
     let boardCards = []
 
     for (let i = 0; i < 5; i++) {
@@ -11,8 +11,8 @@ export const Board = (props) => {
             <BoardCard
                 key={i}
                 disabled={false}
-                rank=""
-                suit=""
+                rank={board[i + 1].rank}
+                suit={board[i + 1].suit}
                 onSelect={() => onSelect(BOARD, i + 1)}/>
         )
     }

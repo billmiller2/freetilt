@@ -73,7 +73,7 @@ export function equityReducer(state = initialState, action) {
         case SELECT_POSITION:
             return {
                 ...state,
-                selectedHand: action.hand,
+                selectedPosition: action.hand,
                 selectedCard: action.card
             }
         case SAVE_EQUITY:
