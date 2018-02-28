@@ -48,11 +48,34 @@ const initialState = {
 export function equityReducer(state = initialState, action) {
     switch (action.type) {
         case SELECT_CARD:
-            let selectedCard = state.selectedCard === 1 ? 2 : 1
+            let selectedCard = state.selectedCard
             let selectedPosition = state.selectedPosition
 
-            if (selectedCard === 1) {
-                selectedPosition = state.selectedPosition === HAND_ONE ? HAND_TWO : HAND_ONE
+            switch (state.selectedPosition) {
+                case HAND_ONE:
+                    if (selectedCard === 1) {
+                        selectedCard = 2
+                    } else {
+                        selectedCard = 1
+                        selectedPosition = HAND_TWO
+                    }
+                    break;
+                case HAND_TWO:
+                    if (selectedCard === 1) {
+                        selectedCard = 2
+                    } else {
+                        selectedCard = 1
+                        selectedPosition = BOARD
+                    }
+                    break;
+                case BOARD:
+                    if (selectedCard < 5) {
+                        selectedCard = selectedCard + 1
+                    } else {
+                        selectedCard = 1
+                        selectedPosition = HAND_ONE
+                    }
+                    break;
             }
 
             return {
