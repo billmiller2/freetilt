@@ -76,6 +76,7 @@ export function equityReducer(state = initialState, action) {
                         selectedPosition = HAND_ONE
                     }
                     break;
+                default:
             }
 
             return {
