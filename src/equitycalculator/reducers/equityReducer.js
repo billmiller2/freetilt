@@ -70,7 +70,7 @@ export function equityReducer(state = initialState, action) {
                     break;
                 case BOARD:
                     if (selectedCard < 5) {
-                        selectedCard = selectedCard + 1
+                        selectedCard++
                     } else {
                         selectedCard = 1
                         selectedPosition = HAND_ONE

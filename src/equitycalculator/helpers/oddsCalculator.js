@@ -2,7 +2,7 @@ import * as handRanks from '../constants/handRanks'
 import { ranks, handRankings } from '../'
 import { getCardStringFromObj, generateBoard } from './'
 
-export const getHandEquity = (hands) => {
+export const getHandEquity = (hands, board) => {
     let handOneWins = 0
     let handTwoWins = 0
 
@@ -12,11 +12,16 @@ export const getHandEquity = (hands) => {
         return []
     }
 
-    for (let i = 0; i < 10000; i++) {
-        const board = generateBoard(getCards(hands[1]), getCards(hands[2]))
+    let boardCards = []
+    for (let j = 1; j < 6; j++) {
+        boardCards.push(getCardStringFromObj(board[j]))
+    }
 
-        const handOneCards = getCards(hands[1], board)
-        const handTwoCards = getCards(hands[2], board)
+    for (let i = 0; i < 10000; i++) {
+        const fullBoard = generateBoard(getCards(hands[1]), getCards(hands[2]), boardCards)
+
+        const handOneCards = getCards(hands[1], fullBoard)
+        const handTwoCards = getCards(hands[2], fullBoard)
 
         const handOneRank = evaluateHandStrength(handOneCards)
         const handTwoRank = evaluateHandStrength(handTwoCards)

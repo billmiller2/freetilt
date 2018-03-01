@@ -1,5 +1,5 @@
 import { connect } from 'react-redux'
-import { Equity, getHandEquity, saveEquity, getHandsFromSlots } from '../'
+import { Equity, getHandEquity, saveEquity, getHandsFromSlots, BOARD } from '../'
 
 const mapStateToProps = (state) => {
     const { slots, savedEquities } = state.equityReducer
@@ -12,7 +12,10 @@ const mapStateToProps = (state) => {
         }
     }
 
-    const handEquities = savedEquity.length > 0 ? savedEquity : getHandEquity(hands)
+    let board = {}
+    board = slots[BOARD]
+
+    const handEquities = savedEquity.length > 0 ? savedEquity : getHandEquity(hands, board)
 
     return {
         hands,

@@ -7,10 +7,14 @@ export const generateCard = () => {
     return rank + suit
 }
 
-export const generateBoard = (handOne = [], handTwo = []) => {
+export const generateBoard = (handOne = [], handTwo = [], existingBoard = []) => {
     let board = []
 
-    while (board.length < 5) {
+    for (let i = 0; i < 5; i++) {
+        if (existingBoard[i].length > 0) {
+            board.push(existingBoard[i])
+            continue
+        }
         let card = generateCard()
 
         if (board.indexOf(card) === -1
@@ -18,7 +22,9 @@ export const generateBoard = (handOne = [], handTwo = []) => {
             && handTwo.indexOf(card) === -1
         ) {
             board.push(card)
+            continue
         }
+        i--
     }
 
     return board
