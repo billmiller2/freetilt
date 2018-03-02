@@ -1,11 +1,12 @@
 import * as React from 'react'
 import { Grid, Col, Row } from 'react-bootstrap'
 import {
+    BoardContainer,
     CardsContainer,
-    EquityContainer,
-    HandContainer,
     ClearContainer,
-    BoardContainer
+    EquityContainer,
+    EvaluateContainer,
+    HandContainer
 } from '../'
 
 export class EquityCalculator extends React.Component {
@@ -17,18 +18,19 @@ export class EquityCalculator extends React.Component {
                     <EquityContainer />
                 </Col>
                 <Col xs={12} md={3} className="col-md-push-1">
-                    <Col xs={6} md={12}>
+                    <Row xs={6} md={12}>
                         <HandContainer number={1} />
-                    </Col>
-                    <Col xs={6} md={12}>
+                    </Row>
+                    <Row xs={6} md={12}>
                         <HandContainer number={2} />
-                    </Col>
-                    <Col xs={12} md={12}>
+                    </Row>
+                    <Row xs={12} md={12}>
                         <BoardContainer />
-                    </Col>
-                    <Col md={12}>
+                    </Row>
+                    <Row md={12}>
+                        <EvaluateContainer />
                         <ClearContainer />
-                    </Col>
+                    </Row>
                 </Col>
                 <Row className="visible-xs-block buffer-row" />
                 <Col xs={12} md={2} className="col-md-pull-5">

@@ -7,9 +7,8 @@ export const ClearButton = (props) => {
 
     return (
         <button
-            className="btn btn-danger" 
-            onClick={props.onClick}
-            id="clear-btn">
+            className="btn btn-danger margin-top margin-left"
+            onClick={props.onClick}>
             Clear
         </button>
     )
