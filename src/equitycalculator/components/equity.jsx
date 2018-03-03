@@ -5,6 +5,7 @@ export class Equity extends React.Component {
     render() {
         const { savedEquities } = this.props
         const hands = savedEquities[savedEquities.length - 1].hands
+        const board = savedEquities[savedEquities.length - 1].board
         const handEquities = savedEquities[savedEquities.length - 1].equities
 
         return (
@@ -29,6 +30,18 @@ export class Equity extends React.Component {
                             </td>
                         </tr>
                     )}
+                    <tr>
+                        <td height="37">
+                            {Object.entries(board).map((card, k) => {
+                                let suit = getSuitFromHTML(card[1].suit.charCodeAt())
+                                return (
+                                    <span key={k} className={suit}>
+                                        {card[1].rank + card[1].suit}
+                                    </span>
+                                )
+                            })}
+                        </td>
+                    </tr>
                     </tbody>
                 </table>
             </div>
