@@ -9,10 +9,18 @@ import {
 
 const mapStateToProps = (state) => {
     const { slots, savedEquities } = state.equityReducer
+    const hands = getHandsFromSlots(slots)
+    let disabled = false
+    Object.entries(hands).map(hand => {
+        if (hand[1][1].rank.length === 0 || hand[1][2].rank.length === 0) {
+            disabled = true
+        }
+    })
 
     return {
         slots,
-        savedEquities
+        savedEquities,
+        disabled
     }
 }
 
