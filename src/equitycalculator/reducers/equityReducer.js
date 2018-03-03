@@ -2,7 +2,10 @@ import {
     SELECT_CARD,
     SELECT_POSITION,
     SAVE_EQUITY,
-    CLEAR_HANDS
+    CLEAR_HANDS,
+    HAND_ONE,
+    HAND_TWO,
+    BOARD
 } from '../'
 
 const card = {
@@ -15,12 +18,21 @@ const initialHand = {
     2: card
 }
 
+const initialBoard = {
+    1: card,
+    2: card,
+    3: card,
+    4: card,
+    5: card
+}
+
 const initialState = {
-    hands: {
-        1: initialHand,
-        2: initialHand
+    slots: {
+        [HAND_ONE]: initialHand,
+        [HAND_TWO]: initialHand,
+        [BOARD]: initialBoard
     },
-    selectedHand: 1,
+    selectedPosition: HAND_ONE,
     selectedCard: 1,
     savedEquities: [
         {
@@ -28,7 +40,8 @@ const initialState = {
             hands: {
                 1: initialHand,
                 2: initialHand
-            }
+            },
+            board: initialBoard
         }
     ]
 }
@@ -36,39 +49,64 @@ const initialState = {
 export function equityReducer(state = initialState, action) {
     switch (action.type) {
         case SELECT_CARD:
-            let selectedCard = state.selectedCard === 1 ? 2 : 1
-            let selectedHand = state.selectedHand
+            let selectedCard = state.selectedCard
+            let selectedPosition = state.selectedPosition
 
-            if (selectedCard === 1) {
-                selectedHand = state.selectedHand === 1 ? 2 : 1
+            switch (state.selectedPosition) {
+                case HAND_ONE:
+                    if (selectedCard === 1) {
+                        selectedCard = 2
+                    } else {
+                        selectedCard = 1
+                        selectedPosition = HAND_TWO
+                    }
+                    break;
+                case HAND_TWO:
+                    if (selectedCard === 1) {
+                        selectedCard = 2
+                    } else {
+                        selectedCard = 1
+                        selectedPosition = BOARD
+                    }
+                    break;
+                case BOARD:
+                    if (selectedCard < 5) {
+                        selectedCard++
+                    } else {
+                        selectedCard = 1
+                        selectedPosition = HAND_ONE
+                    }
+                    break;
+                default:
             }
 
             return {
                 ...state,
-                hands: {
-                    ...state.hands,
-                    [state.selectedHand]: {
-                        ...state.hands[state.selectedHand],
+                slots: {
+                    ...state.slots,
+                    [state.selectedPosition]: {
+                        ...state.slots[state.selectedPosition],
                         [state.selectedCard]: {
                             rank: action.rank,
                             suit: action.suit
                         }
                     }
                 },
-                selectedHand: selectedHand,
+                selectedPosition: selectedPosition,
                 selectedCard: selectedCard
             }
         case SELECT_POSITION:
             return {
                 ...state,
-                selectedHand: action.hand,
+                selectedPosition: action.hand,
                 selectedCard: action.card
             }
         case SAVE_EQUITY:
             const savedEquities = state.savedEquities.slice()
             const equity = {
                 equities: action.equities,
-                hands: action.hands
+                hands: action.hands,
+                board: action.board
             }
             savedEquities.push(equity)
 
@@ -77,7 +115,12 @@ export function equityReducer(state = initialState, action) {
                 savedEquities
             }
         case CLEAR_HANDS:
-            return initialState
+            const equities = state.savedEquities
+
+            return {
+                ...initialState,
+                savedEquities: equities
+            }
         default:
             return state
     }

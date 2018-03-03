@@ -2,12 +2,13 @@ import { connect } from 'react-redux'
 import { Cards, selectCard } from '../'
 
 const mapStateToProps = (state) => {
-    const { hands } = state.equityReducer
+    const { slots } = state.equityReducer
     let deadCards = []
-    Object.entries(hands).map((hand) => {
-        for (let i = 1; i < 3; i++) {
-            if (hand[1][i].rank && hand[1][i].suit) {
-                deadCards.push(hand[1][i].rank + hand[1][i].suit)
+    Object.entries(slots).map((slot) => {
+        const limit = Object.keys(slot[1]).length + 1
+        for (let i = 1; i < limit; i++) {
+            if (slot[1][i].rank && slot[1][i].suit) {
+                deadCards.push(slot[1][i].rank + slot[1][i].suit)
             }
         }
         return true

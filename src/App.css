@@ -27,6 +27,20 @@ body {
     margin-bottom: 20px;
 }
 
-#clear-btn {
+.margin-top {
     margin-top: 20px;
+}
+
+.margin-left {
+    margin-left : 30px;
+}
+
+#eval-btn {
+    background-color: #6b94d6;
+    border-color: #6b94d6;
+}
+
+#clear-btn {
+    background-color: #de6360;
+    border-color: #de6360;
 }
