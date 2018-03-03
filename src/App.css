@@ -44,3 +44,7 @@ body {
     background-color: #de6360;
     border-color: #de6360;
 }
+
+.selectedCard {
+    background: #f3f3f3;
+}
