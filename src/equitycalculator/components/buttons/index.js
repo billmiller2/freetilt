@@ -1,4 +1,6 @@
+export * from './bankCard'
 export * from './boardCard'
 export * from './card'
 export * from './clear'
+export * from './evaluate'
 export * from './handCard'

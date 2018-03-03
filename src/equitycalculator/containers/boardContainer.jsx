@@ -1,16 +1,14 @@
 import { connect } from 'react-redux'
-import { Hand } from '../'
-import { selectPosition } from '../'
+import { Board, BOARD, selectPosition } from '../'
 
-const mapStateToProps = (state, ownProps) => {
+const mapStateToProps = (state) => {
     const { selectedCard, selectedPosition } = state.equityReducer
-    const { number } = ownProps
-    const position = state.equityReducer.slots[number]
+    const board = state.equityReducer.slots[BOARD]
 
     return {
-        position,
         selectedCard,
-        selectedPosition
+        selectedPosition,
+        board
     }
 }
 
@@ -22,7 +20,7 @@ const mapDispatchToProps = (dispatch) => {
     }
 }
 
-export const HandContainer = connect(
+export const BoardContainer = connect(
     mapStateToProps,
     mapDispatchToProps
-)(Hand)
+)(Board)

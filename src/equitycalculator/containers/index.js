@@ -1,5 +1,7 @@
+export * from './boardContainer'
 export * from './calculatorContainer'
 export * from './cardsContainer'
 export * from './clearContainer'
 export * from './equityContainer'
+export * from './evaluateContainer'
 export * from './handContainer'
