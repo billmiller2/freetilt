@@ -2,16 +2,10 @@ import * as React from 'react'
 import { getSuitFromHTML } from '../'
 
 export class Equity extends React.Component {
-    componentDidUpdate(prevProps) {
-        if (JSON.stringify(this.props.hands) !== JSON.stringify(prevProps.hands)
-            && this.props.handEquities.length > 0
-        ) {
-            this.props.saveEquity(this.props.hands, this.props.handEquities)
-        }
-    }
-
     render() {
-        const { hands, handEquities } = this.props
+        const { savedEquities } = this.props
+        const hands = savedEquities[savedEquities.length - 1].hands
+        const handEquities = savedEquities[savedEquities.length - 1].equities
 
         return (
             <div>

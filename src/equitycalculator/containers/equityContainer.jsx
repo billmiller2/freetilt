@@ -1,37 +1,14 @@
 import { connect } from 'react-redux'
-import { Equity, getHandEquity, saveEquity, getHandsFromSlots, BOARD } from '../'
+import { Equity} from '../'
 
 const mapStateToProps = (state) => {
-    const { slots, savedEquities } = state.equityReducer
-    let hands = getHandsFromSlots(slots)
-    let savedEquity = []
-
-    for (let i = 0; i < savedEquities.length; i++) {
-        if (JSON.stringify(savedEquities[i].hands) === JSON.stringify(hands)) {
-            savedEquity = savedEquities[i].equities
-        }
-    }
-
-    let board = {}
-    board = slots[BOARD]
-
-    const handEquities = savedEquity.length > 0 ? savedEquity : getHandEquity(hands, board)
+    const { savedEquities } = state.equityReducer
 
     return {
-        hands,
-        handEquities
-    }
-}
-
-const mapDispatchToProps = (dispatch) => {
-    return {
-        saveEquity: (hands, handEquities) => {
-            dispatch(saveEquity(hands, handEquities))
-        }
+        savedEquities
     }
 }
 
 export const EquityContainer = connect(
-    mapStateToProps,
-    mapDispatchToProps
+    mapStateToProps
 )(Equity)
