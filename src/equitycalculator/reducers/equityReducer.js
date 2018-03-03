@@ -40,7 +40,8 @@ const initialState = {
             hands: {
                 1: initialHand,
                 2: initialHand
-            }
+            },
+            board: initialBoard
         }
     ]
 }
@@ -104,7 +105,8 @@ export function equityReducer(state = initialState, action) {
             const savedEquities = state.savedEquities.slice()
             const equity = {
                 equities: action.equities,
-                hands: action.hands
+                hands: action.hands,
+                board: action.board
             }
             savedEquities.push(equity)
 
