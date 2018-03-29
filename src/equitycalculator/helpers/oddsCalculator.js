@@ -400,7 +400,7 @@ export const breakTies = (handOne, handTwo, handRank) => {
 
             const handOnePairTwoIdx = getPairIndex(handOneRanks)
             const handTwoPairTwoIdx = getPairIndex(handTwoRanks)
-            const pairTwoCompare = getRank(handOneRanks[handOnePairOneIdx], handTwoRanks[handTwoPairOneIdx])
+            const pairTwoCompare = getRank(handOneRanks[handOnePairTwoIdx], handTwoRanks[handTwoPairTwoIdx])
 
             if (pairTwoCompare > 0) {
                 return pairTwoCompare
