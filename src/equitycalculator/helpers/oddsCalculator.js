@@ -260,10 +260,11 @@ const isSet = (ranks) => {
  */
 const checkPairs = (ranks) => {
     let pairCount = 0
+    let j = 0
     let ranksSlice = ranks.slice()
 
     for (let i = 0; i < ranksSlice.length - 1; i++) {
-        let index = getPairIndex(ranksSlice.slice(i))
+        let index = getPairIndex(ranksSlice.slice(i - j))
 
         if (index >= 0) {
             pairCount++
@@ -273,6 +274,7 @@ const checkPairs = (ranks) => {
             }
 
             ranksSlice.splice(index, 2)
+            j = 2
         }
     }
 
