@@ -335,7 +335,7 @@ const getRank = (handOneRank, handTwoRank) => {
     return 0
 }
 
-const checkKicker = (handOneRanks, handTwoRanks) => {
+export const checkKicker = (handOneRanks, handTwoRanks) => {
     for (let i = 0; i < 5; i++) {
         if (handOneRanks[i] === handTwoRanks[i]) {
             continue
