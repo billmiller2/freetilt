@@ -131,6 +131,77 @@ it('calculates hand equities correctly', () => {
 
     expect(+handOneEquity).toEqual(1)
     expect(+handTwoEquity).toEqual(0)
+
+    const sevenH = {
+        rank:"7",
+        suit: UNICODE_HEARTS
+    }
+    const sevenD = {
+        rank:"7",
+        suit: UNICODE_DIAMONDS
+    }
+    const sixC = {
+        rank:"6",
+        suit: UNICODE_CLUBS
+    }
+    const sixH = {
+        rank:"6",
+        suit: UNICODE_HEARTS
+    }
+    const fiveC = {
+        rank:"5",
+        suit: UNICODE_CLUBS
+    }
+    const QH = {
+        rank:"Q",
+        suit: UNICODE_HEARTS
+    }
+
+    hands[1][1] = sevenH
+    hands[1][2] = sixH
+    hands[2][1] = sixC
+    hands[2][2] = fiveC
+
+    board = { ...emptyBoard }
+    board[1] = sevenD
+    board[2] = QH
+    board[3] = KH
+
+    equities = getHandEquity(hands, board)
+    handOneEquity = equities[0]
+    handTwoEquity = equities[1]
+
+    expect(+handOneEquity).toBeGreaterThanOrEqual(0.96)
+    expect(+handOneEquity).toBeLessThanOrEqual(0.98)
+
+    expect(+handTwoEquity).toBeGreaterThanOrEqual(0.03)
+    expect(+handTwoEquity).toBeLessThanOrEqual(0.04)
+
+    const fiveS = {
+        rank: "5",
+        suit: UNICODE_SPADES
+    }
+
+    board[4] = fiveS
+
+    equities = getHandEquity(hands, board)
+    handOneEquity = equities[0]
+    handTwoEquity = equities[1]
+
+    expect(+handOneEquity).toBeGreaterThanOrEqual(0.97)
+    expect(+handOneEquity).toBeLessThanOrEqual(0.98)
+
+    expect(+handTwoEquity).toBeGreaterThanOrEqual(0.02)
+    expect(+handTwoEquity).toBeLessThanOrEqual(0.03)
+
+    board[5] = fiveD
+
+    equities = getHandEquity(hands, board)
+    handOneEquity = equities[0]
+    handTwoEquity = equities[1]
+
+    expect(+handOneEquity).toEqual(0)
+    expect(+handTwoEquity).toEqual(1)
 })
 
 it('checks kickers correctly', () => {
