@@ -10,35 +10,23 @@ import {
     UNICODE_DIAMONDS
 } from '../../constants'
 
+import { getCards } from '../'
+
 it('calculates hand equities correctly', () => {
-    const AS = {
-        rank: "A",
-        suit: UNICODE_SPADES
-    }
-    const KS = {
-        rank: "K",
-        suit: UNICODE_SPADES
-    }
-    const KC = {
-        rank: "K",
-        suit: UNICODE_CLUBS
-    }
-    const KH = {
-        rank: "K",
-        suit: UNICODE_HEARTS
-    }
+    const cards = getCards()
+
     const emptyCard = {
         rank: "",
         suit: ""
     }
     let hands = {
         1: {
-            1: AS,
-            2: KS
+            1: cards["AS"],
+            2: cards["KS"]
         },
         2: {
-            1: KC,
-            2: KH
+            1: cards["KC"],
+            2: cards["KH"]
         }
     }
 
@@ -60,22 +48,10 @@ it('calculates hand equities correctly', () => {
     expect(+handTwoEquity).toBeGreaterThanOrEqual(0.65)
     expect(+handTwoEquity).toBeLessThanOrEqual(0.67)
 
-    const fiveD = {
-        rank: "5",
-        suit: UNICODE_DIAMONDS
-    }
-    const fourH = {
-        rank: "4",
-        suit: UNICODE_HEARTS
-    }
-    const sevenS = {
-        rank: "7",
-        suit: UNICODE_SPADES
-    }
     let board = { ...emptyBoard }
-    board[1] = fiveD
-    board[2] = fourH
-    board[3] = sevenS
+    board[1] = cards["5D"]
+    board[2] = cards["4H"]
+    board[3] = cards["7S"]
 
     equities = getHandEquity(hands, board)
     handOneEquity = equities[0]
@@ -87,12 +63,7 @@ it('calculates hand equities correctly', () => {
     expect(+handTwoEquity).toBeGreaterThanOrEqual(0.79)
     expect(+handTwoEquity).toBeLessThanOrEqual(0.81)
 
-    const nineC = {
-        rank: "9",
-        suit: UNICODE_CLUBS
-    }
-
-    board[4] = nineC
+    board[4] = cards["9C"]
 
     equities = getHandEquity(hands, board)
     handOneEquity = equities[0]
@@ -104,12 +75,7 @@ it('calculates hand equities correctly', () => {
     expect(+handTwoEquity).toBeGreaterThanOrEqual(0.92)
     expect(+handTwoEquity).toBeLessThanOrEqual(0.94)
 
-    const KD = {
-        rank: "K",
-        suit: UNICODE_DIAMONDS
-    }
-
-    board[5] = KD
+    board[5] = cards["KD"]
 
     equities = getHandEquity(hands, board)
     handOneEquity = equities[0]
@@ -118,12 +84,7 @@ it('calculates hand equities correctly', () => {
     expect(+handOneEquity).toEqual(0)
     expect(+handTwoEquity).toEqual(1)
 
-    const AD = {
-        rank: "A",
-        suit: UNICODE_DIAMONDS
-    }
-
-    board[5] = AD
+    board[5] = cards["AD"]
 
     equities = getHandEquity(hands, board)
     handOneEquity = equities[0]
@@ -132,40 +93,15 @@ it('calculates hand equities correctly', () => {
     expect(+handOneEquity).toEqual(1)
     expect(+handTwoEquity).toEqual(0)
 
-    const sevenH = {
-        rank:"7",
-        suit: UNICODE_HEARTS
-    }
-    const sevenD = {
-        rank:"7",
-        suit: UNICODE_DIAMONDS
-    }
-    const sixC = {
-        rank:"6",
-        suit: UNICODE_CLUBS
-    }
-    const sixH = {
-        rank:"6",
-        suit: UNICODE_HEARTS
-    }
-    const fiveC = {
-        rank:"5",
-        suit: UNICODE_CLUBS
-    }
-    const QH = {
-        rank:"Q",
-        suit: UNICODE_HEARTS
-    }
-
-    hands[1][1] = sevenH
-    hands[1][2] = sixH
-    hands[2][1] = sixC
-    hands[2][2] = fiveC
+    hands[1][1] = cards["7H"]
+    hands[1][2] = cards["6H"]
+    hands[2][1] = cards["6C"]
+    hands[2][2] = cards["5C"]
 
     board = { ...emptyBoard }
-    board[1] = sevenD
-    board[2] = QH
-    board[3] = KH
+    board[1] = cards["7D"]
+    board[2] = cards["QH"]
+    board[3] = cards["KH"]
 
     equities = getHandEquity(hands, board)
     handOneEquity = equities[0]
@@ -177,12 +113,7 @@ it('calculates hand equities correctly', () => {
     expect(+handTwoEquity).toBeGreaterThanOrEqual(0.03)
     expect(+handTwoEquity).toBeLessThanOrEqual(0.04)
 
-    const fiveS = {
-        rank: "5",
-        suit: UNICODE_SPADES
-    }
-
-    board[4] = fiveS
+    board[4] = cards["5S"]
 
     equities = getHandEquity(hands, board)
     handOneEquity = equities[0]
@@ -194,7 +125,7 @@ it('calculates hand equities correctly', () => {
     expect(+handTwoEquity).toBeGreaterThanOrEqual(0.02)
     expect(+handTwoEquity).toBeLessThanOrEqual(0.03)
 
-    board[5] = fiveD
+    board[5] = cards["5D"]
 
     equities = getHandEquity(hands, board)
     handOneEquity = equities[0]
