@@ -42,6 +42,7 @@ it('calculates hand equities correctly', () => {
     let handOneEquity = equities[0]
     let handTwoEquity = equities[1]
 
+    // [AS, KS], [KC, KH], []
     expect(+handOneEquity).toBeGreaterThanOrEqual(0.33)
     expect(+handOneEquity).toBeLessThanOrEqual(0.35)
 
@@ -57,6 +58,7 @@ it('calculates hand equities correctly', () => {
     handOneEquity = equities[0]
     handTwoEquity = equities[1]
 
+    // [AS, KS], [KC, KH], [5D, 4H, 7S]
     expect(+handOneEquity).toBeGreaterThanOrEqual(0.19)
     expect(+handOneEquity).toBeLessThanOrEqual(0.21)
 
@@ -69,6 +71,7 @@ it('calculates hand equities correctly', () => {
     handOneEquity = equities[0]
     handTwoEquity = equities[1]
 
+    // [AS, KS], [KC, KH], [5D, 4H, 7S, 9C]
     expect(+handOneEquity).toBeGreaterThanOrEqual(0.06)
     expect(+handOneEquity).toBeLessThanOrEqual(0.08)
 
@@ -81,6 +84,7 @@ it('calculates hand equities correctly', () => {
     handOneEquity = equities[0]
     handTwoEquity = equities[1]
 
+    // [AS, KS], [KC, KH], [5D, 4H, 7S, 9C, KD]
     expect(+handOneEquity).toEqual(0)
     expect(+handTwoEquity).toEqual(1)
 
@@ -90,6 +94,7 @@ it('calculates hand equities correctly', () => {
     handOneEquity = equities[0]
     handTwoEquity = equities[1]
 
+    // [AS, KS], [KC, KH], [5D, 4H, 7S, 9C, AD]
     expect(+handOneEquity).toEqual(1)
     expect(+handTwoEquity).toEqual(0)
 
@@ -107,6 +112,7 @@ it('calculates hand equities correctly', () => {
     handOneEquity = equities[0]
     handTwoEquity = equities[1]
 
+    // [7H, 6H], [6C, 5C], [7D, QH, KH]
     expect(+handOneEquity).toBeGreaterThanOrEqual(0.96)
     expect(+handOneEquity).toBeLessThanOrEqual(0.98)
 
@@ -119,6 +125,7 @@ it('calculates hand equities correctly', () => {
     handOneEquity = equities[0]
     handTwoEquity = equities[1]
 
+    // [7H, 6H], [6C, 5C], [7D, QH, KH, 5S]
     expect(+handOneEquity).toBeGreaterThanOrEqual(0.97)
     expect(+handOneEquity).toBeLessThanOrEqual(0.98)
 
@@ -131,6 +138,7 @@ it('calculates hand equities correctly', () => {
     handOneEquity = equities[0]
     handTwoEquity = equities[1]
 
+    // [7H, 6H], [6C, 5C], [7D, QH, KH, 5S, 5D]
     expect(+handOneEquity).toEqual(0)
     expect(+handTwoEquity).toEqual(1)
 })
