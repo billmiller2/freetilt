@@ -2,6 +2,34 @@ import * as handRanks from '../constants/handRanks'
 import { ranks, handRankings } from '../'
 import { getCardStringFromObj, generateBoard } from './'
 
+/**
+ * Calculate hand equities
+ *
+ * @param {object} hands
+ *     {
+ *         1: {
+ *             1: {
+ *                 rank: "Q",
+ *                 suit: unicode suit string
+ *             },
+ *             2: {
+ *                 rank: "J",
+ *                 suit: unicode suit string
+ *             }
+ *         },
+ *         2: same structure as hand one
+ *     }
+ *
+ * @param {object} board
+ *     {
+ *         1: {
+ *             rank: "K",
+ *             suit: unicode suit string
+ *         },
+ *         2, 3, 4, 5 same structure as 1
+ *         Empty cards will still be passed but have empty strings for rank & suit
+ *     }
+ */
 export const getHandEquity = (hands, board) => {
     let handOneWins = 0
     let handTwoWins = 0
@@ -335,7 +363,7 @@ const getRank = (handOneRank, handTwoRank) => {
     return 0
 }
 
-const checkKicker = (handOneRanks, handTwoRanks) => {
+export const checkKicker = (handOneRanks, handTwoRanks) => {
     for (let i = 0; i < 5; i++) {
         if (handOneRanks[i] === handTwoRanks[i]) {
             continue
