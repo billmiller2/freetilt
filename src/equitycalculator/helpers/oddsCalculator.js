@@ -185,12 +185,7 @@ const isQuads = (ranks) => {
  * @return {bool}
  */
 const isBoat = (cardRanks) => {
-    let setIdx = -1
-    for (let i = 0; i < cardRanks.length - 2; i++) {
-        if (cardRanks.indexOf(cardRanks[i], i + 1) > 0 && cardRanks.indexOf(cardRanks[i], i + 2) > 0) {
-            setIdx = i
-        }
-    }
+    const setIdx = getSetIdx(cardRanks)
 
     if (setIdx > -1) {
         const ranksSplice = cardRanks.slice()
@@ -278,6 +273,21 @@ const isSet = (ranks) => {
         }
     }
     return false
+}
+
+/**
+ * Get set index
+ *
+ * @param {array} ranks ['T', '7', '2', ...]
+ * @return {integer}
+ */
+const getSetIdx = (ranks) => {
+    for (let i = 0; i < ranks.length - 2; i++) {
+        if (ranks.indexOf(ranks[i], i + 1) > 0 && ranks.indexOf(ranks[i], i + 2) > 0) {
+            return i
+        }
+    }
+    return -1
 }
 
 /**
@@ -378,6 +388,25 @@ export const breakTies = (handOne, handTwo, handRank) => {
     const handTwoRanks = getRanks(handTwo)
 
     switch (handRank) {
+        case handRanks.BOAT:
+            const handOneSetIdx = getSetIdx(handOneRanks)
+            const handTwoSetIdx = getSetIdx(handTwoRanks)
+            const setRank = getRank(handOneRanks[handOneSetIdx], handTwoRanks[handTwoSetIdx])
+
+            if (setRank > 0) {
+                return setRank
+            }
+
+            let handOneRemaining = handOneRanks.slice()
+            let handTwoRemaining = handTwoRanks.slice()
+
+            handOneRemaining.splice(handOneSetIdx, 3)
+            handTwoRemaining.splice(handTwoSetIdx, 3)
+
+            const pairOneIdx = getPairIndex(handOneRanks)
+            const pairTwoIdx = getPairIndex(handTwoRanks)
+
+            return getRank(handOneRanks[pairOneIdx], handTwoRanks[pairTwoIdx])
         case handRanks.FLUSH:
             let suits = getSuits(handOne)
             let suit = ''
