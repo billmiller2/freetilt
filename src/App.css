@@ -48,3 +48,7 @@ body {
 .selectedCard {
     background: #f3f3f3;
 }
+
+#footer-text {
+    color: #54637a;
+}
