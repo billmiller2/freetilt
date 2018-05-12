@@ -2,6 +2,7 @@ import * as React from 'react'
 import { Grid, Col, Row } from 'react-bootstrap'
 import {
     BoardContainer,
+    BreakdownContainer,
     CardsContainer,
     ClearContainer,
     EquityContainer,
@@ -14,10 +15,13 @@ export class EquityCalculator extends React.Component {
         return (
             <Grid>
                 <div className="buffer-row" />
-                <Col xs={12} md={2} className="col-md-push-5">
+                <Col xs={12} md={2} className="col-md-push-8">
+                    <BreakdownContainer />
+                </Col>
+                <Col xs={12} md={2} className="col-md-push-3">
                     <EquityContainer />
                 </Col>
-                <Col xs={12} md={3} className="col-md-push-1">
+                <Col xs={12} md={3} className="col-md-pull-1">
                     <Row xs={6} md={12}>
                         <HandContainer number={1} />
                     </Row>
@@ -33,7 +37,7 @@ export class EquityCalculator extends React.Component {
                     </Row>
                 </Col>
                 <Row className="visible-xs-block buffer-row" />
-                <Col xs={12} md={2} className="col-md-pull-5">
+                <Col xs={12} md={2} className="col-md-pull-7">
                     <CardsContainer />
                 </Col>
                 <Row>
