@@ -39,8 +39,8 @@ it('calculates hand equities correctly', () => {
     }
 
     let equities = getHandEquity(hands, emptyBoard)
-    let handOneEquity = equities[0]
-    let handTwoEquity = equities[1]
+    let handOneEquity = equities[0].equity
+    let handTwoEquity = equities[1].equity
 
     // [AS, KS], [KC, KH], []
     expect(+handOneEquity).toBeGreaterThanOrEqual(0.33)
@@ -55,8 +55,8 @@ it('calculates hand equities correctly', () => {
     board[3] = cards["7S"]
 
     equities = getHandEquity(hands, board)
-    handOneEquity = equities[0]
-    handTwoEquity = equities[1]
+    handOneEquity = equities[0].equity
+    handTwoEquity = equities[1].equity
 
     // [AS, KS], [KC, KH], [5D, 4H, 7S]
     expect(+handOneEquity).toBeGreaterThanOrEqual(0.19)
@@ -68,8 +68,8 @@ it('calculates hand equities correctly', () => {
     board[4] = cards["9C"]
 
     equities = getHandEquity(hands, board)
-    handOneEquity = equities[0]
-    handTwoEquity = equities[1]
+    handOneEquity = equities[0].equity
+    handTwoEquity = equities[1].equity
 
     // [AS, KS], [KC, KH], [5D, 4H, 7S, 9C]
     expect(+handOneEquity).toBeGreaterThanOrEqual(0.06)
@@ -81,8 +81,8 @@ it('calculates hand equities correctly', () => {
     board[5] = cards["KD"]
 
     equities = getHandEquity(hands, board)
-    handOneEquity = equities[0]
-    handTwoEquity = equities[1]
+    handOneEquity = equities[0].equity
+    handTwoEquity = equities[1].equity
 
     // [AS, KS], [KC, KH], [5D, 4H, 7S, 9C, KD]
     expect(+handOneEquity).toEqual(0)
@@ -91,8 +91,8 @@ it('calculates hand equities correctly', () => {
     board[5] = cards["AD"]
 
     equities = getHandEquity(hands, board)
-    handOneEquity = equities[0]
-    handTwoEquity = equities[1]
+    handOneEquity = equities[0].equity
+    handTwoEquity = equities[1].equity
 
     // [AS, KS], [KC, KH], [5D, 4H, 7S, 9C, AD]
     expect(+handOneEquity).toEqual(1)
@@ -109,8 +109,8 @@ it('calculates hand equities correctly', () => {
     board[3] = cards["KH"]
 
     equities = getHandEquity(hands, board)
-    handOneEquity = equities[0]
-    handTwoEquity = equities[1]
+    handOneEquity = equities[0].equity
+    handTwoEquity = equities[1].equity
 
     // [7H, 6H], [6C, 5C], [7D, QH, KH]
     expect(+handOneEquity).toBeGreaterThanOrEqual(0.96)
@@ -122,8 +122,8 @@ it('calculates hand equities correctly', () => {
     board[4] = cards["5S"]
 
     equities = getHandEquity(hands, board)
-    handOneEquity = equities[0]
-    handTwoEquity = equities[1]
+    handOneEquity = equities[0].equity
+    handTwoEquity = equities[1].equity
 
     // [7H, 6H], [6C, 5C], [7D, QH, KH, 5S]
     expect(+handOneEquity).toBeGreaterThanOrEqual(0.97)
@@ -135,8 +135,8 @@ it('calculates hand equities correctly', () => {
     board[5] = cards["5D"]
 
     equities = getHandEquity(hands, board)
-    handOneEquity = equities[0]
-    handTwoEquity = equities[1]
+    handOneEquity = equities[0].equity
+    handTwoEquity = equities[1].equity
 
     // [7H, 6H], [6C, 5C], [7D, QH, KH, 5S, 5D]
     expect(+handOneEquity).toEqual(0)
@@ -150,8 +150,8 @@ it('calculates hand equities correctly', () => {
     board = { ...emptyBoard }
 
     equities = getHandEquity(hands, board)
-    handOneEquity = equities[0]
-    handTwoEquity = equities[1]
+    handOneEquity = equities[0].equity
+    handTwoEquity = equities[1].equity
 
     // [AS, 8H], [KH, 8D], []
     expect(+handOneEquity).toBeGreaterThanOrEqual(0.75)
@@ -165,8 +165,8 @@ it('calculates hand equities correctly', () => {
     board[3] = cards["AC"]
 
     equities = getHandEquity(hands, board)
-    handOneEquity = equities[0]
-    handTwoEquity = equities[1]
+    handOneEquity = equities[0].equity
+    handTwoEquity = equities[1].equity
 
     // [AS, 8H], [KH, 8D], [8C, 8S, AC]
     expect(+handOneEquity).toBeGreaterThanOrEqual(0.99)
@@ -178,8 +178,8 @@ it('calculates hand equities correctly', () => {
     board[4] = cards["KC"]
 
     equities = getHandEquity(hands, board)
-    handOneEquity = equities[0]
-    handTwoEquity = equities[1]
+    handOneEquity = equities[0].equity
+    handTwoEquity = equities[1].equity
 
     // [AS, 8H], [KH, 8D], [8C, 8S, AC, KC]
     expect(+handOneEquity).toBeGreaterThanOrEqual(0.94)
@@ -191,8 +191,8 @@ it('calculates hand equities correctly', () => {
     board[5] = cards["2H"]
 
     equities = getHandEquity(hands, board)
-    handOneEquity = equities[0]
-    handTwoEquity = equities[1]
+    handOneEquity = equities[0].equity
+    handTwoEquity = equities[1].equity
 
     // [AS, 8H], [KH, 8D], [8C, 8S, AC, KC, 2H]
     expect(+handOneEquity).toEqual(1)
@@ -206,8 +206,8 @@ it('calculates hand equities correctly', () => {
     board = { ...emptyBoard }
 
     equities = getHandEquity(hands, board)
-    handOneEquity = equities[0]
-    handTwoEquity = equities[1]
+    handOneEquity = equities[0].equity
+    handTwoEquity = equities[1].equity
 
     // [AS, KS], [KH, KC], []
     expect(+handOneEquity).toBeGreaterThanOrEqual(0.34)
@@ -221,8 +221,8 @@ it('calculates hand equities correctly', () => {
     board[3] = cards["7S"]
 
     equities = getHandEquity(hands, board)
-    handOneEquity = equities[0]
-    handTwoEquity = equities[1]
+    handOneEquity = equities[0].equity
+    handTwoEquity = equities[1].equity
 
     // [AS, KS], [KH, KC], [AD, KD, 7S]
     expect(+handOneEquity).toBeGreaterThanOrEqual(0.13)
