@@ -3,6 +3,10 @@ import * as React from 'react'
 export const Breakdown = (props) => {
     const { equities, hands } = props
 
+    if (equities.length === 0) {
+        return <div />
+    }
+
     return (
         <div>
             <h4>Breakdown</h4>
@@ -25,8 +29,8 @@ export const Breakdown = (props) => {
                     </tr>
                     <tr>
                         <th>Equity</th>
-                        <td>{equities[0]}</td>
-                        <td>{equities[1]}</td>
+                        <td>{equities[0].equity}</td>
+                        <td>{equities[1].equity}</td>
                     </tr>
                 </tbody>
             </table>
