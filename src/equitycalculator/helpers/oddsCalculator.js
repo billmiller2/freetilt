@@ -1,5 +1,5 @@
 import * as handRanks from '../constants/handRanks'
-import { ranks, handRankings, FLUSH } from '../'
+import { ranks, handRankings } from '../'
 import { getCardStringFromObj, generateBoard } from './'
 
 /**
@@ -45,8 +45,13 @@ export const getHandEquity = (hands, board) => {
         boardCards.push(getCardStringFromObj(board[j]))
     }
 
-    let handOneFlushes = 0
-    let handTwoFlushes = 0
+    let handOneBreakdown = {}
+    let handTwoBreakdown = {}
+
+    for (let j = 0; j < handRankings.length; j++) {
+        handOneBreakdown[handRankings[j]] = 0
+        handTwoBreakdown[handRankings[j]] = 0
+    }
 
     for (let i = 0; i < 10000; i++) {
         const fullBoard = generateBoard(getCards(hands[1]), getCards(hands[2]), boardCards)
@@ -73,29 +78,21 @@ export const getHandEquity = (hands, board) => {
             }
         }
 
-        if (handOneRank === FLUSH) {
-            handOneFlushes++
-        }
-        if (handTwoRank === FLUSH) {
-            handTwoFlushes++
-        }
+        handOneBreakdown[handOneRank]++
+        handTwoBreakdown[handTwoRank]++
     }
+
+    handRankings.forEach(rank => {
+        handOneBreakdown[rank] = handOneBreakdown[rank] / 10000
+        handTwoBreakdown[rank] = handTwoBreakdown[rank] / 10000
+    })
 
     const ties = 10000 - handOneWins - handTwoWins
-    const handOneEquity = getEquity(handTwoWins, ties)
-    const handTwoEquity = getEquity(handOneWins, ties)
 
-    const handOneEquityObj = getEquityObject(handOneEquity, handOneFlushes)
-    const handTwoEquityObj = getEquityObject(handTwoEquity, handTwoFlushes)
+    handOneBreakdown['equity'] = getEquity(handTwoWins, ties)
+    handTwoBreakdown['equity'] = getEquity(handOneWins, ties)
 
-    return [handOneEquityObj, handTwoEquityObj]
-}
-
-const getEquityObject = (equity, flushes) => {
-    return {
-        equity,
-        flushes: flushes / 10000
-    }
+    return [handOneBreakdown, handTwoBreakdown]
 }
 
 const getEquity = (wins, ties) => (1 - (wins / 10000) - (0.5 * (ties / 10000))).toFixed(2)
