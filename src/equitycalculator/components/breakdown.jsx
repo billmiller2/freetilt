@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { getSuitFromHTML } from '../'
+import { getSuitFromHTML, formatPercentage } from '../'
 
 export const Breakdown = (props) => {
     const { equities, hands } = props
@@ -31,48 +31,48 @@ export const Breakdown = (props) => {
                     </tr>
                     <tr>
                         <th>High Card</th>
-                        <td>{equities[0].HIGH_CARD}</td>
-                        <td>{equities[1].HIGH_CARD}</td>
+                        <td>{formatPercentage(equities[0].HIGH_CARD, 2)}</td>
+                        <td>{formatPercentage(equities[1].HIGH_CARD, 2)}</td>
                     </tr>
                     <tr>
                         <th>Pair</th>
-                        <td>{equities[0].PAIR}</td>
-                        <td>{equities[1].PAIR}</td>
+                        <td>{formatPercentage(equities[0].PAIR, 2)}</td>
+                        <td>{formatPercentage(equities[1].PAIR, 2)}</td>
                     </tr>
                     <tr>
                         <th>Two Pair</th>
-                        <td>{equities[0].TWO_PAIR}</td>
-                        <td>{equities[1].TWO_PAIR}</td>
+                        <td>{formatPercentage(equities[0].TWO_PAIR, 2)}</td>
+                        <td>{formatPercentage(equities[1].TWO_PAIR, 2)}</td>
                     </tr>
                     <tr>
                         <th>Set</th>
-                        <td>{equities[0].SET}</td>
-                        <td>{equities[1].SET}</td>
+                        <td>{formatPercentage(equities[0].SET, 2)}</td>
+                        <td>{formatPercentage(equities[1].SET, 2)}</td>
                     </tr>
                     <tr>
                         <th>Straight</th>
-                        <td>{equities[0].STRAIGHT}</td>
-                        <td>{equities[1].STRAIGHT}</td>
+                        <td>{formatPercentage(equities[0].STRAIGHT, 2)}</td>
+                        <td>{formatPercentage(equities[1].STRAIGHT, 2)}</td>
                     </tr>
                     <tr>
                         <th>Flush</th>
-                        <td>{equities[0].FLUSH}</td>
-                        <td>{equities[1].FLUSH}</td>
+                        <td>{formatPercentage(equities[0].FLUSH, 2)}</td>
+                        <td>{formatPercentage(equities[1].FLUSH, 2)}</td>
                     </tr>
                     <tr>
                         <th>Boat</th>
-                        <td>{equities[0].BOAT}</td>
-                        <td>{equities[1].BOAT}</td>
+                        <td>{formatPercentage(equities[0].BOAT, 2)}</td>
+                        <td>{formatPercentage(equities[1].BOAT, 2)}</td>
                     </tr>
                     <tr>
                         <th>Quads</th>
-                        <td>{equities[0].QUADS}</td>
-                        <td>{equities[1].QUADS}</td>
+                        <td>{formatPercentage(equities[0].QUADS, 2)}</td>
+                        <td>{formatPercentage(equities[1].QUADS, 2)}</td>
                     </tr>
                     <tr>
                         <th>Straight Flush</th>
-                        <td>{equities[0].STRAIGHT_FLUSH}</td>
-                        <td>{equities[1].STRAIGHT_FLUSH}</td>
+                        <td>{formatPercentage(equities[0].STRAIGHT_FLUSH, 2)}</td>
+                        <td>{formatPercentage(equities[1].STRAIGHT_FLUSH, 2)}</td>
                     </tr>
                 </tbody>
             </table>
