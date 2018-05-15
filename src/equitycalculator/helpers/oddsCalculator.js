@@ -45,6 +45,14 @@ export const getHandEquity = (hands, board) => {
         boardCards.push(getCardStringFromObj(board[j]))
     }
 
+    let handOneBreakdown = {}
+    let handTwoBreakdown = {}
+
+    for (let j = 0; j < handRankings.length; j++) {
+        handOneBreakdown[handRankings[j]] = 0
+        handTwoBreakdown[handRankings[j]] = 0
+    }
+
     for (let i = 0; i < 10000; i++) {
         const fullBoard = generateBoard(getCards(hands[1]), getCards(hands[2]), boardCards)
 
@@ -69,13 +77,22 @@ export const getHandEquity = (hands, board) => {
                 handTwoWins++
             }
         }
+
+        handOneBreakdown[handOneRank]++
+        handTwoBreakdown[handTwoRank]++
     }
 
-    const ties = 10000 - handOneWins - handTwoWins
-    const handOneEquity = getEquity(handTwoWins, ties)
-    const handTwoEquity = getEquity(handOneWins, ties)
+    handRankings.forEach(rank => {
+        handOneBreakdown[rank] = handOneBreakdown[rank] / 10000
+        handTwoBreakdown[rank] = handTwoBreakdown[rank] / 10000
+    })
 
-    return [handOneEquity, handTwoEquity]
+    const ties = 10000 - handOneWins - handTwoWins
+
+    handOneBreakdown['equity'] = getEquity(handTwoWins, ties)
+    handTwoBreakdown['equity'] = getEquity(handOneWins, ties)
+
+    return [handOneBreakdown, handTwoBreakdown]
 }
 
 const getEquity = (wins, ties) => (1 - (wins / 10000) - (0.5 * (ties / 10000))).toFixed(2)
