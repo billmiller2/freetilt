@@ -41,7 +41,7 @@ export class EquityCalculator extends React.Component {
                     <CardsContainer />
                 </Col>
                 <Row>
-                    <div className="footer navbar-fixed-bottom">
+                    <div className="footer navbar-fixed-bottom visible-md visible-lg">
                         <p className="text-center" id="footer-text">
                             <small>
                             FreeTilt is an open source project.  Please report issues
