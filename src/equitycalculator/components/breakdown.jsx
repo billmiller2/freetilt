@@ -1,4 +1,5 @@
 import * as React from 'react'
+import { getSuitFromHTML } from '../'
 
 export const Breakdown = (props) => {
     const { equities, hands } = props
@@ -14,18 +15,19 @@ export const Breakdown = (props) => {
                 <tbody>
                     <tr>
                         <th></th>
-                        <td>
-                            {hands[1][1].rank
-                                + hands[1][1].suit
-                                + hands[1][2].rank
-                                + hands[1][2].suit}
-                        </td>
-                        <td>
-                            {hands[2][1].rank
-                                + hands[2][1].suit
-                                + hands[2][2].rank
-                                + hands[2][2].suit}
-                        </td>
+                        {Object.entries(hands).map((hand, i) =>
+                            <td key={i}>
+                            {Object.entries(hand[1]).map((card, j) => {
+                                const suit = getSuitFromHTML(card[1].suit.charCodeAt())
+
+                                return (
+                                    <span className={suit} key={j}>
+                                        {card[1].rank + card[1].suit}
+                                    </span>
+                                )
+                            })}
+                            </td>
+                        )}
                     </tr>
                     <tr>
                         <th>High Card</th>
