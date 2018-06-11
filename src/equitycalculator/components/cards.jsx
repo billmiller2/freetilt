@@ -8,23 +8,23 @@ export class Cards extends React.Component {
         const { deadCards } = this.props
         return (
             <div>
-            {unicodeSuits.map((suit, i) => 
-                <Col key={i} xs={2} md={3}>
+            {unicodeSuits.map((suit, i) =>
+                <Col key={i} xs={2} md={3} className="btn-col">
                     {ranks.map((rank, j) => {
                         const disabled = deadCards.includes(rank + suit) ? true : false
 
                         return [
-                            <BankCard 
+                            <BankCard
                                 disabled={disabled}
                                 key={rank+suit}
                                 onSelect={this.props.onSelect}
-                                rank={rank} 
+                                rank={rank}
                                 suit={suit} />,
                             <br key={suit+rank} />
                         ]
                     })}
                 </Col>
-            )}                
+            )}
             </div>
         )
     }
