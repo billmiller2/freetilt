@@ -7,6 +7,10 @@ body {
     min-height: 34px;
 }
 
+.btn-col {
+    min-width: 40px;
+}
+
 .spades {
     color: #000000;
 }

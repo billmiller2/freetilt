@@ -15,13 +15,13 @@ export class EquityCalculator extends React.Component {
         return (
             <Grid>
                 <div className="buffer-row" />
-                <Col xs={12} md={2} className="col-md-push-8">
+                <Col xs={12} sm={12} md={2} className="col-md-push-9 col-lg-push-8">
                     <BreakdownContainer />
                 </Col>
-                <Col xs={12} md={2} className="col-md-push-3">
+                <Col xs={12} sm={2} className="col-lg-push-3 col-md-push-4 col-sm-push-9">
                     <EquityContainer />
                 </Col>
-                <Col xs={12} md={3} className="col-md-pull-1">
+                <Col xs={12} sm={4} className="col-lg-pull-1 col-sm-push-3 col-md-push-0">
                     <Row xs={6} md={12}>
                         <HandContainer number={1} />
                     </Row>
@@ -37,7 +37,7 @@ export class EquityCalculator extends React.Component {
                     </Row>
                 </Col>
                 <Row className="visible-xs-block buffer-row" />
-                <Col xs={12} md={2} className="col-md-pull-7">
+                <Col xs={12} sm={4} md={3} lg={2} className="col-md-pull-8 col-sm-pull-6">
                     <CardsContainer />
                 </Col>
                 <Row>
