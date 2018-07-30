@@ -32,6 +32,7 @@ const initialState = {
         [HAND_TWO]: initialHand,
         [BOARD]: initialBoard
     },
+    hands: 2,
     selectedPosition: HAND_ONE,
     selectedCard: 1,
     savedEquities: [

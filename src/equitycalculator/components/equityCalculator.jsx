@@ -3,7 +3,7 @@ import { Grid, Col, Row } from 'react-bootstrap'
 import {
     BoardContainer,
     BreakdownContainer,
-    CardsContainer,
+    CardBankContainer,
     ClearContainer,
     EquityContainer,
     EvaluateContainer,
@@ -38,7 +38,7 @@ export class EquityCalculator extends React.Component {
                 </Col>
                 <Row className="visible-xs-block buffer-row" />
                 <Col xs={12} sm={4} md={3} lg={2} className="col-md-pull-8 col-sm-pull-6">
-                    <CardsContainer />
+                    <CardBankContainer />
                 </Col>
                 <Row>
                     <div className="footer navbar-fixed-bottom visible-md visible-lg">
