@@ -3,6 +3,8 @@ import {
     SELECT_POSITION,
     SAVE_EQUITY,
     CLEAR_HANDS,
+    INCREMENT_HANDS,
+    DECREMENT_HANDS,
     HAND_ONE,
     HAND_TWO,
     BOARD
@@ -32,7 +34,7 @@ const initialState = {
         [HAND_TWO]: initialHand,
         [BOARD]: initialBoard
     },
-    hands: 2,
+    handCount: 2,
     selectedPosition: HAND_ONE,
     selectedCard: 1,
     savedEquities: [
@@ -121,6 +123,16 @@ export function equityReducer(state = initialState, action) {
             return {
                 ...initialState,
                 savedEquities: equities
+            }
+        case INCREMENT_HANDS:
+            return {
+                ...state,
+                handCount: state.handCount + 1
+            }
+        case DECREMENT_HANDS:
+            return {
+                ...state,
+                handCount: state.handCount - 1
             }
         default:
             return state

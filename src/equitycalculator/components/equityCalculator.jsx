@@ -12,6 +12,17 @@ import {
 
 export class EquityCalculator extends React.Component {
     render() {
+        const { handCount } = this.props
+
+        let handRows = []
+        for (let i = 0; i < handCount; i++) {
+            handRows.push(
+                <Row xs={6} md={12} key={i + 1}>
+                    <HandContainer number={i + 1} />
+                </Row>
+            )
+        }
+
         return (
             <Grid>
                 <div className="buffer-row" />
@@ -22,12 +33,7 @@ export class EquityCalculator extends React.Component {
                     <EquityContainer />
                 </Col>
                 <Col xs={12} sm={4} className="col-lg-pull-1 col-sm-push-3 col-md-push-0">
-                    <Row xs={6} md={12}>
-                        <HandContainer number={1} />
-                    </Row>
-                    <Row xs={6} md={12}>
-                        <HandContainer number={2} />
-                    </Row>
+                    {handRows}
                     <Row xs={12} md={12}>
                         <BoardContainer />
                     </Row>

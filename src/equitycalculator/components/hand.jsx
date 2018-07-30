@@ -9,7 +9,11 @@ export class Hand extends React.Component {
             onSelect,
             number,
             selectedPosition,
-            selectedCard
+            selectedCard,
+            showPlus,
+            showMinus,
+            increment,
+            decrement
         } = this.props
 
         return (
@@ -25,6 +29,16 @@ export class Hand extends React.Component {
                     suit={position[2].suit}
                     isSelected={(selectedPosition === number) && (selectedCard === 2)}
                     onSelect={() => onSelect(number, HAND_TWO)} />
+                {showPlus &&
+                    <button className="btn btn-default" onClick={increment}>
+                        <span className="glyphicon glyphicon-plus" />
+                    </button>
+                }
+                {showMinus &&
+                    <button className="btn btn-default" onClick={decrement}>
+                        <span className="glyphicon glyphicon-minus" />
+                    </button>
+                }
             </div>
         )
     }
