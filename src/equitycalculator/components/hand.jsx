@@ -16,8 +16,8 @@ export class Hand extends React.Component {
             decrement
         } = this.props
 
-        const addHandTooltip = <Tooltip id="add-tooltip">Add Hand</Tooltip>
-        const removeHandTooltip = <Tooltip id="remove-tooltip">Remove Hand</Tooltip>
+        const addHandTooltip = <Tooltip id="add-tooltip" className="tooltip">Add Hand</Tooltip>
+        const removeHandTooltip = <Tooltip id="remove-tooltip" className="tooltip">Remove Hand</Tooltip>
 
         return (
             <div>
