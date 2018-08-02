@@ -29,12 +29,12 @@ export class Hand extends React.Component {
                     isSelected={(selectedPosition === number) && (selectedCard === 2)}
                     onSelect={() => onSelect(number, 2)} />
                 {showPlus &&
-                    <button className="btn btn-default" onClick={increment}>
+                    <button className="btn btn-default handCountModifier" onClick={increment}>
                         <span className="glyphicon glyphicon-plus" />
                     </button>
                 }
                 {showMinus &&
-                    <button className="btn btn-default" onClick={decrement}>
+                    <button className="btn btn-default handCountModifier" onClick={decrement}>
                         <span className="glyphicon glyphicon-minus" />
                     </button>
                 }

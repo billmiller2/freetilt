@@ -57,3 +57,7 @@ body {
 #footer-text {
     color: #54637a;
 }
+
+.handCountModifier {
+    border: none;
+}
