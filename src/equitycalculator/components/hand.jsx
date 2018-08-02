@@ -1,4 +1,5 @@
 import * as React from 'react'
+import { Tooltip, OverlayTrigger } from 'react-bootstrap'
 import { HandCard } from './'
 
 export class Hand extends React.Component {
@@ -15,6 +16,9 @@ export class Hand extends React.Component {
             decrement
         } = this.props
 
+        const addHandTooltip = <Tooltip id="add-tooltip">Add Hand</Tooltip>
+        const removeHandTooltip = <Tooltip id="remove-tooltip">Remove Hand</Tooltip>
+
         return (
             <div>
                 <h4>Hand {number}</h4>
@@ -29,14 +33,18 @@ export class Hand extends React.Component {
                     isSelected={(selectedPosition === number) && (selectedCard === 2)}
                     onSelect={() => onSelect(number, 2)} />
                 {showPlus &&
-                    <button className="btn btn-default handCountModifier" onClick={increment}>
-                        <span className="glyphicon glyphicon-plus" />
-                    </button>
+                    <OverlayTrigger placement="top" overlay={addHandTooltip}>
+                        <button className="btn btn-default handCountModifier" onClick={increment}>
+                            <span className="glyphicon glyphicon-plus" />
+                        </button>
+                    </OverlayTrigger>
                 }
                 {showMinus &&
-                    <button className="btn btn-default handCountModifier" onClick={decrement}>
-                        <span className="glyphicon glyphicon-minus" />
-                    </button>
+                    <OverlayTrigger placement="top" overlay={removeHandTooltip}>
+                        <button className="btn btn-default handCountModifier" onClick={decrement}>
+                            <span className="glyphicon glyphicon-minus" />
+                        </button>
+                    </OverlayTrigger>
                 }
             </div>
         )
