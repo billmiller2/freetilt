@@ -5,8 +5,6 @@ import {
     CLEAR_HANDS,
     INCREMENT_HANDS,
     DECREMENT_HANDS,
-    HAND_ONE,
-    HAND_TWO,
     BOARD
 } from '../'
 
@@ -30,12 +28,12 @@ const initialBoard = {
 
 const initialState = {
     slots: {
-        [HAND_ONE]: initialHand,
-        [HAND_TWO]: initialHand,
+        1: initialHand,
+        2: initialHand,
         [BOARD]: initialBoard
     },
     handCount: 2,
-    selectedPosition: HAND_ONE,
+    selectedPosition: 1,
     selectedCard: 1,
     savedEquities: [
         {
@@ -56,15 +54,15 @@ export function equityReducer(state = initialState, action) {
             let selectedPosition = state.selectedPosition
 
             switch (state.selectedPosition) {
-                case HAND_ONE:
+                case 1:
                     if (selectedCard === 1) {
                         selectedCard = 2
                     } else {
                         selectedCard = 1
-                        selectedPosition = HAND_TWO
+                        selectedPosition = 2
                     }
                     break;
-                case HAND_TWO:
+                case 2:
                     if (selectedCard === 1) {
                         selectedCard = 2
                     } else {
@@ -77,7 +75,7 @@ export function equityReducer(state = initialState, action) {
                         selectedCard++
                     } else {
                         selectedCard = 1
-                        selectedPosition = HAND_ONE
+                        selectedPosition = 1
                     }
                     break;
                 default:
@@ -125,14 +123,20 @@ export function equityReducer(state = initialState, action) {
                 savedEquities: equities
             }
         case INCREMENT_HANDS:
+            const increasedCount = state.handCount + 1
+            const increasedSlots = { ...state.slots, [increasedCount]: initialHand }
             return {
                 ...state,
-                handCount: state.handCount + 1
+                handCount: increasedCount,
+                slots: increasedSlots
             }
         case DECREMENT_HANDS:
+            const decreasedCount = state.handCount - 1
+            const decreasedSlots = { ...state.slots, [decreasedCount]: initialHand }
             return {
                 ...state,
-                handCount: state.handCount - 1
+                handCount: decreasedCount,
+                slots: decreasedSlots
             }
         default:
             return state

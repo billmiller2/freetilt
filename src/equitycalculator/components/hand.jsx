@@ -1,6 +1,5 @@
 import * as React from 'react'
 import { HandCard } from './'
-import { HAND_ONE, HAND_TWO } from '../'
 
 export class Hand extends React.Component {
     render() {
@@ -23,12 +22,12 @@ export class Hand extends React.Component {
                     rank={position[1].rank}
                     suit={position[1].suit}
                     isSelected={(selectedPosition === number) && (selectedCard === 1)}
-                    onSelect={() => onSelect(number, HAND_ONE)} />
+                    onSelect={() => onSelect(number, 1)} />
                 <HandCard
                     rank={position[2].rank}
                     suit={position[2].suit}
                     isSelected={(selectedPosition === number) && (selectedCard === 2)}
-                    onSelect={() => onSelect(number, HAND_TWO)} />
+                    onSelect={() => onSelect(number, 2)} />
                 {showPlus &&
                     <button className="btn btn-default" onClick={increment}>
                         <span className="glyphicon glyphicon-plus" />

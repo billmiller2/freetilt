@@ -1,4 +1,4 @@
-import { getSuitFromUnicode, HAND_ONE, HAND_TWO } from '../'
+import { getSuitFromUnicode } from '../'
 
 export const getCardStringFromObj = (card) => {
     return card.rank + getSuitFromUnicode(card.suit)
@@ -6,8 +6,8 @@ export const getCardStringFromObj = (card) => {
 
 export const getHandsFromSlots = (slots) => {
     let hands = {}
-    hands[HAND_ONE] = slots[HAND_ONE]
-    hands[HAND_TWO] = slots[HAND_TWO]
+    hands[1] = slots[1]
+    hands[2] = slots[2]
 
     return hands
 }
