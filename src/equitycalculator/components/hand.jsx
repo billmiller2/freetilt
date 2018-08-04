@@ -32,17 +32,17 @@ export class Hand extends React.Component {
                     suit={position[2].suit}
                     isSelected={(selectedPosition === number) && (selectedCard === 2)}
                     onSelect={() => onSelect(number, 2)} />
-                {showPlus &&
-                    <OverlayTrigger placement="top" overlay={addHandTooltip}>
-                        <button className="btn btn-default handCountModifier" onClick={increment}>
-                            <span className="glyphicon glyphicon-plus" />
-                        </button>
-                    </OverlayTrigger>
-                }
                 {showMinus &&
                     <OverlayTrigger placement="top" overlay={removeHandTooltip}>
                         <button className="btn btn-default handCountModifier" onClick={decrement}>
                             <span className="glyphicon glyphicon-minus" />
+                        </button>
+                    </OverlayTrigger>
+                }
+                {showPlus &&
+                    <OverlayTrigger placement="top" overlay={addHandTooltip}>
+                        <button className="btn btn-default handCountModifier" onClick={increment}>
+                            <span className="glyphicon glyphicon-plus" />
                         </button>
                     </OverlayTrigger>
                 }

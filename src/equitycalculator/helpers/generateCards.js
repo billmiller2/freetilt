@@ -27,7 +27,7 @@ export const getCards = () => {
     return cards
 }
 
-export const generateBoard = (handOne = [], handTwo = [], existingBoard = []) => {
+export const generateBoard = (hands, existingBoard = []) => {
     let board = []
 
     for (let i = 0; i < 5; i++) {
@@ -36,15 +36,19 @@ export const generateBoard = (handOne = [], handTwo = [], existingBoard = []) =>
             continue
         }
         let card = generateCard()
+        let decrement = true
 
-        if (board.indexOf(card) === -1
-            && handOne.indexOf(card) === -1
-            && handTwo.indexOf(card) === -1
-        ) {
-            board.push(card)
-            continue
+        for (let i = 0; i < hands.length; i++) {
+            if (board.indexOf(card) === -1
+                && hands[i].indexOf(card) === -1
+            ) {
+                board.push(card)
+                decrement = false
+            }
         }
-        i--
+        if (decrement) {
+            i--
+        }
     }
 
     return board

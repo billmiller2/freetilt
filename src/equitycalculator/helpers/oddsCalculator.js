@@ -17,7 +17,8 @@ import { getCardStringFromObj, generateBoard } from './'
  *                 suit: unicode suit string
  *             }
  *         },
- *         2: same structure as hand one
+ *         2: same structure as hand one,
+ *         n: a variable number of hands can be submitted
  *     }
  *
  * @param {object} board
@@ -31,9 +32,6 @@ import { getCardStringFromObj, generateBoard } from './'
  *     }
  */
 export const getHandEquity = (hands, board) => {
-    let handOneWins = 0
-    let handTwoWins = 0
-
     if (getCards(hands[1]).indexOf('') !== -1
         || getCards(hands[2]).indexOf('') !== -1
     ) {
@@ -45,54 +43,74 @@ export const getHandEquity = (hands, board) => {
         boardCards.push(getCardStringFromObj(board[j]))
     }
 
-    let handOneBreakdown = {}
-    let handTwoBreakdown = {}
+    let handCount = Object.keys(hands).length
+    let breakdowns = []
+    let wins = []
+    let tieEquities = []
 
-    for (let j = 0; j < handRankings.length; j++) {
-        handOneBreakdown[handRankings[j]] = 0
-        handTwoBreakdown[handRankings[j]] = 0
+    for (let i = 0; i < handCount; i++) {
+        wins.push(0)
+        tieEquities.push(0)
+        breakdowns.push({})
+        for (let j = 0; j < handRankings.length; j++) {
+            breakdowns[i][handRankings[j]] = 0
+        }
     }
+
+    let handOneWins = 0
+    let handTwoWins = 0
 
     for (let i = 0; i < 10000; i++) {
-        const fullBoard = generateBoard(getCards(hands[1]), getCards(hands[2]), boardCards)
-
-        const handOneCards = getCards(hands[1], fullBoard)
-        const handTwoCards = getCards(hands[2], fullBoard)
-
-        const handOneRank = evaluateHandStrength(handOneCards)
-        const handTwoRank = evaluateHandStrength(handTwoCards)
-
-        if (handRankings.indexOf(handOneRank) > handRankings.indexOf(handTwoRank)) {
-            handOneWins++
-        } else if (handRankings.indexOf(handOneRank) < handRankings.indexOf(handTwoRank)) {
-            handTwoWins++
-        } else {
-            const tieWinner = breakTies(handOneCards, handTwoCards, handOneRank)
-
-            if (tieWinner === 1) {
-                handOneWins++
-            }
-
-            if (tieWinner === 2) {
-                handTwoWins++
-            }
+        let holeCards = []
+        for (let i = 0; i < handCount; i++) {
+            holeCards.push(getCards(hands[i + 1]))
         }
 
-        handOneBreakdown[handOneRank]++
-        handTwoBreakdown[handTwoRank]++
-    }
+        const fullBoard = generateBoard(holeCards, boardCards)
 
-    handRankings.forEach(rank => {
-        handOneBreakdown[rank] = handOneBreakdown[rank] / 10000
-        handTwoBreakdown[rank] = handTwoBreakdown[rank] / 10000
+        let handCards = []
+        let handStrengths = []
+        for (let i = 0; i < handCount; i++) {
+            handCards.push(getCards(hands[i + 1], fullBoard))
+            handStrengths.push(evaluateHandStrength(handCards[i]))
+            breakdowns[i][handStrengths[i]]++
+        }
+
+        let topHandRankIndex = 0
+        handStrengths.forEach(handStrength => {
+            if (handRankings.indexOf(handStrength) > topHandRankIndex) {
+                topHandRankIndex = handRankings.indexOf(handStrength)
+            }
+        })
+        let indicies = []
+        handStrengths.forEach((handStrength, i) => {
+            if (handRankings.indexOf(handStrength) === topHandRankIndex) {
+                indicies.push(i)
+            }
+        })
+        if (indicies.length === 1) {
+            wins[indicies[0]]++
+        } else {
+            //const tieWinner = breakTies(handCards, topRank)
+
+            //if (typeof wins[tieWinner] !== 'undefined') {
+                //wins[tieWinner]++
+            //} else {
+                //const tieEquity = ((1 / indicies.length) * (1 / 10000))
+
+                //indicies.forEach(index => {
+                    //tieEquities[indicies[index]] += tieEquity
+                //})
+            //}
+        }
+    }
+    console.log(wins)
+
+    breakdowns.forEach((breakdown, i) => {
+        breakdowns[i]['equity'] = getEquity(wins, tieEquities)
     })
 
-    const ties = 10000 - handOneWins - handTwoWins
-
-    handOneBreakdown['equity'] = getEquity(handTwoWins, ties)
-    handTwoBreakdown['equity'] = getEquity(handOneWins, ties)
-
-    return [handOneBreakdown, handTwoBreakdown]
+    return breakdowns
 }
 
 const getEquity = (wins, ties) => (1 - (wins / 10000) - (0.5 * (ties / 10000))).toFixed(2)
@@ -382,124 +400,132 @@ const getSuits = (cards) => {
 }
 
 const getRank = (handOneRank, handTwoRank) => {
-    if (ranks.indexOf(handOneRank) < ranks.indexOf(handTwoRank)) {
-        return 1
-    } else if (ranks.indexOf(handOneRank) > ranks.indexOf(handTwoRank)) {
-        return 2
-    }
-    return 0
+    //if (ranks.indexOf(handOneRank) < ranks.indexOf(handTwoRank)) {
+        //return 1
+    //} else if (ranks.indexOf(handOneRank) > ranks.indexOf(handTwoRank)) {
+        //return 2
+    //}
+    return -1
 }
 
-export const checkKicker = (handOneRanks, handTwoRanks) => {
-    for (let i = 0; i < 5; i++) {
-        if (handOneRanks[i] === handTwoRanks[i]) {
-            continue
-        }
-        return getRank(handOneRanks[i], handTwoRanks[i])
-    }
-    return 0
+export const checkKicker = (ranks) => {
+    //const handCount = ranks.length
+    //for (let i = 0; i < 5; i++) {
+        //let handRanks = []
+        //for (let j = 0; j < handCount; j++) {
+            //handRanks.push(ranks[i][j])
+        //}
+
+        //if (handOneRanks[i] === handTwoRanks[i]) {
+            //continue
+        //}
+        //return getRank(handOneRanks[i], handTwoRanks[i])
+    //}
+    return -1
 }
 
-export const breakTies = (handOne, handTwo, handRank) => {
-    const handOneRanks = getRanks(handOne)
-    const handTwoRanks = getRanks(handTwo)
+export const breakTies = (hands, handRank) => {
+    let ranks = []
+    for (let i = 0; i < hands.length; i++) {
+        ranks.push(getRanks(hands[i]))
+    }
 
     switch (handRank) {
         case handRanks.BOAT:
-            const handOneSetIdx = getSetIdx(handOneRanks)
-            const handTwoSetIdx = getSetIdx(handTwoRanks)
-            const setRank = getRank(handOneRanks[handOneSetIdx], handTwoRanks[handTwoSetIdx])
+            //const handOneSetIdx = getSetIdx(handOneRanks)
+            //const handTwoSetIdx = getSetIdx(handTwoRanks)
+            //const setRank = getRank(handOneRanks[handOneSetIdx], handTwoRanks[handTwoSetIdx])
 
-            if (setRank > 0) {
-                return setRank
-            }
+            //if (setRank > 0) {
+                //return setRank
+            //}
 
-            let handOneRemaining = handOneRanks.slice()
-            let handTwoRemaining = handTwoRanks.slice()
+            //let handOneRemaining = handOneRanks.slice()
+            //let handTwoRemaining = handTwoRanks.slice()
 
-            handOneRemaining.splice(handOneSetIdx, 3)
-            handTwoRemaining.splice(handTwoSetIdx, 3)
+            //handOneRemaining.splice(handOneSetIdx, 3)
+            //handTwoRemaining.splice(handTwoSetIdx, 3)
 
-            const pairOneIdx = getPairIndex(handOneRanks)
-            const pairTwoIdx = getPairIndex(handTwoRanks)
+            //const pairOneIdx = getPairIndex(handOneRanks)
+            //const pairTwoIdx = getPairIndex(handTwoRanks)
 
-            return getRank(handOneRanks[pairOneIdx], handTwoRanks[pairTwoIdx])
+            //return getRank(handOneRanks[pairOneIdx], handTwoRanks[pairTwoIdx])
         case handRanks.FLUSH:
-            let suits = getSuits(handOne)
-            let suit = ''
+            //let suits = getSuits(handOne)
+            //let suit = ''
 
-            for (let i = 0; i < suits.length; i++) {
-                let idx = suits.indexOf(suits[i], i + 1)
+            //for (let i = 0; i < suits.length; i++) {
+                //let idx = suits.indexOf(suits[i], i + 1)
 
-                if (idx > -1) {
-                    let suitsSlice = suits.slice()
-                    suitsSlice.splice(idx, 1)
+                //if (idx > -1) {
+                    //let suitsSlice = suits.slice()
+                    //suitsSlice.splice(idx, 1)
 
-                    if (suitsSlice.indexOf(suits[i], i + 1)) {
-                        suit = suits[i]
-                        break
-                    }
-                }
-            }
+                    //if (suitsSlice.indexOf(suits[i], i + 1)) {
+                        //suit = suits[i]
+                        //break
+                    //}
+                //}
+            //}
 
-            const flushOne = handOne.filter((card) => card[1] === suit)
-            const flushTwo = handTwo.filter((card) => card[1] === suit)
+            //const flushOne = handOne.filter((card) => card[1] === suit)
+            //const flushTwo = handTwo.filter((card) => card[1] === suit)
 
-            let winner = 0
-            for (let j = 0; j < 5; j++) {
-                if (typeof flushOne[j] !== 'undefined' && typeof flushTwo[j] !== 'undefined') {
-                    winner = getRank(flushOne[j][0], flushTwo[j][0])
-                }
+            //let winner = 0
+            //for (let j = 0; j < 5; j++) {
+                //if (typeof flushOne[j] !== 'undefined' && typeof flushTwo[j] !== 'undefined') {
+                    //winner = getRank(flushOne[j][0], flushTwo[j][0])
+                //}
 
-                if (winner > 0) {
-                    break
-                }
-            }
+                //if (winner > 0) {
+                    //break
+                //}
+            //}
 
-            return winner
+            //return winner
         case handRanks.STRAIGHT:
-            const handOneIdx = isStraight(handOneRanks, true)
-            const handTwoIdx = isStraight(handTwoRanks, true)
+            //const handOneIdx = isStraight(handOneRanks, true)
+            //const handTwoIdx = isStraight(handTwoRanks, true)
 
-            return getRank(handOneRanks[handOneIdx], handTwoRanks[handTwoIdx])
+            //return getRank(handOneRanks[handOneIdx], handTwoRanks[handTwoIdx])
         case handRanks.TWO_PAIR:
-            const handOnePairOneIdx = getPairIndex(handOneRanks)
-            const handTwoPairOneIdx = getPairIndex(handTwoRanks)
-            const pairOneCompare = getRank(handOneRanks[handOnePairOneIdx], handTwoRanks[handTwoPairOneIdx])
+            //const handOnePairOneIdx = getPairIndex(handOneRanks)
+            //const handTwoPairOneIdx = getPairIndex(handTwoRanks)
+            //const pairOneCompare = getRank(handOneRanks[handOnePairOneIdx], handTwoRanks[handTwoPairOneIdx])
 
-            if (pairOneCompare > 0) {
-                return pairOneCompare
-            }
+            //if (pairOneCompare > 0) {
+                //return pairOneCompare
+            //}
 
-            handOneRanks.splice(handOnePairOneIdx, 2)
-            handTwoRanks.splice(handTwoPairOneIdx, 2)
+            //handOneRanks.splice(handOnePairOneIdx, 2)
+            //handTwoRanks.splice(handTwoPairOneIdx, 2)
 
-            const handOnePairTwoIdx = getPairIndex(handOneRanks)
-            const handTwoPairTwoIdx = getPairIndex(handTwoRanks)
-            const pairTwoCompare = getRank(handOneRanks[handOnePairTwoIdx], handTwoRanks[handTwoPairTwoIdx])
+            //const handOnePairTwoIdx = getPairIndex(handOneRanks)
+            //const handTwoPairTwoIdx = getPairIndex(handTwoRanks)
+            //const pairTwoCompare = getRank(handOneRanks[handOnePairTwoIdx], handTwoRanks[handTwoPairTwoIdx])
 
-            if (pairTwoCompare > 0) {
-                return pairTwoCompare
-            }
+            //if (pairTwoCompare > 0) {
+                //return pairTwoCompare
+            //}
 
-            handOneRanks.splice(handOnePairTwoIdx, 2)
-            handTwoRanks.splice(handTwoPairTwoIdx, 2)
+            //handOneRanks.splice(handOnePairTwoIdx, 2)
+            //handTwoRanks.splice(handTwoPairTwoIdx, 2)
 
-            return getRank(handOneRanks[0], handTwoRanks[0])
+            //return getRank(handOneRanks[0], handTwoRanks[0])
         case handRanks.QUADS:
         case handRanks.SET:
         case handRanks.PAIR:
-            const idxOne = getPairIndex(handOneRanks)
-            const idxTwo = getPairIndex(handTwoRanks)
-            const bestPair = getRank(handOneRanks[idxOne], handTwoRanks[idxTwo])
+            //const idxOne = getPairIndex(handOneRanks)
+            //const idxTwo = getPairIndex(handTwoRanks)
+            //const bestPair = getRank(handOneRanks[idxOne], handTwoRanks[idxTwo])
 
-            if (bestPair > 0) {
-                return bestPair
-            }
-            return checkKicker(handOneRanks, handTwoRanks)
+            //if (bestPair > 0) {
+                //return bestPair
+            //}
+            //return checkKicker(ranks)
         case handRanks.HIGH_CARD:
-            return checkKicker(handOneRanks, handTwoRanks)
+            //return checkKicker(ranks)
         default:
-            return 0
+            return -1
     }
 }

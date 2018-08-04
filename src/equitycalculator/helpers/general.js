@@ -5,9 +5,12 @@ export const getCardStringFromObj = (card) => {
 }
 
 export const getHandsFromSlots = (slots) => {
+    const handCount = Object.keys(slots).length
     let hands = {}
-    hands[1] = slots[1]
-    hands[2] = slots[2]
+
+    for (let i = 1; i < handCount; i++) {
+        hands[i] = slots[i]
+    }
 
     return hands
 }
