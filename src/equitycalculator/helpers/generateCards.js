@@ -36,19 +36,20 @@ export const generateBoard = (hands, existingBoard = []) => {
             continue
         }
         let card = generateCard()
-        let decrement = true
+        let decrement = false
 
         for (let i = 0; i < hands.length; i++) {
-            if (board.indexOf(card) === -1
-                && hands[i].indexOf(card) === -1
+            if (board.indexOf(card) !== -1
+                || hands[i].indexOf(card) !== -1
             ) {
-                board.push(card)
-                decrement = false
+                decrement = true
             }
         }
         if (decrement) {
             i--
+            continue
         }
+        board.push(card)
     }
 
     return board
