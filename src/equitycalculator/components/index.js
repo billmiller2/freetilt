@@ -1,4 +1,5 @@
 export * from './board'
+export * from './breakdown-row'
 export * from './breakdown'
 export * from './buttons'
 export * from './cardBank'

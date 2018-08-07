@@ -71,6 +71,11 @@ body {
 #add-tooltip > .tooltip-arrow {
     border-top: 5px solid #d8d8d8;
 }
+
 #remove-tooltip > .tooltip-arrow {
     border-top: 5px solid #d8d8d8;
+}
+
+.capitalize {
+    text-transform: capitalize;
 }

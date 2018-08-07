@@ -67,6 +67,9 @@ export const getHandEquity = (hands, board) => {
     }
 
     breakdowns.forEach((breakdown, i) => {
+        Object.entries(breakdown).forEach(([key, value]) => {
+            breakdowns[i][key] = value / 10000
+        })
         breakdowns[i]['equity'] = getEquity(wins[i], tieEquities[i])
     })
 
