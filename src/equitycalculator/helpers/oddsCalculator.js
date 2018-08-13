@@ -17,7 +17,8 @@ import { getCardStringFromObj, generateBoard } from './'
  *                 suit: unicode suit string
  *             }
  *         },
- *         2: same structure as hand one
+ *         2: same structure as hand one,
+ *         n: a variable number of hands can be submitted
  *     }
  *
  * @param {object} board
@@ -31,71 +32,156 @@ import { getCardStringFromObj, generateBoard } from './'
  *     }
  */
 export const getHandEquity = (hands, board) => {
-    let handOneWins = 0
-    let handTwoWins = 0
-
-    if (getCards(hands[1]).indexOf('') !== -1
-        || getCards(hands[2]).indexOf('') !== -1
-    ) {
+    if (!isValidInput(hands)) {
         return []
     }
 
+    const boardCards = getBoardCards(board)
+    const handCount = Object.keys(hands).length
+    let { breakdowns, wins, tieEquities } = initializeEquityVariables(handCount)
+
+    for (let i = 0; i < 10000; i++) {
+        const holeCards = getHoleCards(hands, handCount)
+        const fullBoard = generateBoard(holeCards, boardCards)
+        const { handCards, handStrengths, updatedBreakdowns } = evaluateHands(breakdowns, handCount, hands, fullBoard)
+        breakdowns = updatedBreakdowns
+        const topHandRankIndex = getTopHandRankIndex(handStrengths)
+        const winningIndicies = getWinningIndicies(handStrengths, topHandRankIndex)
+
+        if (winningIndicies.length === 1) {
+            wins[winningIndicies[0]]++
+        } else {
+            const losingIndicies = getLosingIndicies(winningIndicies, handCards, topHandRankIndex)
+            const updatedWinningIndicies = winningIndicies.filter(index => losingIndicies.indexOf(index) === -1)
+
+            if (updatedWinningIndicies.length === 1) {
+                wins[updatedWinningIndicies[0]]++
+            } else {
+                const tieEquity = ((1 / updatedWinningIndicies.length) * (1 / 10000))
+
+                updatedWinningIndicies.forEach(index => {
+                    tieEquities[index] += tieEquity
+                })
+            }
+        }
+    }
+
+    breakdowns.forEach((breakdown, i) => {
+        Object.entries(breakdown).forEach(([key, value]) => {
+            breakdowns[i][key] = value / 10000
+        })
+        breakdowns[i]['equity'] = getEquity(wins[i], tieEquities[i])
+    })
+
+    return breakdowns
+}
+
+const isValidInput = (hands) => {
+    if (getCards(hands[1]).indexOf('') !== -1
+        || getCards(hands[2]).indexOf('') !== -1
+    ) {
+        return false
+    }
+    return true
+}
+
+const getBoardCards = (board) => {
     let boardCards = []
     for (let j = 1; j < 6; j++) {
         boardCards.push(getCardStringFromObj(board[j]))
     }
-
-    let handOneBreakdown = {}
-    let handTwoBreakdown = {}
-
-    for (let j = 0; j < handRankings.length; j++) {
-        handOneBreakdown[handRankings[j]] = 0
-        handTwoBreakdown[handRankings[j]] = 0
-    }
-
-    for (let i = 0; i < 10000; i++) {
-        const fullBoard = generateBoard(getCards(hands[1]), getCards(hands[2]), boardCards)
-
-        const handOneCards = getCards(hands[1], fullBoard)
-        const handTwoCards = getCards(hands[2], fullBoard)
-
-        const handOneRank = evaluateHandStrength(handOneCards)
-        const handTwoRank = evaluateHandStrength(handTwoCards)
-
-        if (handRankings.indexOf(handOneRank) > handRankings.indexOf(handTwoRank)) {
-            handOneWins++
-        } else if (handRankings.indexOf(handOneRank) < handRankings.indexOf(handTwoRank)) {
-            handTwoWins++
-        } else {
-            const tieWinner = breakTies(handOneCards, handTwoCards, handOneRank)
-
-            if (tieWinner === 1) {
-                handOneWins++
-            }
-
-            if (tieWinner === 2) {
-                handTwoWins++
-            }
-        }
-
-        handOneBreakdown[handOneRank]++
-        handTwoBreakdown[handTwoRank]++
-    }
-
-    handRankings.forEach(rank => {
-        handOneBreakdown[rank] = handOneBreakdown[rank] / 10000
-        handTwoBreakdown[rank] = handTwoBreakdown[rank] / 10000
-    })
-
-    const ties = 10000 - handOneWins - handTwoWins
-
-    handOneBreakdown['equity'] = getEquity(handTwoWins, ties)
-    handTwoBreakdown['equity'] = getEquity(handOneWins, ties)
-
-    return [handOneBreakdown, handTwoBreakdown]
+    return boardCards
 }
 
-const getEquity = (wins, ties) => (1 - (wins / 10000) - (0.5 * (ties / 10000))).toFixed(2)
+const initializeEquityVariables = (handCount) => {
+    let wins = []
+    let tieEquities = []
+    let breakdowns = []
+    for (let i = 0; i < handCount; i++) {
+        wins.push(0)
+        tieEquities.push(0)
+        breakdowns.push({})
+        for (let j = 0; j < handRankings.length; j++) {
+            breakdowns[i][handRankings[j]] = 0
+        }
+    }
+
+    return { breakdowns, wins, tieEquities }
+}
+
+const getHoleCards = (hands, handCount) => {
+    let holeCards = []
+    for (let i = 0; i < handCount; i++) {
+        holeCards.push(getCards(hands[i + 1]))
+    }
+    return holeCards
+}
+
+const evaluateHands = (breakdowns, handCount, hands, fullBoard) => {
+    let handCards = []
+    let handStrengths = []
+    for (let j = 0; j < handCount; j++) {
+        handCards.push(getCards(hands[j + 1], fullBoard))
+        handStrengths.push(evaluateHandStrength(handCards[j]))
+        breakdowns[j][handStrengths[j]]++
+    }
+
+    return { handCards, handStrengths, updatedBreakdowns: breakdowns }
+}
+
+const getTopHandRankIndex = (handStrengths) => {
+    let topHandRankIndex = 0
+    handStrengths.forEach(handStrength => {
+        if (handRankings.indexOf(handStrength) > topHandRankIndex) {
+            topHandRankIndex = handRankings.indexOf(handStrength)
+        }
+    })
+
+    return topHandRankIndex
+}
+
+const getWinningIndicies = (handStrengths, topHandRankIndex) => {
+    let winningIndicies = []
+    handStrengths.forEach((handStrength, i) => {
+        if (handRankings.indexOf(handStrength) === topHandRankIndex) {
+            winningIndicies.push(i)
+        }
+    })
+
+    return winningIndicies
+}
+
+const getLosingIndicies = (winningIndicies, handCards, topHandRankIndex) => {
+    let losingIndicies = []
+    winningIndicies.forEach((outerIndex) => {
+        winningIndicies.forEach((innerIndex) => {
+            if (innerIndex > outerIndex) {
+                const tieWinner = breakTies(
+                    handCards[outerIndex],
+                    handCards[innerIndex],
+                    handRankings[topHandRankIndex]
+                )
+                switch (tieWinner) {
+                    case 1:
+                        if (losingIndicies.indexOf(innerIndex) === -1) {
+                            losingIndicies.push(innerIndex)
+                        }
+                        break
+                    case 2:
+                        if (losingIndicies.indexOf(outerIndex) === -1) {
+                            losingIndicies.push(outerIndex)
+                        }
+                        break
+                    default:
+                }
+            }
+        })
+    })
+
+    return losingIndicies
+}
+
+const getEquity = (wins, ties) => ((wins / 10000) + ties).toFixed(2)
 
 const getCards = (hand, board = []) => {
     let handArray = []

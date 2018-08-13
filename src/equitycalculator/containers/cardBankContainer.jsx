@@ -1,5 +1,5 @@
 import { connect } from 'react-redux'
-import { Cards, selectCard } from '../'
+import { CardBank, selectCard } from '../'
 
 const mapStateToProps = (state) => {
     const { slots } = state.equityReducer
@@ -27,7 +27,7 @@ const mapDispatchToProps = (dispatch) => {
     }
 }
 
-export const CardsContainer = connect(
+export const CardBankContainer = connect(
     mapStateToProps,
     mapDispatchToProps
-)(Cards)
+)(CardBank)

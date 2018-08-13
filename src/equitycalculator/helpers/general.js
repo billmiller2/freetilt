@@ -1,13 +1,16 @@
-import { getSuitFromUnicode, HAND_ONE, HAND_TWO } from '../'
+import { getSuitFromUnicode } from '../'
 
 export const getCardStringFromObj = (card) => {
     return card.rank + getSuitFromUnicode(card.suit)
 }
 
 export const getHandsFromSlots = (slots) => {
+    const handCount = Object.keys(slots).length
     let hands = {}
-    hands[HAND_ONE] = slots[HAND_ONE]
-    hands[HAND_TWO] = slots[HAND_TWO]
+
+    for (let i = 1; i < handCount; i++) {
+        hands[i] = slots[i]
+    }
 
     return hands
 }

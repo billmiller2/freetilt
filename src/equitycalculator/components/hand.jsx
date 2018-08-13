@@ -1,6 +1,6 @@
 import * as React from 'react'
+import { Tooltip, OverlayTrigger } from 'react-bootstrap'
 import { HandCard } from './'
-import { HAND_ONE, HAND_TWO } from '../'
 
 export class Hand extends React.Component {
     render() {
@@ -9,8 +9,15 @@ export class Hand extends React.Component {
             onSelect,
             number,
             selectedPosition,
-            selectedCard
+            selectedCard,
+            showPlus,
+            showMinus,
+            increment,
+            decrement
         } = this.props
+
+        const addHandTooltip = <Tooltip id="add-tooltip" className="tooltip">Add Hand</Tooltip>
+        const removeHandTooltip = <Tooltip id="remove-tooltip" className="tooltip">Remove Hand</Tooltip>
 
         return (
             <div>
@@ -19,12 +26,26 @@ export class Hand extends React.Component {
                     rank={position[1].rank}
                     suit={position[1].suit}
                     isSelected={(selectedPosition === number) && (selectedCard === 1)}
-                    onSelect={() => onSelect(number, HAND_ONE)} />
+                    onSelect={() => onSelect(number, 1)} />
                 <HandCard
                     rank={position[2].rank}
                     suit={position[2].suit}
                     isSelected={(selectedPosition === number) && (selectedCard === 2)}
-                    onSelect={() => onSelect(number, HAND_TWO)} />
+                    onSelect={() => onSelect(number, 2)} />
+                {showMinus &&
+                    <OverlayTrigger placement="top" overlay={removeHandTooltip}>
+                        <button className="btn btn-default handCountModifier" onClick={decrement}>
+                            <span className="glyphicon glyphicon-minus" />
+                        </button>
+                    </OverlayTrigger>
+                }
+                {showPlus &&
+                    <OverlayTrigger placement="top" overlay={addHandTooltip}>
+                        <button className="btn btn-default handCountModifier" onClick={increment}>
+                            <span className="glyphicon glyphicon-plus" />
+                        </button>
+                    </OverlayTrigger>
+                }
             </div>
         )
     }

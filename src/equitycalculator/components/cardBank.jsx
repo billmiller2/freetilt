@@ -3,7 +3,7 @@ import { Col } from 'react-bootstrap'
 import { unicodeSuits, ranks } from '../'
 import { BankCard } from './'
 
-export class Cards extends React.Component {
+export class CardBank extends React.Component {
     render() {
         const { deadCards } = this.props
         return (

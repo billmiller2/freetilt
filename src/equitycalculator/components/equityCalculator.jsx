@@ -3,7 +3,7 @@ import { Grid, Col, Row } from 'react-bootstrap'
 import {
     BoardContainer,
     BreakdownContainer,
-    CardsContainer,
+    CardBankContainer,
     ClearContainer,
     EquityContainer,
     EvaluateContainer,
@@ -12,6 +12,17 @@ import {
 
 export class EquityCalculator extends React.Component {
     render() {
+        const { handCount } = this.props
+
+        let handRows = []
+        for (let i = 0; i < handCount; i++) {
+            handRows.push(
+                <Row xs={6} md={12} key={i + 1}>
+                    <HandContainer number={i + 1} />
+                </Row>
+            )
+        }
+
         return (
             <Grid>
                 <div className="buffer-row" />
@@ -22,12 +33,7 @@ export class EquityCalculator extends React.Component {
                     <EquityContainer />
                 </Col>
                 <Col xs={12} sm={4} className="col-lg-pull-1 col-sm-push-3 col-md-push-0">
-                    <Row xs={6} md={12}>
-                        <HandContainer number={1} />
-                    </Row>
-                    <Row xs={6} md={12}>
-                        <HandContainer number={2} />
-                    </Row>
+                    {handRows}
                     <Row xs={12} md={12}>
                         <BoardContainer />
                     </Row>
@@ -38,7 +44,7 @@ export class EquityCalculator extends React.Component {
                 </Col>
                 <Row className="visible-xs-block buffer-row" />
                 <Col xs={12} sm={4} md={3} lg={2} className="col-md-pull-8 col-sm-pull-6">
-                    <CardsContainer />
+                    <CardBankContainer />
                 </Col>
                 <Row>
                     <div className="footer navbar-fixed-bottom visible-md visible-lg">

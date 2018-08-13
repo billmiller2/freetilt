@@ -57,3 +57,25 @@ body {
 #footer-text {
     color: #54637a;
 }
+
+.handCountModifier {
+    border: none;
+}
+
+.tooltip-inner {
+    background-color: #fff;
+    color: #000;
+    border: 1px solid #d8d8d8;
+}
+
+#add-tooltip > .tooltip-arrow {
+    border-top: 5px solid #d8d8d8;
+}
+
+#remove-tooltip > .tooltip-arrow {
+    border-top: 5px solid #d8d8d8;
+}
+
+.capitalize {
+    text-transform: capitalize;
+}

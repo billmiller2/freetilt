@@ -30,3 +30,15 @@ export function clearHands() {
         type: types.CLEAR_HANDS
     }
 }
+
+export function incrementHands() {
+    return {
+        type: types.INCREMENT_HANDS
+    }
+}
+
+export function decrementHands() {
+    return {
+        type: types.DECREMENT_HANDS
+    }
+}
