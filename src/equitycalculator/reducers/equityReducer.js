@@ -123,11 +123,10 @@ export function equityReducer(state = initialState, action) {
                 slots: increasedSlots
             }
         case DECREMENT_HANDS:
-            const decreasedCount = state.handCount - 1
-            const decreasedSlots = { ...state.slots, [decreasedCount]: initialHand }
+            const { [state.handCount]: removed, ...decreasedSlots } = { ...state.slots }
             return {
                 ...state,
-                handCount: decreasedCount,
+                handCount: state.handCount - 1,
                 slots: decreasedSlots
             }
         default:
