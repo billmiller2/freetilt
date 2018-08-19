@@ -3,7 +3,7 @@ body {
 }
 
 .cardButton {
-    min-width: 42px;
+    width: 42px;
     min-height: 34px;
 }
 
