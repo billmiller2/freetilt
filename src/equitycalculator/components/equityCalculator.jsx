@@ -18,7 +18,9 @@ export class EquityCalculator extends React.Component {
         for (let i = 0; i < handCount; i++) {
             handRows.push(
                 <Row xs={6} md={12} key={i + 1}>
-                    <HandContainer number={i + 1} />
+                    <Col xs={12}>
+                        <HandContainer number={i + 1} />
+                    </Col>
                 </Row>
             )
         }
@@ -35,11 +37,15 @@ export class EquityCalculator extends React.Component {
                 <Col xs={12} sm={4} className="col-lg-pull-1 col-sm-push-3 col-md-push-0">
                     {handRows}
                     <Row xs={12} md={12}>
-                        <BoardContainer />
+                        <Col xs={12}>
+                            <BoardContainer />
+                        </Col>
                     </Row>
                     <Row md={12}>
-                        <EvaluateContainer />
-                        <ClearContainer />
+                        <Col xs={12}>
+                            <EvaluateContainer />
+                            <ClearContainer />
+                        </Col>
                     </Row>
                 </Col>
                 <Row className="visible-xs-block buffer-row" />
