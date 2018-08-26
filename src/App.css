@@ -12,6 +12,16 @@ body {
     padding: 0px;
 }
 
+/*increase button size on small devices*/
+@media only screen and (max-width: 600px) {
+    .cardButton {
+        width: 50px;
+    }
+    .btn-col {
+        min-width: 50px;
+    }
+}
+
 .spades {
     color: #000000;
 }
