@@ -28,6 +28,10 @@ export class Equity extends React.Component {
                                 {handEquities.length > 0 && formatPercentage(handEquities[i].equity, 0)}
                             </div>
                             </td>
+                            <td>
+                                {(handEquities.length > 0 && +handEquities[i].equity === 1)
+                                    && <span className="glyphicon glyphicon-ok" />}
+                            </td>
                         </tr>
                     )}
                     <tr>
@@ -41,6 +45,7 @@ export class Equity extends React.Component {
                                 )
                             })}
                         </td>
+                        <td />
                     </tr>
                     </tbody>
                 </table>

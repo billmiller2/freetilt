@@ -15,5 +15,12 @@ export const getHandsFromSlots = (slots) => {
     return hands
 }
 
-export const formatPercentage = (number, decimalPlaces) =>
-    (number * 100).toFixed(decimalPlaces) + '%'
+export const formatPercentage = (number, decimalPlaces) => {
+    if (number > 0.99 && number !== 1) {
+        return '>99%'
+    }
+    if (number < 0.01 && number !== 0) {
+        return '<1%'
+    }
+    return (number * 100).toFixed(decimalPlaces) + '%'
+}
