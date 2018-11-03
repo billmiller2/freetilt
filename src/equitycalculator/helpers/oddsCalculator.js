@@ -181,7 +181,7 @@ const getLosingIndicies = (winningIndicies, handCards, topHandRankIndex) => {
     return losingIndicies
 }
 
-const getEquity = (wins, ties) => ((wins / 10000) + ties).toFixed(2)
+const getEquity = (wins, ties) => ((wins / 10000) + ties)
 
 const getCards = (hand, board = []) => {
     let handArray = []
