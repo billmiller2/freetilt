@@ -89,3 +89,7 @@ body {
 .capitalize {
     text-transform: capitalize;
 }
+
+.handRangeRow {
+    margin-bottom: 15px;
+}

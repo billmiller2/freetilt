@@ -3,11 +3,10 @@ import { Grid, Col, Row } from 'react-bootstrap'
 import {
     BoardContainer,
     BreakdownContainer,
-    CardBankContainer,
     ClearContainer,
     EquityContainer,
     EvaluateContainer,
-    HandContainer
+    HandRangeContainer
 } from '../'
 
 export class EquityCalculator extends React.Component {
@@ -19,7 +18,7 @@ export class EquityCalculator extends React.Component {
             handRows.push(
                 <Row xs={6} md={12} key={i + 1}>
                     <Col xs={12}>
-                        <HandContainer number={i + 1} />
+                        <HandRangeContainer number={i + 1} />
                     </Col>
                 </Row>
             )
@@ -28,13 +27,7 @@ export class EquityCalculator extends React.Component {
         return (
             <Grid>
                 <div className="buffer-row" />
-                <Col xs={12} sm={12} md={2} className="col-md-push-9 col-lg-push-8">
-                    <BreakdownContainer />
-                </Col>
-                <Col xs={12} sm={2} className="col-lg-push-3 col-md-push-4 col-sm-push-9">
-                    <EquityContainer />
-                </Col>
-                <Col xs={12} sm={4} className="col-lg-pull-1 col-sm-push-3 col-md-push-0">
+                <Col xs={12} sm={4}>
                     {handRows}
                     <Row xs={12} md={12}>
                         <Col xs={12}>
@@ -48,10 +41,13 @@ export class EquityCalculator extends React.Component {
                         </Col>
                     </Row>
                 </Col>
-                <Row className="visible-xs-block buffer-row" />
-                <Col xs={12} sm={4} md={3} lg={2} className="col-md-pull-8 col-sm-pull-6">
-                    <CardBankContainer />
+                <Col xs={12} sm={2}>
+                    <EquityContainer />
                 </Col>
+                <Col xs={12} sm={12} md={2}>
+                    <BreakdownContainer />
+                </Col>
+                <Row className="visible-xs-block buffer-row" />
                 <Row>
                     <div className="footer navbar-fixed-bottom visible-md visible-lg">
                         <p className="text-center" id="footer-text">
