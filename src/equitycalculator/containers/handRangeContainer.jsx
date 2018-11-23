@@ -7,7 +7,12 @@ import {
 } from '../'
 
 const mapStateToProps = (state, ownProps) => {
-    const { selectedCard, selectedPosition, handCount } = state.equityReducer
+    const {
+        selectedCard,
+        selectedPosition,
+        handCount,
+        savedEquities
+    } = state.equityReducer
     const { number } = ownProps
     const position = state.equityReducer.slots[number]
     const showPlus = number === handCount
@@ -18,7 +23,8 @@ const mapStateToProps = (state, ownProps) => {
         selectedCard,
         selectedPosition,
         showPlus,
-        showMinus
+        showMinus,
+        savedEquities
     }
 }
 

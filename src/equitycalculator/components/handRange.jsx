@@ -1,6 +1,8 @@
 import React, { Component } from 'react'
+
 import { Tooltip, OverlayTrigger } from 'react-bootstrap'
 import { HandModal, RangeModal } from './'
+import { getSuitFromHTML, formatPercentage } from '../'
 
 export class HandRange extends Component {
     constructor(props) {
@@ -33,9 +35,11 @@ export class HandRange extends Component {
             showMinus,
             increment,
             decrement,
-            number
+            number,
+            savedEquities
         } = this.props
-
+        const hand = savedEquities[savedEquities.length - 1].hands[number]
+        const equity = savedEquities[savedEquities.length - 1].equities[number - 1]
         const addHandTooltip = <Tooltip id="add-tooltip" className="tooltip">Add Hand</Tooltip>
         const removeHandTooltip = <Tooltip id="remove-tooltip" className="tooltip">Remove Hand</Tooltip>
 
@@ -47,6 +51,21 @@ export class HandRange extends Component {
                 <button className="btn btn-default" onClick={this.toggleRangeModal}>
                     Range
                 </button>
+                &nbsp;
+                {Object.values(hand).map((card, i) => {
+                    const suit = getSuitFromHTML(card.suit.charCodeAt())
+                    return (
+                        <span key={i} className={suit}>
+                            {card.rank + card.suit}
+                        </span>
+                    )
+                })}
+                &nbsp;
+                {typeof equity !== 'undefined' && formatPercentage(equity.equity, 0)}
+                &nbsp;
+                {(typeof equity !== 'undefined' && equity.equity === 1)
+                    && <span className="glyphicon glyphicon-ok" />
+                }
                 {showMinus &&
                     <OverlayTrigger placement="top" overlay={removeHandTooltip}>
                         <button className="btn btn-default handCountModifier" onClick={decrement}>
