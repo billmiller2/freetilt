@@ -32,7 +32,8 @@ export class HandRange extends Component {
             showPlus,
             showMinus,
             increment,
-            decrement
+            decrement,
+            number
         } = this.props
 
         const addHandTooltip = <Tooltip id="add-tooltip" className="tooltip">Add Hand</Tooltip>
@@ -60,8 +61,14 @@ export class HandRange extends Component {
                         </button>
                     </OverlayTrigger>
                 }
-                <HandModal show={this.state.showHandModal} onClose={this.toggleHandModal} />
-                <RangeModal show={this.state.showRangeModal} onClose={this.toggleRangeModal} />
+                <HandModal
+                    show={this.state.showHandModal}
+                    onClose={this.toggleHandModal}
+                    number={number} />
+                <RangeModal
+                    show={this.state.showRangeModal}
+                    onClose={this.toggleRangeModal}
+                    number={number} />
             </div>
         )
     }
