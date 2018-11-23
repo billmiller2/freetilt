@@ -9,7 +9,7 @@ export class CardBank extends React.Component {
         return (
             <div>
             {unicodeSuits.map((suit, i) =>
-                <Col key={i} xs={2} md={3} className="btn-col">
+                <Col key={i} xs={1} className="btn-col">
                     {ranks.map((rank, j) => {
                         const disabled = deadCards.includes(rank + suit) ? true : false
 

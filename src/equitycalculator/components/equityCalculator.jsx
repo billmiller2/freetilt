@@ -2,9 +2,7 @@ import * as React from 'react'
 import { Grid, Col, Row } from 'react-bootstrap'
 import {
     BoardContainer,
-    BreakdownContainer,
     ClearContainer,
-    EquityContainer,
     EvaluateContainer,
     HandRangeContainer
 } from '../'
@@ -40,12 +38,6 @@ export class EquityCalculator extends React.Component {
                             <ClearContainer />
                         </Col>
                     </Row>
-                </Col>
-                <Col xs={12} sm={2}>
-                    <EquityContainer />
-                </Col>
-                <Col xs={12} sm={12} md={2}>
-                    <BreakdownContainer />
                 </Col>
                 <Row className="visible-xs-block buffer-row" />
                 <Row>
