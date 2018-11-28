@@ -1,7 +1,8 @@
 import * as React from 'react'
 import { Grid, Col, Row } from 'react-bootstrap'
+
+import { BoardButton } from './'
 import {
-    BoardContainer,
     ClearContainer,
     EvaluateContainer,
     HandRangeContainer
@@ -29,7 +30,7 @@ export class EquityCalculator extends React.Component {
                     {handRows}
                     <Row xs={12} md={12}>
                         <Col xs={12}>
-                            <BoardContainer />
+                            <BoardButton />
                         </Col>
                     </Row>
                     <Row md={12}>

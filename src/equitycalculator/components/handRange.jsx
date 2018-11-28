@@ -51,7 +51,7 @@ export class HandRange extends Component {
                 <button className="btn btn-default" onClick={this.toggleRangeModal}>
                     Range
                 </button>
-                &nbsp;
+                &nbsp;&nbsp;
                 {Object.values(hand).map((card, i) => {
                     const suit = getSuitFromHTML(card.suit.charCodeAt())
                     return (
@@ -60,7 +60,7 @@ export class HandRange extends Component {
                         </span>
                     )
                 })}
-                &nbsp;
+                &nbsp;&nbsp;
                 {typeof equity !== 'undefined' && formatPercentage(equity.equity, 0)}
                 &nbsp;
                 {(typeof equity !== 'undefined' && equity.equity === 1)
