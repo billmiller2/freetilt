@@ -1,11 +1,13 @@
 import { connect } from 'react-redux'
-import { EquityCalculator } from '../'
+import { EquityCalculator, BOARD } from '../'
 
 const mapStateToProps = (state, ownProps) => {
     const { handCount } = state.equityReducer
+    const board = state.equityReducer.slots[BOARD]
 
     return {
-        handCount
+        handCount,
+        board
     }
 }
 

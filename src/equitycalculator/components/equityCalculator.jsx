@@ -10,7 +10,7 @@ import {
 
 export class EquityCalculator extends React.Component {
     render() {
-        const { handCount } = this.props
+        const { handCount, board } = this.props
 
         let handRows = []
         for (let i = 0; i < handCount; i++) {
@@ -30,7 +30,7 @@ export class EquityCalculator extends React.Component {
                     {handRows}
                     <Row xs={12} md={12}>
                         <Col xs={12}>
-                            <BoardButton />
+                            <BoardButton board={board} />
                         </Col>
                     </Row>
                     <Row md={12}>

@@ -36,12 +36,16 @@ export class HandRange extends Component {
             increment,
             decrement,
             number,
-            savedEquities
+            savedEquities,
+            slots
         } = this.props
-        const hand = savedEquities[savedEquities.length - 1].hands[number]
+
+        const hand = slots[number]
         const equity = savedEquities[savedEquities.length - 1].equities[number - 1]
         const addHandTooltip = <Tooltip id="add-tooltip" className="tooltip">Add Hand</Tooltip>
         const removeHandTooltip = <Tooltip id="remove-tooltip" className="tooltip">Remove Hand</Tooltip>
+
+        console.log(hand)
 
         return (
             <div className="handRangeRow">
