@@ -1,4 +1,5 @@
 export * from './boardContainer'
+export * from './boardButtonContainer'
 export * from './breakdownContainer'
 export * from './calculatorContainer'
 export * from './cardBankContainer'

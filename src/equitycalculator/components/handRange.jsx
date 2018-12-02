@@ -37,7 +37,8 @@ export class HandRange extends Component {
             decrement,
             number,
             savedEquities,
-            slots
+            slots,
+            onSelect
         } = this.props
 
         const hand = slots[number]
@@ -60,7 +61,10 @@ export class HandRange extends Component {
 
         return (
             <div className="handRangeRow">
-                <button className="btn btn-default" onClick={this.toggleHandModal}>
+                <button className="btn btn-default" onClick={() => {
+                    this.toggleHandModal()
+                    onSelect(number, 1)
+                }}>
                     Hand
                 </button>
                 <button className="btn btn-default" onClick={this.toggleRangeModal}>

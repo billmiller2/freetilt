@@ -21,11 +21,14 @@ export class BoardButton extends Component {
     }
 
     render() {
-        const { board } = this.props
+        const { board, onClick } = this.props
 
         return (
             <div>
-                <button className="btn btn-default" onClick={this.toggleBoardModal}>
+                <button className="btn btn-default" onClick={() => {
+                    this.toggleBoardModal()
+                    onClick()
+                }}>
                     Board
                 </button>
                 &nbsp;
