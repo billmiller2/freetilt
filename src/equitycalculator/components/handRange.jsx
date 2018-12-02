@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 
 import { Tooltip, OverlayTrigger } from 'react-bootstrap'
 import { HandModal, RangeModal } from './'
-import { getSuitFromHTML, formatPercentage } from '../'
+import { getSuitFromHTML, formatPercentage, BOARD } from '../'
 
 export class HandRange extends Component {
     constructor(props) {
@@ -41,11 +41,22 @@ export class HandRange extends Component {
         } = this.props
 
         const hand = slots[number]
-        const equity = savedEquities[savedEquities.length - 1].equities[number - 1]
+        const latestEquities = savedEquities[savedEquities.length - 1]
+        const equity = latestEquities.equities[number - 1]
         const addHandTooltip = <Tooltip id="add-tooltip" className="tooltip">Add Hand</Tooltip>
         const removeHandTooltip = <Tooltip id="remove-tooltip" className="tooltip">Remove Hand</Tooltip>
 
-        console.log(hand)
+        let displayEquities = true
+
+        if (JSON.stringify(latestEquities.board) !== JSON.stringify(slots[BOARD])) {
+            displayEquities = false
+        }
+
+        for (let i = 1; i < Object.keys(slots).length; i++) {
+            if (JSON.stringify(slots[i]) !== JSON.stringify(latestEquities.hands[i])) {
+                displayEquities = false
+            }
+        }
 
         return (
             <div className="handRangeRow">
@@ -65,9 +76,9 @@ export class HandRange extends Component {
                     )
                 })}
                 &nbsp;&nbsp;
-                {typeof equity !== 'undefined' && formatPercentage(equity.equity, 0)}
+                {(typeof equity !== 'undefined' && displayEquities) && formatPercentage(equity.equity, 0)}
                 &nbsp;
-                {(typeof equity !== 'undefined' && equity.equity === 1)
+                {(typeof equity !== 'undefined' && displayEquities && equity.equity === 1)
                     && <span className="glyphicon glyphicon-ok" />
                 }
                 {showMinus &&
