@@ -93,3 +93,25 @@ body {
 .handRangeRow {
     margin-bottom: 15px;
 }
+
+.rangeBtn {
+    height: 40px;
+    width: 40px;
+}
+
+.suitedRangeBtn {
+    background-color: #f5f5f5;
+}
+
+.offsuitRangeBtn {
+    background-color: #e7f6ff;
+}
+
+.pairRangeBtn {
+    background-color: #c4dbe8;
+}
+
+.rangeRow {
+    margin-left: 10px;
+}
+
