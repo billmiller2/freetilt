@@ -4,6 +4,11 @@ import { Modal } from 'react-bootstrap'
 import { ranks } from '../'
 
 export class RangeModal extends Component {
+    //constructor(props) {
+        //super(props)
+
+    //}
+
     render() {
         const { show, onClose } = this.props
 
@@ -39,9 +44,22 @@ export class RangeModal extends Component {
                                             btnClass = 'pairRangeBtn'
                                     }
 
+                                    let hand = rankOne + rankTwo + suited
+
+                                    if (ranks.indexOf(rankTwo) < ranks.indexOf(rankOne)) {
+                                        hand = rankTwo + rankOne + suited
+                                    }
+
                                     return (
-                                        <button className={"btn btn-sm rangeBtn " + btnClass} key={rankOne + rankTwo}>
-                                            {rankOne + rankTwo + suited}
+                                        <button
+                                            className={"btn btn-sm rangeBtn " + btnClass}
+                                            onMouseOver={(e) => {
+                                                if (e.buttons === 1) {
+                                                    console.log(hand)
+                                                }
+                                            }}
+                                            key={rankOne + rankTwo}>
+                                            {hand}
                                         </button>
                                     )
                                 })}
