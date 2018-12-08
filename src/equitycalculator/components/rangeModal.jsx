@@ -4,10 +4,44 @@ import { Modal } from 'react-bootstrap'
 import { ranks } from '../'
 
 export class RangeModal extends Component {
-    //constructor(props) {
-        //super(props)
+    constructor(props) {
+        super(props)
 
-    //}
+        this.state = {
+            adding: true,
+            selectedHands: []
+        }
+
+        this.setAddingOrRemoving = this.setAddingOrRemoving.bind(this)
+        this.toggleSelection = this.toggleSelection.bind(this)
+    }
+
+    setAddingOrRemoving(hand) {
+        let adding = false
+
+        if (this.state.selectedHands.indexOf(hand) === -1) {
+            adding = true
+        }
+
+        this.setState({
+            adding: adding
+        }, this.toggleSelection(hand, adding))
+    }
+
+    toggleSelection(hand, adding = this.state.adding) {
+        let selectedHands = this.state.selectedHands.slice()
+        const index = selectedHands.indexOf(hand)
+
+        if (adding) {
+            selectedHands.push(hand)
+        } else if (index !== -1){
+            selectedHands.splice(index, 1)
+        }
+
+        this.setState({
+            selectedHands: selectedHands
+        })
+    }
 
     render() {
         const { show, onClose } = this.props
@@ -50,12 +84,17 @@ export class RangeModal extends Component {
                                         hand = rankTwo + rankOne + suited
                                     }
 
+                                    if (this.state.selectedHands.indexOf(hand) !== -1) {
+                                        btnClass += ' selectedRangeBtn'
+                                    }
+
                                     return (
                                         <button
                                             className={"btn btn-sm rangeBtn " + btnClass}
+                                            onMouseDown={() => this.setAddingOrRemoving(hand)}
                                             onMouseOver={(e) => {
                                                 if (e.buttons === 1) {
-                                                    console.log(hand)
+                                                    this.toggleSelection(hand)
                                                 }
                                             }}
                                             key={rankOne + rankTwo}>
