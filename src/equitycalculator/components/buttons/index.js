@@ -1,4 +1,5 @@
 export * from './bankCard'
+export * from './boardButton'
 export * from './boardCard'
 export * from './card'
 export * from './clear'

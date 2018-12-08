@@ -3,7 +3,9 @@ import { HandRange } from '../components'
 import {
     selectPosition,
     incrementHands,
-    decrementHands
+    decrementHands,
+    addToRange,
+    removeFromRange
 } from '../'
 
 const mapStateToProps = (state, ownProps) => {
@@ -12,7 +14,8 @@ const mapStateToProps = (state, ownProps) => {
         selectedPosition,
         handCount,
         savedEquities,
-        slots
+        slots,
+        ranges
     } = state.equityReducer
     const { number } = ownProps
     const position = state.equityReducer.slots[number]
@@ -26,7 +29,8 @@ const mapStateToProps = (state, ownProps) => {
         showPlus,
         showMinus,
         savedEquities,
-        slots
+        slots,
+        ranges
     }
 }
 
@@ -36,7 +40,9 @@ const mapDispatchToProps = (dispatch) => {
             dispatch(selectPosition(hand, card))
         },
         increment: () => dispatch(incrementHands()),
-        decrement: () => dispatch(decrementHands())
+        decrement: () => dispatch(decrementHands()),
+        addToRange: (number, hand) => dispatch(addToRange(number, hand)),
+        removeFromRange: (number, hand) => dispatch(removeFromRange(number, hand))
     }
 }
 

@@ -38,7 +38,10 @@ export class HandRange extends Component {
             number,
             savedEquities,
             slots,
-            onSelect
+            onSelect,
+            addToRange,
+            removeFromRange,
+            ranges
         } = this.props
 
         const hand = slots[number]
@@ -104,6 +107,9 @@ export class HandRange extends Component {
                     onClose={this.toggleHandModal}
                     number={number} />
                 <RangeModal
+                    addToRange={addToRange}
+                    removeFromRange={removeFromRange}
+                    range={ranges[number]}
                     show={this.state.showRangeModal}
                     onClose={this.toggleRangeModal}
                     number={number} />

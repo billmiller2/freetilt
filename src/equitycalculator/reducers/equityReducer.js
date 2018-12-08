@@ -5,7 +5,9 @@ import {
     CLEAR_HANDS,
     INCREMENT_HANDS,
     DECREMENT_HANDS,
-    BOARD
+    BOARD,
+    ADD_TO_RANGE,
+    REMOVE_FROM_RANGE
 } from '../'
 
 const card = {
@@ -31,6 +33,10 @@ const initialState = {
         1: initialHand,
         2: initialHand,
         [BOARD]: initialBoard
+    },
+    ranges: {
+        1: [],
+        2: []
     },
     handCount: 2,
     selectedPosition: 1,
@@ -129,6 +135,28 @@ export function equityReducer(state = initialState, action) {
                 ...state,
                 handCount: state.handCount - 1,
                 slots: decreasedSlots
+            }
+        case ADD_TO_RANGE:
+            let addRange = state.ranges[action.number].slice()
+            addRange.push(action.hand)
+
+            return {
+                ...state,
+                ranges: {
+                    ...state.ranges,
+                    [action.number]: addRange
+                }
+            }
+        case REMOVE_FROM_RANGE:
+            let removeRange = state.ranges[action.number].slice()
+            removeRange.splice(removeRange.indexOf(action.hand), 1)
+
+            return {
+                ...state,
+                ranges: {
+                    ...state.ranges,
+                    [action.number]: removeRange
+                }
             }
         default:
             return state

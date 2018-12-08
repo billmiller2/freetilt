@@ -8,8 +8,7 @@ export class RangeModal extends Component {
         super(props)
 
         this.state = {
-            adding: true,
-            selectedHands: []
+            adding: true
         }
 
         this.setAddingOrRemoving = this.setAddingOrRemoving.bind(this)
@@ -19,7 +18,7 @@ export class RangeModal extends Component {
     setAddingOrRemoving(hand) {
         let adding = false
 
-        if (this.state.selectedHands.indexOf(hand) === -1) {
+        if (this.props.range.indexOf(hand) === -1) {
             adding = true
         }
 
@@ -29,29 +28,22 @@ export class RangeModal extends Component {
     }
 
     toggleSelection(hand, adding = this.state.adding) {
-        let selectedHands = this.state.selectedHands.slice()
-        const index = selectedHands.indexOf(hand)
-
         if (adding) {
-            selectedHands.push(hand)
-        } else if (index !== -1){
-            selectedHands.splice(index, 1)
+            this.props.addToRange(this.props.number, hand)
+        } else if (this.props.range.indexOf(hand) !== -1){
+            this.props.removeFromRange(this.props.number, hand)
         }
-
-        this.setState({
-            selectedHands: selectedHands
-        })
     }
 
     render() {
-        const { show, onClose } = this.props
+        const { show, onClose, number, range } = this.props
 
         return (
             <Modal show={show} onHide={onClose}>
                 <Modal.Header closeButton>
+                    <h4>Range {number}</h4>
                 </Modal.Header>
                 <Modal.Body>
-                    <h4>Range</h4>
                     {ranks.map((rankOne, i) => {
                         let suited = 'o'
                         return (
@@ -84,7 +76,7 @@ export class RangeModal extends Component {
                                         hand = rankTwo + rankOne + suited
                                     }
 
-                                    if (this.state.selectedHands.indexOf(hand) !== -1) {
+                                    if (range.indexOf(hand) !== -1) {
                                         btnClass += ' selectedRangeBtn'
                                     }
 

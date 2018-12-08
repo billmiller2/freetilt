@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 
-import { BoardModal } from './'
-import { getSuitFromHTML } from '../'
+import { BoardModal } from '../'
+import { getSuitFromHTML } from '../../'
 
 export class BoardButton extends Component {
     constructor(props) {

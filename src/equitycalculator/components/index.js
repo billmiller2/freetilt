@@ -1,5 +1,4 @@
 export * from './board'
-export * from './boardButton'
 export * from './boardModal'
 export * from './breakdown-row'
 export * from './breakdown'
