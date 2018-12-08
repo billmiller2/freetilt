@@ -123,18 +123,25 @@ export function equityReducer(state = initialState, action) {
         case INCREMENT_HANDS:
             const increasedCount = state.handCount + 1
             const increasedSlots = { ...state.slots, [increasedCount]: initialHand }
+            const increasedRanges = { ...state.ranges, [increasedCount]: [] }
+
             return {
                 ...state,
                 handCount: increasedCount,
-                slots: increasedSlots
+                slots: increasedSlots,
+                ranges: increasedRanges
             }
         case DECREMENT_HANDS:
             const decreasedSlots = { ...state.slots }
+            const decreasedRanges = { ...state.ranges }
             delete decreasedSlots[state.handCount]
+            delete decreasedRanges[state.handCount]
+
             return {
                 ...state,
                 handCount: state.handCount - 1,
-                slots: decreasedSlots
+                slots: decreasedSlots,
+                ranges: decreasedRanges
             }
         case ADD_TO_RANGE:
             let addRange = state.ranges[action.number].slice()
