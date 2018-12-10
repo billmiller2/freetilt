@@ -13,7 +13,6 @@ export class Hand extends React.Component {
 
         return (
             <div>
-                <h4>Hand {number}</h4>
                 <HandCard
                     rank={position[1].rank}
                     suit={position[1].suit}

@@ -1,7 +1,62 @@
-import { getSuitFromUnicode } from '../'
+import { getSuitFromUnicode, unicodeSuits } from '../'
 
 export const getCardStringFromObj = (card) => {
     return card.rank + getSuitFromUnicode(card.suit)
+}
+
+export const getHandsFromRangeHand = (rangeHand) => {
+    let hands = []
+
+    if (rangeHand.indexOf('s') !== -1) { // suited
+        unicodeSuits.forEach(suit => {
+            hands.push({
+                1: {
+                    rank: rangeHand[0],
+                    suit: suit
+                },
+                2: {
+                    rank: rangeHand[1],
+                    suit: suit
+                }
+            })
+        })
+    } else if (rangeHand.indexOf('o') !== -1 ) { // offsuit
+        unicodeSuits.forEach(suitOne => {
+            unicodeSuits.forEach(suitTwo => {
+                if (suitOne !== suitTwo) {
+                    hands.push({
+                        1: {
+                            rank: rangeHand[0],
+                            suit: suitOne
+                        },
+                        2: {
+                            rank: rangeHand[1],
+                            suit: suitTwo
+                        }
+                    })
+                }
+            })
+        })
+    } else { // pair
+        unicodeSuits.forEach((suitOne, i) => {
+            unicodeSuits.forEach((suitTwo, j) => {
+                if (suitOne !== suitTwo && j > i) {
+                    hands.push({
+                        1: {
+                            rank: rangeHand[0],
+                            suit: suitOne
+                        },
+                        2: {
+                            rank: rangeHand[1],
+                            suit: suitTwo
+                        }
+                    })
+                }
+            })
+        })
+    }
+
+    return hands
 }
 
 export const getHandsFromSlots = (slots) => {

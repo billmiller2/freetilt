@@ -3,12 +3,13 @@ import {
     EvaluateButton,
     saveEquity,
     getHandsFromSlots,
+    getHandsFromRangeHand,
     getHandEquity,
     BOARD
 } from '../'
 
 const mapStateToProps = (state) => {
-    const { slots, savedEquities } = state.equityReducer
+    const { slots, ranges, savedEquities } = state.equityReducer
     const hands = getHandsFromSlots(slots)
     let disabled = false
     Object.entries(hands).forEach(function(hand) {
@@ -19,6 +20,7 @@ const mapStateToProps = (state) => {
 
     return {
         slots,
+        ranges,
         savedEquities,
         disabled
     }
@@ -26,21 +28,35 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        saveEquity: (slots, savedEquities) => {
+        saveEquity: (slots, ranges, savedEquities) => {
             let hands = getHandsFromSlots(slots)
-            let savedEquity = []
+            //let savedEquity = []
             let board = {}
             board = slots[BOARD]
 
-            for (let i = 0; i < savedEquities.length; i++) {
-                if (JSON.stringify(savedEquities[i].hands) === JSON.stringify(hands)
-                    && JSON.stringify(savedEquities[i].board) === JSON.stringify(board)
-                ) {
-                    savedEquity = savedEquities[i].equities
-                }
-            }
+            //for (let i = 0; i < savedEquities.length; i++) {
+                //if (JSON.stringify(savedEquities[i].hands) === JSON.stringify(hands)
+                    //&& JSON.stringify(savedEquities[i].board) === JSON.stringify(board)
+                //) {
+                    //savedEquity = savedEquities[i].equities
+                //}
+            //}
 
-            const handEquities = savedEquity.length > 0 ? savedEquity : getHandEquity(hands, board)
+            //const handEquities = savedEquity.length > 0 ? savedEquity : getHandEquity(hands, board)
+
+            let rangeHands = []
+
+            Object.values(ranges).forEach((range, i) => {
+                if (range.length > 0) {
+                    rangeHands[i] = []
+                }
+
+                range.forEach(rangeHand => {
+                    rangeHands[i] = rangeHands[i].concat(getHandsFromRangeHand(rangeHand))
+                })
+            })
+
+            const handEquities = getHandEquity(hands, board)
             dispatch(saveEquity(hands, board, handEquities))
         }
     }

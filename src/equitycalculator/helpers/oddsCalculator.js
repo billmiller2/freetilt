@@ -9,11 +9,11 @@ import { getCardStringFromObj, generateBoard } from './'
  *     {
  *         1: {
  *             1: {
- *                 rank: "Q",
+ *                 rank: "q",
  *                 suit: unicode suit string
  *             },
  *             2: {
- *                 rank: "J",
+ *                 rank: "j",
  *                 suit: unicode suit string
  *             }
  *         },
@@ -31,7 +31,7 @@ import { getCardStringFromObj, generateBoard } from './'
  *         Empty cards will still be passed but have empty strings for rank & suit
  *     }
  */
-export const getHandEquity = (hands, board) => {
+export const getHandEquity = (hands, board, iterations = 10000) => {
     if (!isValidInput(hands)) {
         return []
     }
@@ -40,7 +40,7 @@ export const getHandEquity = (hands, board) => {
     const handCount = Object.keys(hands).length
     let { breakdowns, wins, tieEquities } = initializeEquityVariables(handCount)
 
-    for (let i = 0; i < 10000; i++) {
+    for (let i = 0; i < iterations; i++) {
         const holeCards = getHoleCards(hands, handCount)
         const fullBoard = generateBoard(holeCards, boardCards)
         const { handCards, handStrengths, updatedBreakdowns } = evaluateHands(breakdowns, handCount, hands, fullBoard)
@@ -57,7 +57,7 @@ export const getHandEquity = (hands, board) => {
             if (updatedWinningIndicies.length === 1) {
                 wins[updatedWinningIndicies[0]]++
             } else {
-                const tieEquity = ((1 / updatedWinningIndicies.length) * (1 / 10000))
+                const tieEquity = ((1 / updatedWinningIndicies.length) * (1 / iterations))
 
                 updatedWinningIndicies.forEach(index => {
                     tieEquities[index] += tieEquity
@@ -68,7 +68,7 @@ export const getHandEquity = (hands, board) => {
 
     breakdowns.forEach((breakdown, i) => {
         Object.entries(breakdown).forEach(([key, value]) => {
-            breakdowns[i][key] = value / 10000
+            breakdowns[i][key] = value / iterations
         })
         breakdowns[i]['equity'] = getEquity(wins[i], tieEquities[i])
     })

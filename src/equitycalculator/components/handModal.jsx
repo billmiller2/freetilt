@@ -9,6 +9,7 @@ export const HandModal = (props) => {
     return (
         <Modal bsSize="small" show={props.show} onHide={props.onClose}>
             <Modal.Header closeButton>
+                <h4>Hand {number}</h4>
             </Modal.Header>
             <Modal.Body>
                 <div className="container-fluid">
