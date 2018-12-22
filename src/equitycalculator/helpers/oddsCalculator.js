@@ -2,6 +2,26 @@ import * as handRanks from '../constants/handRanks'
 import { ranks, handRankings } from '../'
 import { getCardStringFromObj, generateBoard } from './'
 
+export const getRangeEquity = (ranges, board) => {
+    const totalRanges = Object.values(ranges).length
+    let handCount = []
+    let breakdowns = []
+
+    Object.values(ranges).forEach((range, i) => {
+        handCount[i] = range.length
+    })
+
+    ranges[1].forEach((hand, i) => {
+        const dummyHand = ranges[2][0]
+        const hands = {
+            [1]: hand,
+            [2]: dummyHand
+        }
+        console.log(hands)
+        breakdowns[i] = getHandEquity(hands, board)
+    })
+}
+
 /**
  * Calculate hand equities
  *

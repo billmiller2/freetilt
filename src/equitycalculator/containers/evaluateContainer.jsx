@@ -4,7 +4,7 @@ import {
     saveEquity,
     getHandsFromSlots,
     getHandsFromRangeHand,
-    getHandEquity,
+    getRangeEquity,
     BOARD
 } from '../'
 
@@ -68,7 +68,7 @@ const mapDispatchToProps = (dispatch) => {
                 }
             })
 
-            const handEquities = getHandEquity(hands, board)
+            const handEquities = getRangeEquity(hands, board)
             dispatch(saveEquity(hands, board, handEquities))
         }
     }
