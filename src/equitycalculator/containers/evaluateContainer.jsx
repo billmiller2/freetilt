@@ -56,6 +56,18 @@ const mapDispatchToProps = (dispatch) => {
                 })
             })
 
+            rangeHands.forEach((range, i) => {
+                if (rangeHands[i].length > 0) {
+                    hands[i + 1] = rangeHands[i]
+                }
+            })
+
+            Object.values(hands).forEach((hand, i) => {
+                if (!Array.isArray(hands[i + 1])) {
+                    hands[i + 1] = [hands[i + 1]]
+                }
+            })
+
             const handEquities = getHandEquity(hands, board)
             dispatch(saveEquity(hands, board, handEquities))
         }
