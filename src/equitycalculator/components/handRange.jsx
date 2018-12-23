@@ -21,7 +21,7 @@ export class HandRange extends Component {
     getHand(hand) {
         let formattedHand = []
 
-        Object.values(hand).map((card, i) => {
+        Object.values(hand).forEach((card, i) => {
             const suit = getSuitFromHTML(card.suit.charCodeAt())
             formattedHand.push(
                 <span key={i} className={suit}>

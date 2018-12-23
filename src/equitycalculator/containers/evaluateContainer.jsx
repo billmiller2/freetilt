@@ -12,11 +12,14 @@ const mapStateToProps = (state) => {
     const { slots, ranges, savedEquities } = state.equityReducer
     const hands = getHandsFromSlots(slots)
     let disabled = false
-    Object.entries(hands).forEach(function(hand) {
-        if (hand[1][1].rank.length === 0 || hand[1][2].rank.length === 0) {
+
+    for (let i = 1; i < 3; i++) {
+        if (ranges[i].length === 0 &&
+            (hands[i][1].rank.length === 0 || hands[i][2].rank.length === 0)
+        ) {
             disabled = true
         }
-    })
+    }
 
     return {
         slots,
