@@ -2,7 +2,8 @@ import React, { Component } from 'react'
 
 import { Tooltip, OverlayTrigger } from 'react-bootstrap'
 import { HandModal, RangeModal } from './'
-import { getSuitFromHTML, formatPercentage, BOARD } from '../'
+//import { getSuitFromHTML, formatPercentage, BOARD } from '../'
+import { getSuitFromHTML, formatPercentage } from '../'
 
 export class HandRange extends Component {
     constructor(props) {
@@ -15,6 +16,35 @@ export class HandRange extends Component {
 
         this.toggleHandModal = this.toggleHandModal.bind(this)
         this.toggleRangeModal = this.toggleRangeModal.bind(this)
+    }
+
+    getHand(hand) {
+        let formattedHand = []
+
+        Object.values(hand).map((card, i) => {
+            const suit = getSuitFromHTML(card.suit.charCodeAt())
+            formattedHand.push(
+                <span key={i} className={suit}>
+                    {card.rank + card.suit}
+                </span>
+            )
+        })
+
+        return formattedHand
+    }
+
+    getRange(range) {
+        let formattedRange = ''
+
+        range.forEach((hand, i) => {
+            formattedRange += hand
+
+            if ((i + 1) < range.length) {
+                formattedRange += ', '
+            }
+        })
+
+        return formattedRange
     }
 
     toggleHandModal() {
@@ -49,18 +79,19 @@ export class HandRange extends Component {
         const equity = latestEquities.equities[number - 1]
         const addHandTooltip = <Tooltip id="add-tooltip" className="tooltip">Add Hand</Tooltip>
         const removeHandTooltip = <Tooltip id="remove-tooltip" className="tooltip">Remove Hand</Tooltip>
+        const range = ranges[number]
 
         let displayEquities = true
 
-        if (JSON.stringify(latestEquities.board) !== JSON.stringify(slots[BOARD])) {
-            displayEquities = false
-        }
+        //if (JSON.stringify(latestEquities.board) !== JSON.stringify(slots[BOARD])) {
+            //displayEquities = false
+        //}
 
-        for (let i = 1; i < Object.keys(slots).length; i++) {
-            if (JSON.stringify(slots[i]) !== JSON.stringify(latestEquities.hands[i])) {
-                displayEquities = false
-            }
-        }
+        //for (let i = 1; i < Object.keys(slots).length; i++) {
+            //if (JSON.stringify(slots[i]) !== JSON.stringify(latestEquities.hands[i])) {
+                //displayEquities = false
+            //}
+        //}
 
         return (
             <div className="handRangeRow">
@@ -74,14 +105,8 @@ export class HandRange extends Component {
                     Range
                 </button>
                 &nbsp;&nbsp;
-                {Object.values(hand).map((card, i) => {
-                    const suit = getSuitFromHTML(card.suit.charCodeAt())
-                    return (
-                        <span key={i} className={suit}>
-                            {card.rank + card.suit}
-                        </span>
-                    )
-                })}
+                {range.length === 0 && this.getHand(hand)}
+                {range.length > 0 && this.getRange(range)}
                 &nbsp;&nbsp;
                 {(typeof equity !== 'undefined' && displayEquities) && formatPercentage(equity.equity, 0)}
                 &nbsp;
