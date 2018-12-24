@@ -3,7 +3,7 @@ import React, { Component } from 'react'
 import { Tooltip, OverlayTrigger } from 'react-bootstrap'
 import { HandModal, RangeModal } from './'
 //import { getSuitFromHTML, formatPercentage, BOARD } from '../'
-import { getSuitFromHTML, formatPercentage } from '../'
+import { getSuitFromHTML, formatPercentage, ranks } from '../'
 
 export class HandRange extends Component {
     constructor(props) {
@@ -34,17 +34,51 @@ export class HandRange extends Component {
     }
 
     getRange(range) {
-        let formattedRange = ''
+        const pairs = range.filter(hand => hand.length === 2)
+        const nonPairs = range.filter(hand => hand.length === 3)
+        let lowestPair = ''
+        let highestPair = ''
+        let rangeSummary = ''
 
-        range.forEach((hand, i) => {
-            formattedRange += hand
+        ranks.slice().forEach(rank => {
+            if (pairs.indexOf(rank + rank) !== -1 && highestPair.length === 0) {
+                highestPair = rank + rank
 
-            if ((i + 1) < range.length) {
-                formattedRange += ', '
             }
         })
 
-        return formattedRange
+        ranks.slice().reverse().forEach((rank, i) => {
+            if (pairs.indexOf(rank + rank) !== -1 && lowestPair.length === 0) {
+                lowestPair = rank + rank
+
+                if (rank !== 'A' && highestPair === 'AA') {
+                    rangeSummary = lowestPair + '+'
+                }
+                rangeSummary = lowestPair
+
+                if (rank !== 'A') {
+                    if (highestPair === 'AA') {
+                        rangeSummary += '+'
+                    } else {
+                        rangeSummary = highestPair + '-' + lowestPair
+                    }
+                }
+
+                if (nonPairs.length > 0) {
+                    rangeSummary += ', '
+                }
+            }
+        })
+
+        nonPairs.forEach((hand, i) => {
+            rangeSummary += hand
+
+            if ((i + 1) < nonPairs.length) {
+                rangeSummary += ', '
+            }
+        })
+
+        return rangeSummary
     }
 
     toggleHandModal() {
