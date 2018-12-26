@@ -14,6 +14,7 @@ export class HandRange extends Component {
             showRangeModal: false
         }
 
+        this.getRange = this.getRange.bind(this)
         this.toggleHandModal = this.toggleHandModal.bind(this)
         this.toggleRangeModal = this.toggleRangeModal.bind(this)
     }
@@ -33,44 +34,57 @@ export class HandRange extends Component {
         return formattedHand
     }
 
+    getPairSummary(pairs) {
+        const sortedPairs = pairs.sort((a, b) => ranks.indexOf(a[0]) - ranks.indexOf(b[0]))
+        let pairRanges = [{
+            highest: '',
+            lowest: ''
+        }]
+
+        sortedPairs.forEach((pair, i) => {
+            const currentRange = pairRanges.length - 1
+
+            if (pairRanges[currentRange].highest.length === 0) {
+                pairRanges[currentRange].highest = pair
+            }
+
+            if ((i + 1) === sortedPairs.length) {
+                pairRanges[currentRange].lowest = pair
+            } else if (ranks.indexOf(sortedPairs[i + 1][0]) - ranks.indexOf(sortedPairs[i][0]) !== 1) {
+                pairRanges[currentRange].lowest = pair
+                pairRanges.push({
+                    highest: '',
+                    lowest: ''
+                })
+            }
+        })
+
+        let pairSummary = ''
+
+        pairRanges.forEach((pairRange, i) => {
+            pairSummary += pairRange.highest
+
+            if (pairRange.highest !== pairRange.lowest) {
+                pairSummary += '-' + pairRange.lowest
+            }
+            if ((i + 1) < pairRanges.length) {
+                pairSummary += ', '
+            }
+        })
+
+        return pairSummary
+    }
+
     getRange(range) {
         const pairs = range.filter(hand => hand.length === 2)
         const nonPairs = range.filter(hand => hand.length === 3)
-        let lowestPair = ''
-        let highestPair = ''
-        let rangeSummary = ''
-
-        ranks.slice().forEach(rank => {
-            if (pairs.indexOf(rank + rank) !== -1 && highestPair.length === 0) {
-                highestPair = rank + rank
-
-            }
-        })
-
-        ranks.slice().reverse().forEach((rank, i) => {
-            if (pairs.indexOf(rank + rank) !== -1 && lowestPair.length === 0) {
-                lowestPair = rank + rank
-
-                if (rank !== 'A' && highestPair === 'AA') {
-                    rangeSummary = lowestPair + '+'
-                }
-                rangeSummary = lowestPair
-
-                if (rank !== 'A') {
-                    if (highestPair === 'AA') {
-                        rangeSummary += '+'
-                    } else {
-                        rangeSummary = highestPair + '-' + lowestPair
-                    }
-                }
-
-                if (nonPairs.length > 0) {
-                    rangeSummary += ', '
-                }
-            }
-        })
+        let rangeSummary = this.getPairSummary(pairs)
 
         nonPairs.forEach((hand, i) => {
+            if (i === 0) {
+                rangeSummary += ', '
+            }
+
             rangeSummary += hand
 
             if ((i + 1) < nonPairs.length) {
