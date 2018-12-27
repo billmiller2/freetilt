@@ -67,6 +67,9 @@ export class HandRange extends Component {
             if (pairRange.highest !== pairRange.lowest) {
                 pairSummary += '-' + pairRange.lowest
             }
+            if (pairRanges.length === 1 && sortedPairs.indexOf('AA') !== -1 && sortedPairs.length > 1) {
+                pairSummary = pairRange.lowest + '+'
+            }
             if ((i + 1) < pairRanges.length) {
                 pairSummary += ', '
             }
