@@ -16,7 +16,7 @@ export const getRangeEquity = (ranges, board) => {
             1: hand,
             2: dummyHand
         }
-        breakdowns[i] = getHandEquity(hands, board)
+        breakdowns[i] = getHandEquity(hands, board, 1000)
     })
 
     let finalBreakdown = []
@@ -107,7 +107,7 @@ export const getHandEquity = (hands, board, iterations = 10000) => {
         Object.entries(breakdown).forEach(([key, value]) => {
             breakdowns[i][key] = value / iterations
         })
-        breakdowns[i]['equity'] = getEquity(wins[i], tieEquities[i])
+        breakdowns[i]['equity'] = getEquity(wins[i], tieEquities[i], iterations)
     })
 
     return breakdowns
@@ -218,7 +218,7 @@ const getLosingIndicies = (winningIndicies, handCards, topHandRankIndex) => {
     return losingIndicies
 }
 
-const getEquity = (wins, ties) => ((wins / 10000) + ties)
+const getEquity = (wins, ties, iterations) => ((wins / iterations) + ties)
 
 const getCards = (hand, board = []) => {
     let handArray = []
