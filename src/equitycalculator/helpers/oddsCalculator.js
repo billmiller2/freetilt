@@ -2,20 +2,29 @@ import * as handRanks from '../constants/handRanks'
 import { ranks, handRankings } from '../'
 import { getCardStringFromObj, generateBoard } from './'
 
-export const getRangeEquity = (ranges, board) => {
-    let handCount = []
-    let breakdowns = []
+const getComparisons = (ranges, comparisons, hands, index) => {
+    ranges[index].forEach(hand => {
+        const newHands = Object.assign({}, hands)
+        const newHand = Object.assign({}, hand)
+        newHands[index] = newHand
 
-    Object.values(ranges).forEach((range, i) => {
-        handCount[i] = range.length
+        if (Object.keys(newHands).length === Object.keys(ranges).length) {
+            comparisons.push(newHands)
+        }
+
+        if (index + 1 <= Object.keys(ranges).length) {
+            getComparisons(ranges, comparisons, newHands, index + 1)
+        }
     })
 
-    ranges[1].forEach((hand, i) => {
-        const dummyHand = ranges[2][0]
-        const hands = {
-            1: hand,
-            2: dummyHand
-        }
+    return comparisons
+}
+
+export const getRangeEquity = (ranges, board) => {
+    let breakdowns = []
+    const comparisons = getComparisons(ranges, [], {}, 1)
+
+    comparisons.forEach((hands, i) => {
         breakdowns[i] = getHandEquity(hands, board, 1000)
     })
 
