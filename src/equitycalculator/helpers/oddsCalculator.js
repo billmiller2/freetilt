@@ -25,7 +25,9 @@ export const getRangeEquity = (ranges, board) => {
     const comparisons = getComparisons(ranges, [], {}, 1)
 
     comparisons.forEach((hands, i) => {
-        breakdowns[i] = getHandEquity(hands, board, 1000)
+        if (isValidComparison(hands, board)) {
+            breakdowns.push(getHandEquity(hands, board, 1000))
+        }
     })
 
     let finalBreakdown = []
@@ -46,6 +48,41 @@ export const getRangeEquity = (ranges, board) => {
     })
 
     return finalBreakdown
+}
+
+/**
+ * Validate that no cards are duplicated
+ *
+ * @param {object} hands
+ * @param {object} board
+ * @return bool
+ */
+const isValidComparison = (hands, board) => {
+    let cards = []
+
+    Object.values(hands).forEach(hand => {
+        Object.values(hand).forEach(card => {
+            if (card.rank.length > 0) {
+                cards.push(JSON.stringify(card))
+            }
+        })
+    })
+
+    Object.values(board).forEach(card => {
+        if (card.rank.length > 0) {
+            cards.push(JSON.stringify(card))
+        }
+    })
+
+    let hasDuplicates = false
+
+    cards.forEach((card, i) => {
+        if (cards.indexOf(card, (i + 1)) !== -1) {
+            hasDuplicates = true
+        }
+    })
+
+    return !hasDuplicates
 }
 
 /**
