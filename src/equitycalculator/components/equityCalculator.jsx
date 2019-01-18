@@ -5,7 +5,8 @@ import {
     BoardButtonContainer,
     ClearContainer,
     EvaluateContainer,
-    HandRangeContainer
+    HandRangeContainer,
+    IncrementContainer
 } from '../'
 
 export class EquityCalculator extends React.Component {
@@ -28,6 +29,8 @@ export class EquityCalculator extends React.Component {
                 <div className="buffer-row" />
                 <Col xs={12}>
                     {handRows}
+                    <IncrementContainer />
+                    <br /><br />
                     <Row xs={12} md={12}>
                         <Col xs={12}>
                             <BoardButtonContainer board={board} />

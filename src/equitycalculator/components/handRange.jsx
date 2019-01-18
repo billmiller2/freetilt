@@ -115,9 +115,7 @@ export class HandRange extends Component {
 
     render() {
         const {
-            showPlus,
             showMinus,
-            increment,
             decrement,
             number,
             savedEquities,
@@ -132,7 +130,6 @@ export class HandRange extends Component {
         const hand = slots[number]
         const latestEquities = savedEquities[savedEquities.length - 1]
         const equity = latestEquities.equities[number - 1]
-        const addHandTooltip = <Tooltip id="add-tooltip" className="tooltip">Add Hand</Tooltip>
         const removeHandTooltip = <Tooltip id="remove-tooltip" className="tooltip">Remove Hand</Tooltip>
         const range = ranges[number]
 
@@ -151,7 +148,9 @@ export class HandRange extends Component {
                 {range.length === 0 && this.getHand(hand)}
                 {range.length > 0 && this.getRange(range)}
                 &nbsp;&nbsp;
-                {(typeof equity !== 'undefined' && displayEquities) && formatPercentage(equity.equity, 0)}
+                {(typeof equity !== 'undefined' && displayEquities)
+                    && <strong>{formatPercentage(equity.equity, 0)}</strong>
+                }
                 &nbsp;
                 {(typeof equity !== 'undefined' && displayEquities && equity.equity === 1)
                     && <span className="glyphicon glyphicon-ok" />
@@ -159,14 +158,7 @@ export class HandRange extends Component {
                 {showMinus &&
                     <OverlayTrigger placement="top" overlay={removeHandTooltip}>
                         <button className="btn btn-default handCountModifier" onClick={decrement}>
-                            <span className="glyphicon glyphicon-minus" />
-                        </button>
-                    </OverlayTrigger>
-                }
-                {showPlus &&
-                    <OverlayTrigger placement="top" overlay={addHandTooltip}>
-                        <button className="btn btn-default handCountModifier" onClick={increment}>
-                            <span className="glyphicon glyphicon-plus" />
+                            <span className="glyphicon glyphicon-remove removeHandIcon" />
                         </button>
                     </OverlayTrigger>
                 }
