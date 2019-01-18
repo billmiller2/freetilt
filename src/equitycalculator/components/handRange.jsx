@@ -83,7 +83,7 @@ export class HandRange extends Component {
         let rangeSummary = this.getPairSummary(pairs)
 
         nonPairs.forEach((hand, i) => {
-            if (i === 0) {
+            if (i === 0 && pairs.length > 0) {
                 rangeSummary += ', '
             }
 
