@@ -87,10 +87,14 @@ export class HandRange extends Component {
                 rangeSummary += ', '
             }
 
-            rangeSummary += hand
+            if (rangeSummary.length < 45) {
+                rangeSummary += hand
 
-            if ((i + 1) < nonPairs.length) {
-                rangeSummary += ', '
+                if ((i + 1) < nonPairs.length) {
+                    rangeSummary += ', '
+                }
+            } else if (rangeSummary.indexOf('...') === -1) {
+                rangeSummary = rangeSummary.slice(0, -2) + '...'
             }
         })
 

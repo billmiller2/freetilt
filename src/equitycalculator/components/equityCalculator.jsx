@@ -26,7 +26,7 @@ export class EquityCalculator extends React.Component {
         return (
             <Grid>
                 <div className="buffer-row" />
-                <Col xs={12} sm={4}>
+                <Col xs={12}>
                     {handRows}
                     <Row xs={12} md={12}>
                         <Col xs={12}>
