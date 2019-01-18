@@ -50,7 +50,8 @@ const initialState = {
             },
             board: initialBoard
         }
-    ]
+    ],
+    displayEquities: false
 }
 
 export function equityReducer(state = initialState, action) {
@@ -92,7 +93,8 @@ export function equityReducer(state = initialState, action) {
                     }
                 },
                 selectedPosition: selectedPosition,
-                selectedCard: selectedCard
+                selectedCard: selectedCard,
+                displayEquities: false
             }
         case SELECT_POSITION:
             return {
@@ -111,6 +113,7 @@ export function equityReducer(state = initialState, action) {
 
             return {
                 ...state,
+                displayEquities: true,
                 savedEquities
             }
         case CLEAR_HANDS:
@@ -118,6 +121,7 @@ export function equityReducer(state = initialState, action) {
 
             return {
                 ...initialState,
+                displayEquities: false,
                 savedEquities: equities
             }
         case INCREMENT_HANDS:
@@ -129,7 +133,8 @@ export function equityReducer(state = initialState, action) {
                 ...state,
                 handCount: increasedCount,
                 slots: increasedSlots,
-                ranges: increasedRanges
+                ranges: increasedRanges,
+                displayEquities: false
             }
         case DECREMENT_HANDS:
             const decreasedSlots = { ...state.slots }
@@ -141,7 +146,8 @@ export function equityReducer(state = initialState, action) {
                 ...state,
                 handCount: state.handCount - 1,
                 slots: decreasedSlots,
-                ranges: decreasedRanges
+                ranges: decreasedRanges,
+                displayEquities: false
             }
         case ADD_TO_RANGE:
             let addRange = state.ranges[action.number].slice()
@@ -152,7 +158,8 @@ export function equityReducer(state = initialState, action) {
                 ranges: {
                     ...state.ranges,
                     [action.number]: addRange
-                }
+                },
+                displayEquities: false
             }
         case REMOVE_FROM_RANGE:
             let removeRange = state.ranges[action.number].slice()
@@ -163,7 +170,8 @@ export function equityReducer(state = initialState, action) {
                 ranges: {
                     ...state.ranges,
                     [action.number]: removeRange
-                }
+                },
+                displayEquities: false
             }
         default:
             return state

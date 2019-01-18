@@ -2,7 +2,6 @@ import React, { Component } from 'react'
 
 import { Tooltip, OverlayTrigger } from 'react-bootstrap'
 import { HandModal, RangeModal } from './'
-//import { getSuitFromHTML, formatPercentage, BOARD } from '../'
 import { getSuitFromHTML, formatPercentage, ranks } from '../'
 
 export class HandRange extends Component {
@@ -122,7 +121,8 @@ export class HandRange extends Component {
             onSelect,
             addToRange,
             removeFromRange,
-            ranges
+            ranges,
+            displayEquities
         } = this.props
 
         const hand = slots[number]
@@ -131,18 +131,6 @@ export class HandRange extends Component {
         const addHandTooltip = <Tooltip id="add-tooltip" className="tooltip">Add Hand</Tooltip>
         const removeHandTooltip = <Tooltip id="remove-tooltip" className="tooltip">Remove Hand</Tooltip>
         const range = ranges[number]
-
-        let displayEquities = true
-
-        //if (JSON.stringify(latestEquities.board) !== JSON.stringify(slots[BOARD])) {
-            //displayEquities = false
-        //}
-
-        //for (let i = 1; i < Object.keys(slots).length; i++) {
-            //if (JSON.stringify(slots[i]) !== JSON.stringify(latestEquities.hands[i])) {
-                //displayEquities = false
-            //}
-        //}
 
         return (
             <div className="handRangeRow">

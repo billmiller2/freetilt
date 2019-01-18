@@ -15,7 +15,8 @@ const mapStateToProps = (state, ownProps) => {
         handCount,
         savedEquities,
         slots,
-        ranges
+        ranges,
+        displayEquities
     } = state.equityReducer
     const { number } = ownProps
     const position = state.equityReducer.slots[number]
@@ -30,7 +31,8 @@ const mapStateToProps = (state, ownProps) => {
         showMinus,
         savedEquities,
         slots,
-        ranges
+        ranges,
+        displayEquities
     }
 }
 
