@@ -151,7 +151,10 @@ export function equityReducer(state = initialState, action) {
             }
         case ADD_TO_RANGE:
             let addRange = state.ranges[action.number].slice()
-            addRange.push(action.hand)
+
+            if (addRange.indexOf(action.hand) === -1) {
+                addRange.push(action.hand)
+            }
 
             return {
                 ...state,
