@@ -5,7 +5,9 @@ import {
     CLEAR_HANDS,
     INCREMENT_HANDS,
     DECREMENT_HANDS,
-    BOARD
+    BOARD,
+    ADD_TO_RANGE,
+    REMOVE_FROM_RANGE
 } from '../'
 
 const card = {
@@ -32,6 +34,10 @@ const initialState = {
         2: initialHand,
         [BOARD]: initialBoard
     },
+    ranges: {
+        1: [],
+        2: []
+    },
     handCount: 2,
     selectedPosition: 1,
     selectedCard: 1,
@@ -44,7 +50,8 @@ const initialState = {
             },
             board: initialBoard
         }
-    ]
+    ],
+    displayEquities: false
 }
 
 export function equityReducer(state = initialState, action) {
@@ -86,7 +93,8 @@ export function equityReducer(state = initialState, action) {
                     }
                 },
                 selectedPosition: selectedPosition,
-                selectedCard: selectedCard
+                selectedCard: selectedCard,
+                displayEquities: false
             }
         case SELECT_POSITION:
             return {
@@ -105,6 +113,7 @@ export function equityReducer(state = initialState, action) {
 
             return {
                 ...state,
+                displayEquities: true,
                 savedEquities
             }
         case CLEAR_HANDS:
@@ -112,23 +121,60 @@ export function equityReducer(state = initialState, action) {
 
             return {
                 ...initialState,
+                displayEquities: false,
                 savedEquities: equities
             }
         case INCREMENT_HANDS:
             const increasedCount = state.handCount + 1
             const increasedSlots = { ...state.slots, [increasedCount]: initialHand }
+            const increasedRanges = { ...state.ranges, [increasedCount]: [] }
+
             return {
                 ...state,
                 handCount: increasedCount,
-                slots: increasedSlots
+                slots: increasedSlots,
+                ranges: increasedRanges,
+                displayEquities: false
             }
         case DECREMENT_HANDS:
             const decreasedSlots = { ...state.slots }
+            const decreasedRanges = { ...state.ranges }
             delete decreasedSlots[state.handCount]
+            delete decreasedRanges[state.handCount]
+
             return {
                 ...state,
                 handCount: state.handCount - 1,
-                slots: decreasedSlots
+                slots: decreasedSlots,
+                ranges: decreasedRanges,
+                displayEquities: false
+            }
+        case ADD_TO_RANGE:
+            let addRange = state.ranges[action.number].slice()
+
+            if (addRange.indexOf(action.hand) === -1) {
+                addRange.push(action.hand)
+            }
+
+            return {
+                ...state,
+                ranges: {
+                    ...state.ranges,
+                    [action.number]: addRange
+                },
+                displayEquities: false
+            }
+        case REMOVE_FROM_RANGE:
+            let removeRange = state.ranges[action.number].slice()
+            removeRange.splice(removeRange.indexOf(action.hand), 1)
+
+            return {
+                ...state,
+                ranges: {
+                    ...state.ranges,
+                    [action.number]: removeRange
+                },
+                displayEquities: false
             }
         default:
             return state

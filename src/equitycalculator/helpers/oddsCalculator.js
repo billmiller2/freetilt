@@ -2,6 +2,94 @@ import * as handRanks from '../constants/handRanks'
 import { ranks, handRankings } from '../'
 import { getCardStringFromObj, generateBoard } from './'
 
+const getComparisons = (ranges, comparisons, hands, index) => {
+    ranges[index].forEach(hand => {
+        const newHands = Object.assign({}, hands)
+        const newHand = Object.assign({}, hand)
+        newHands[index] = newHand
+
+        if (Object.keys(newHands).length === Object.keys(ranges).length) {
+            comparisons.push(newHands)
+        }
+
+        if (index + 1 <= Object.keys(ranges).length) {
+            getComparisons(ranges, comparisons, newHands, index + 1)
+        }
+    })
+
+    return comparisons
+}
+
+export const getRangeEquity = (ranges, board) => {
+    let breakdowns = []
+    const comparisons = getComparisons(ranges, [], {}, 1)
+    let iterations = 10000 - (comparisons.length * 100)
+
+    if (iterations < 5) {
+        iterations = 5
+    }
+
+    comparisons.forEach((hands, i) => {
+        if (isValidComparison(hands, board)) {
+            breakdowns.push(getHandEquity(hands, board, iterations))
+        }
+    })
+
+    let finalBreakdown = []
+
+    breakdowns.forEach(breakdown => {
+        breakdown.forEach((rangeBreakdown, i) => {
+            if (typeof finalBreakdown[i] === 'undefined') {
+                finalBreakdown[i] = {}
+            }
+
+            Object.entries(rangeBreakdown).forEach(([key, value]) => {
+                if (typeof finalBreakdown[i][key] === 'undefined') {
+                    finalBreakdown[i][key] = 0
+                }
+                finalBreakdown[i][key] += (value / breakdowns.length)
+            })
+        })
+    })
+
+    return finalBreakdown
+}
+
+/**
+ * Validate that no cards are duplicated
+ *
+ * @param {object} hands
+ * @param {object} board
+ * @return bool
+ */
+const isValidComparison = (hands, board) => {
+    let cards = []
+
+    Object.values(hands).forEach(hand => {
+        Object.values(hand).forEach(card => {
+            if (card.rank.length > 0) {
+                cards.push(JSON.stringify(card))
+            }
+        })
+    })
+
+    Object.values(board).forEach(card => {
+        if (card.rank.length > 0) {
+            cards.push(JSON.stringify(card))
+        }
+    })
+
+    let hasDuplicates = false
+
+    cards.forEach((card, i) => {
+        if (cards.indexOf(card, (i + 1)) !== -1) {
+            hasDuplicates = true
+        }
+    })
+
+    return !hasDuplicates
+}
+
 /**
  * Calculate hand equities
  *
@@ -9,11 +97,11 @@ import { getCardStringFromObj, generateBoard } from './'
  *     {
  *         1: {
  *             1: {
- *                 rank: "Q",
+ *                 rank: "q",
  *                 suit: unicode suit string
  *             },
  *             2: {
- *                 rank: "J",
+ *                 rank: "j",
  *                 suit: unicode suit string
  *             }
  *         },
@@ -31,7 +119,7 @@ import { getCardStringFromObj, generateBoard } from './'
  *         Empty cards will still be passed but have empty strings for rank & suit
  *     }
  */
-export const getHandEquity = (hands, board) => {
+export const getHandEquity = (hands, board, iterations = 10000) => {
     if (!isValidInput(hands)) {
         return []
     }
@@ -40,7 +128,7 @@ export const getHandEquity = (hands, board) => {
     const handCount = Object.keys(hands).length
     let { breakdowns, wins, tieEquities } = initializeEquityVariables(handCount)
 
-    for (let i = 0; i < 10000; i++) {
+    for (let i = 0; i < iterations; i++) {
         const holeCards = getHoleCards(hands, handCount)
         const fullBoard = generateBoard(holeCards, boardCards)
         const { handCards, handStrengths, updatedBreakdowns } = evaluateHands(breakdowns, handCount, hands, fullBoard)
@@ -57,7 +145,7 @@ export const getHandEquity = (hands, board) => {
             if (updatedWinningIndicies.length === 1) {
                 wins[updatedWinningIndicies[0]]++
             } else {
-                const tieEquity = ((1 / updatedWinningIndicies.length) * (1 / 10000))
+                const tieEquity = ((1 / updatedWinningIndicies.length) * (1 / iterations))
 
                 updatedWinningIndicies.forEach(index => {
                     tieEquities[index] += tieEquity
@@ -68,9 +156,9 @@ export const getHandEquity = (hands, board) => {
 
     breakdowns.forEach((breakdown, i) => {
         Object.entries(breakdown).forEach(([key, value]) => {
-            breakdowns[i][key] = value / 10000
+            breakdowns[i][key] = value / iterations
         })
-        breakdowns[i]['equity'] = getEquity(wins[i], tieEquities[i])
+        breakdowns[i]['equity'] = getEquity(wins[i], tieEquities[i], iterations)
     })
 
     return breakdowns
@@ -181,7 +269,7 @@ const getLosingIndicies = (winningIndicies, handCards, topHandRankIndex) => {
     return losingIndicies
 }
 
-const getEquity = (wins, ties) => ((wins / 10000) + ties)
+const getEquity = (wins, ties, iterations) => ((wins / iterations) + ties)
 
 const getCards = (hand, board = []) => {
     let handArray = []

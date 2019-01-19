@@ -42,3 +42,19 @@ export function decrementHands() {
         type: types.DECREMENT_HANDS
     }
 }
+
+export function addToRange(number, hand) {
+    return {
+        type: types.ADD_TO_RANGE,
+        number: number,
+        hand: hand
+    }
+}
+
+export function removeFromRange(number, hand) {
+    return {
+        type: types.REMOVE_FROM_RANGE,
+        number: number,
+        hand: hand
+    }
+}

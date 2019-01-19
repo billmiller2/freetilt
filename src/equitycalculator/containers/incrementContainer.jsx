@@ -1,5 +1,6 @@
 import { connect } from 'react-redux'
-import { ClearButton, clearHands } from '../'
+import { Increment } from '../components'
+import { incrementHands } from '../'
 
 const mapStateToProps = () => {
     return {}
@@ -7,11 +8,11 @@ const mapStateToProps = () => {
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        onClick: () => dispatch(clearHands())
+        increment: () => dispatch(incrementHands()),
     }
 }
 
-export const ClearContainer = connect(
+export const IncrementContainer = connect(
     mapStateToProps,
     mapDispatchToProps
-)(ClearButton)
+)(Increment)
