@@ -23,10 +23,15 @@ const getComparisons = (ranges, comparisons, hands, index) => {
 export const getRangeEquity = (ranges, board) => {
     let breakdowns = []
     const comparisons = getComparisons(ranges, [], {}, 1)
+    let iterations = 10000 - (comparisons.length * 100)
+
+    if (iterations < 5) {
+        iterations = 5
+    }
 
     comparisons.forEach((hands, i) => {
         if (isValidComparison(hands, board)) {
-            breakdowns.push(getHandEquity(hands, board, 1000))
+            breakdowns.push(getHandEquity(hands, board, iterations))
         }
     })
 
