@@ -1,17 +1,8 @@
 import { connect } from 'react-redux'
-import { ClearButton, clearHands, getHandsFromSlots } from '../'
+import { ClearButton, clearHands } from '../'
 
-const mapStateToProps = (state) => {
-    const { slots } = state.equityReducer
-    const hands = getHandsFromSlots(slots)
-    const displayButton = hands[1][1].rank.length > 0
-        || hands[1][2].rank.length > 0
-        || hands[2][1].rank.length > 0
-        || hands[2][2].rank.length > 0
-
-    return {
-        displayButton
-    }
+const mapStateToProps = () => {
+    return {}
 }
 
 const mapDispatchToProps = (dispatch) => {
