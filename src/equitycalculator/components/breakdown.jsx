@@ -5,9 +5,9 @@ import { BreakdownRow } from './'
 export const Breakdown = (props) => {
     const { equities, hands } = props
 
-    if (equities.length === 0) {
+    //if (equities.length === 0) {
         return <div />
-    }
+    //}
 
     return (
         <div>
