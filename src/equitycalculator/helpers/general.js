@@ -145,6 +145,24 @@ const getPairSummary = (pairs) => {
     return pairSummary
 }
 
+const getNonPairSummary = (nonPairs, pairs, rangeSummary) => {
+    nonPairs.forEach((hand, i) => {
+        if (i === 0 && pairs.length > 0) {
+            rangeSummary += ', '
+        }
+
+        if (rangeSummary.length < 45) {
+            rangeSummary += hand
+
+            if ((i + 1) < nonPairs.length) {
+                rangeSummary += ', '
+            }
+        } else if (rangeSummary.indexOf('...') === -1) {
+            rangeSummary = rangeSummary.slice(0, -2) + '...'
+        }
+    })
+}
+
 export const getRange = (range) => {
     const pairs = range.filter(hand => hand.length === 2)
     const nonPairs = range.filter(hand => hand.length === 3)
@@ -165,6 +183,27 @@ export const getRange = (range) => {
             rangeSummary = rangeSummary.slice(0, -2) + '...'
         }
     })
+
+    return rangeSummary
+}
+
+export const getRangeSummary = (range) => {
+    let pairs = []
+    let nonPairs = []
+
+    range.forEach(hand => {
+        const firstCard = hand[1].rank
+        const secondCard = hand[2].rank
+        const handRanks = firstCard + secondCard
+
+        if (firstCard === secondCard && pairs.indexOf(handRanks) === -1) {
+            pairs.push(handRanks)
+        } else if (firstCard !== secondCard && nonPairs.indexOf(handRanks) === -1) {
+            nonPairs.push(firstCard + secondCard)
+        }
+    })
+
+    let rangeSummary = getPairSummary(pairs)
 
     return rangeSummary
 }

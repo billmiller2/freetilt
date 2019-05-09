@@ -1,13 +1,13 @@
 import * as React from 'react'
-import { getSuitFromHTML, handRankings } from '../'
+import { handRankings, getHand, getRangeSummary } from '../'
 import { BreakdownRow } from './'
 
 export const Breakdown = (props) => {
     const { equities, hands } = props
 
-    //if (equities.length === 0) {
+    if (equities.length === 0) {
         return <div />
-    //}
+    }
 
     return (
         <div>
@@ -16,19 +16,15 @@ export const Breakdown = (props) => {
                 <tbody>
                     <tr>
                         <th></th>
-                        {Object.entries(hands).map((hand, i) =>
-                            <td key={i}>
-                            {Object.entries(hand[1]).map((card, j) => {
-                                const suit = getSuitFromHTML(card[1].suit.charCodeAt())
-
-                                return (
-                                    <span className={suit} key={j}>
-                                        {card[1].rank + card[1].suit}
-                                    </span>
-                                )
-                            })}
-                            </td>
-                        )}
+                        {Object.values(hands).map((range, i) => {
+                            return (
+                                <td key={i}>
+                                    {range.length === 1
+                                        ? getHand(range[0])
+                                        : getRangeSummary(range, true)}
+                                </td>
+                            )
+                        })}
                     </tr>
                     {handRankings.map((handRanking, i) =>
                         <BreakdownRow key={i} ranking={handRanking} equities={equities} />
