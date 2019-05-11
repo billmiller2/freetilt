@@ -44,7 +44,7 @@ export class EquityCalculator extends React.Component {
                         </Col>
                     </Row>
                 </Col>
-                <Col md={6}>
+                <Col xs={12} md={6}>
                     <BreakdownContainer />
                 </Col>
                 <Row className="visible-xs-block buffer-row" />
