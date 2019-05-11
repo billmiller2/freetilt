@@ -145,35 +145,13 @@ const getPairSummary = (pairs) => {
     return pairSummary
 }
 
-const getNonPairSummary = (nonPairs, pairs, rangeSummary) => {
+const getNonPairSummary = (nonPairs, pairs, rangeSummary, limit) => {
     nonPairs.forEach((hand, i) => {
         if (i === 0 && pairs.length > 0) {
             rangeSummary += ', '
         }
 
-        if (rangeSummary.length < 45) {
-            rangeSummary += hand
-
-            if ((i + 1) < nonPairs.length) {
-                rangeSummary += ', '
-            }
-        } else if (rangeSummary.indexOf('...') === -1) {
-            rangeSummary = rangeSummary.slice(0, -2) + '...'
-        }
-    })
-}
-
-export const getRange = (range) => {
-    const pairs = range.filter(hand => hand.length === 2)
-    const nonPairs = range.filter(hand => hand.length === 3)
-    let rangeSummary = getPairSummary(pairs)
-
-    nonPairs.forEach((hand, i) => {
-        if (i === 0 && pairs.length > 0) {
-            rangeSummary += ', '
-        }
-
-        if (rangeSummary.length < 45) {
+        if (rangeSummary.length < limit) {
             rangeSummary += hand
 
             if ((i + 1) < nonPairs.length) {
@@ -185,6 +163,14 @@ export const getRange = (range) => {
     })
 
     return rangeSummary
+}
+
+export const getRange = (range) => {
+    const pairs = range.filter(hand => hand.length === 2)
+    const nonPairs = range.filter(hand => hand.length === 3)
+    let rangeSummary = getPairSummary(pairs)
+
+    return getNonPairSummary(nonPairs, pairs, rangeSummary, 45)
 }
 
 export const getRangeSummary = (range) => {
@@ -205,5 +191,5 @@ export const getRangeSummary = (range) => {
 
     let rangeSummary = getPairSummary(pairs)
 
-    return rangeSummary
+    return getNonPairSummary(nonPairs, pairs, rangeSummary, 5)
 }
