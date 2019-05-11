@@ -2,7 +2,11 @@ import React, { Component } from 'react'
 
 import { Tooltip, OverlayTrigger } from 'react-bootstrap'
 import { HandModal, RangeModal } from './'
-import { getSuitFromHTML, formatPercentage, ranks } from '../'
+import {
+    getHand,
+    getRange,
+    formatPercentage,
+} from '../'
 
 export class HandRange extends Component {
     constructor(props) {
@@ -13,92 +17,8 @@ export class HandRange extends Component {
             showRangeModal: false
         }
 
-        this.getRange = this.getRange.bind(this)
         this.toggleHandModal = this.toggleHandModal.bind(this)
         this.toggleRangeModal = this.toggleRangeModal.bind(this)
-    }
-
-    getHand(hand) {
-        let formattedHand = []
-
-        Object.values(hand).forEach((card, i) => {
-            const suit = getSuitFromHTML(card.suit.charCodeAt())
-            formattedHand.push(
-                <span key={i} className={suit}>
-                    {card.rank + card.suit}
-                </span>
-            )
-        })
-
-        return formattedHand
-    }
-
-    getPairSummary(pairs) {
-        const sortedPairs = pairs.sort((a, b) => ranks.indexOf(a[0]) - ranks.indexOf(b[0]))
-        let pairRanges = [{
-            highest: '',
-            lowest: ''
-        }]
-
-        sortedPairs.forEach((pair, i) => {
-            const currentRange = pairRanges.length - 1
-
-            if (pairRanges[currentRange].highest.length === 0) {
-                pairRanges[currentRange].highest = pair
-            }
-
-            if ((i + 1) === sortedPairs.length) {
-                pairRanges[currentRange].lowest = pair
-            } else if (ranks.indexOf(sortedPairs[i + 1][0]) - ranks.indexOf(sortedPairs[i][0]) !== 1) {
-                pairRanges[currentRange].lowest = pair
-                pairRanges.push({
-                    highest: '',
-                    lowest: ''
-                })
-            }
-        })
-
-        let pairSummary = ''
-
-        pairRanges.forEach((pairRange, i) => {
-            pairSummary += pairRange.highest
-
-            if (pairRange.highest !== pairRange.lowest) {
-                pairSummary += '-' + pairRange.lowest
-            }
-            if (pairRanges.length === 1 && sortedPairs.indexOf('AA') !== -1 && sortedPairs.length > 1) {
-                pairSummary = pairRange.lowest + '+'
-            }
-            if ((i + 1) < pairRanges.length) {
-                pairSummary += ', '
-            }
-        })
-
-        return pairSummary
-    }
-
-    getRange(range) {
-        const pairs = range.filter(hand => hand.length === 2)
-        const nonPairs = range.filter(hand => hand.length === 3)
-        let rangeSummary = this.getPairSummary(pairs)
-
-        nonPairs.forEach((hand, i) => {
-            if (i === 0 && pairs.length > 0) {
-                rangeSummary += ', '
-            }
-
-            if (rangeSummary.length < 45) {
-                rangeSummary += hand
-
-                if ((i + 1) < nonPairs.length) {
-                    rangeSummary += ', '
-                }
-            } else if (rangeSummary.indexOf('...') === -1) {
-                rangeSummary = rangeSummary.slice(0, -2) + '...'
-            }
-        })
-
-        return rangeSummary
     }
 
     toggleHandModal() {
@@ -145,8 +65,8 @@ export class HandRange extends Component {
                     Range
                 </button>
                 &nbsp;&nbsp;
-                {range.length === 0 && this.getHand(hand)}
-                {range.length > 0 && this.getRange(range)}
+                {range.length === 0 && getHand(hand)}
+                {range.length > 0 && getRange(range)}
                 &nbsp;&nbsp;
                 {(typeof equity !== 'undefined' && displayEquities)
                     && <strong>{formatPercentage(equity.equity, 0)}</strong>
