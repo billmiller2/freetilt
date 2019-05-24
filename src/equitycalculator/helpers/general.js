@@ -165,12 +165,12 @@ const getNonPairSummary = (nonPairs, pairs, rangeSummary, limit) => {
     return rangeSummary
 }
 
-export const getRange = (range) => {
+export const getRange = (range, limit = 45) => {
     const pairs = range.filter(hand => hand.length === 2)
     const nonPairs = range.filter(hand => hand.length === 3)
     let rangeSummary = getPairSummary(pairs)
 
-    return getNonPairSummary(nonPairs, pairs, rangeSummary, 45)
+    return getNonPairSummary(nonPairs, pairs, rangeSummary, limit)
 }
 
 export const getRangeSummary = (range) => {
