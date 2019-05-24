@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import $ from 'jquery'
 
 import { Tooltip, OverlayTrigger } from 'react-bootstrap'
 import { HandModal, RangeModal } from './'
@@ -52,6 +53,7 @@ export class HandRange extends Component {
         const equity = latestEquities.equities[number - 1]
         const removeHandTooltip = <Tooltip id="remove-tooltip" className="tooltip">Remove Hand</Tooltip>
         const range = ranges[number]
+        const rangeLimit = ($(window).width()) > 500 ? 45 : 5
 
         return (
             <div className="handRangeRow">
@@ -66,7 +68,7 @@ export class HandRange extends Component {
                 </button>
                 &nbsp;&nbsp;
                 {range.length === 0 && getHand(hand)}
-                {range.length > 0 && getRange(range)}
+                {range.length > 0 && getRange(range, rangeLimit)}
                 &nbsp;&nbsp;
                 {(typeof equity !== 'undefined' && displayEquities)
                     && <strong>{formatPercentage(equity.equity, 0)}</strong>
