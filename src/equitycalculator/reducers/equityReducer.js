@@ -64,19 +64,11 @@ export function equityReducer(state = initialState, action) {
                 case BOARD:
                     if (selectedCard < 5) {
                         selectedCard++
-                    } else {
-                        selectedCard = 1
-                        selectedPosition = 1
                     }
                     break;
                 default:
                     if (selectedCard === 1) {
                         selectedCard = 2
-                    } else {
-                        selectedCard = 1
-                        selectedPosition = state.selectedPosition === state.handCount
-                            ? BOARD
-                            : state.selectedPosition + 1
                     }
             }
 
