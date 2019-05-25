@@ -124,5 +124,15 @@ body {
 }
 
 .rangeModal {
-    min-width: 600px;
+    max-width: 100%;
+}
+
+@media (max-width: 500px) {
+    .rangeModal {
+        overflow-x: auto;
+    }
+}
+
+.rangeMatrix {
+    width: 600px;
 }
