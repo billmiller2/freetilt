@@ -39,11 +39,12 @@ export class RangeModal extends Component {
         const { show, onClose, number, range } = this.props
 
         return (
-            <Modal show={show} onHide={onClose} className="rangeModal">
+            <Modal show={show} onHide={onClose}>
                 <Modal.Header closeButton>
                     <h4>Range {number}</h4>
                 </Modal.Header>
-                <Modal.Body>
+                <Modal.Body className="rangeModal">
+                    <div className="rangeMatrix">
                     {ranks.map((rankOne, i) => {
                         let suited = 'o'
                         return (
@@ -97,6 +98,7 @@ export class RangeModal extends Component {
                             </div>
                         )
                     })}
+                    </div>
                 </Modal.Body>
             </Modal>
         )
