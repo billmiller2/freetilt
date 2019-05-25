@@ -122,3 +122,7 @@ body {
 .removeHandIcon {
     color: red;
 }
+
+.rangeModal {
+    min-width: 600px;
+}
