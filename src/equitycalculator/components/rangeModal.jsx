@@ -39,7 +39,7 @@ export class RangeModal extends Component {
         const { show, onClose, number, range } = this.props
 
         return (
-            <Modal show={show} onHide={onClose}>
+            <Modal show={show} onHide={onClose} className="rangeModal">
                 <Modal.Header closeButton>
                     <h4>Range {number}</h4>
                 </Modal.Header>
