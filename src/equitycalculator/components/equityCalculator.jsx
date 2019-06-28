@@ -53,7 +53,7 @@ export class EquityCalculator extends React.Component {
                         <p className="text-center" id="footer-text">
                             <small>
                             FreeTilt is an open source project.  Please report issues
-                            <a href="https://www.github.com/billmiller2/freetilt/issues"> here</a>
+                            <a href="https://www.github.com/billmiller2/freetilt/issues" target="_blank"> here</a>
                         </small>
                         </p>
                     </div>
